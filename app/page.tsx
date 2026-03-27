@@ -14,9 +14,11 @@ import CartToast from '@/components/home/CartToast'
 import { CartProvider, useCart } from '@/contexts/CartContext'
 import Modal from '@/components/ui/Modal'
 import { payStripe } from '@/lib/stripe'
+import { useStripeCheckout } from '@/hooks/useStripeCheckout'
 
 function PageContent() {
   const { cart, count, total, changeQty, remove } = useCart()
+  const { createCheckoutSession, loading: checkoutLoading } = useStripeCheckout()
   const [cartOpen, setCartOpen] = useState(false)
   const [cartPage, setCartPage] = useState(false)
   const [authOpen, setAuthOpen] = useState(false)
@@ -347,13 +349,13 @@ function PageContent() {
                     <span className="text-dr-white">Total</span>
                     <span className="text-purple-glow">{total}€</span>
                   </div>
-                  <a
-                    href="#contact"
-                    onClick={() => setCartPage(false)}
-                    className="block w-full text-center bg-purple-core text-white py-3 rounded-xl text-sm font-medium hover:bg-purple-glow transition-colors"
+                  <button
+                    onClick={() => createCheckoutSession(cart)}
+                    disabled={checkoutLoading}
+                    className="block w-full text-center bg-purple-core text-white py-3 rounded-xl text-sm font-medium hover:bg-purple-glow transition-colors cursor-pointer border-none disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    Réserver & payer →
-                  </a>
+                    {checkoutLoading ? 'Redirection...' : 'Réserver & payer →'}
+                  </button>
                 </div>
               </div>
             )}
