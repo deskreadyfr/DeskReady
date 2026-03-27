@@ -2746,7 +2746,7 @@
           <span>Total</span>
           <span id="panier-total" style="color:var(--purple-glow);">0€</span>
         </div>
-        <a href="#contact" class="btn-primary" style="display:block;text-align:center;">Réserver & payer →</a>
+        <button onclick="payStripeCart(this)" class="btn-primary" style="display:block;text-align:center;width:100%;border:none;cursor:pointer;">Réserver & payer →</button>
         <button onclick="clearCart()" style="background:none;border:none;color:var(--grey);font-size:0.8rem;cursor:pointer;margin-top:1rem;width:100%;text-align:center;font-family:'DM Sans',sans-serif;">Vider le panier</button>
       </div>
     </div>
@@ -3086,6 +3086,29 @@ function payStripe(productKey) {
   const link = STRIPE_LINKS[productKey];
   if (!link || link.includes('REMPLACER')) { alert('Lien de paiement non configuré. Merci de contacter contact@deskready.com'); return; }
   window.open(link, '_blank');
+}
+async function payStripeCart(btn) {
+  if (cart.length === 0) { alert('Votre panier est vide'); return; }
+  if (btn) { btn.textContent = 'Chargement…'; btn.disabled = true; }
+  const url = await createCheckoutSession(cart);
+  if (url) { window.location.href = url; }
+  else if (btn) { btn.textContent = 'Réserver & payer →'; btn.disabled = false; }
+}
+async function createCheckoutSession(items) {
+  try {
+    const response = await fetch(
+      'https://lysibziqgissumqszedk.supabase.co/functions/v1/create-checkout-session',
+      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items }) }
+    );
+    const data = await response.json();
+    if (data.checkoutUrl) return data.checkoutUrl;
+    alert('Erreur : ' + (data.error || 'Impossible de créer la session'));
+    return null;
+  } catch (err) {
+    console.error('Erreur checkout:', err);
+    alert('Erreur lors de la création de la session de paiement');
+    return null;
+  }
 }
 function openCalendly() {
   const bookingSection = document.getElementById('booking');
