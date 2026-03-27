@@ -2974,10 +2974,7 @@ async function submitCandidature() {
   submitBtn.textContent = 'Envoi en cours…'; submitBtn.disabled = true;
   try {
     if (window._sb) {
-      const ext = cvFile.name.split('.').pop();
-      const fileName = `${Date.now()}_${email.replace(/[^a-z0-9]/gi,'_')}.${ext}`;
-      const { data: uploadData, error: uploadErr } = await _sb.storage.from('candidatures').upload(fileName, cvFile, { contentType: cvFile.type });
-      if (uploadErr) throw uploadErr;
+      const cvFileName = cvFile.name;
       const tel = document.querySelector('#candidature-modal input[type="tel"]').value.trim();
       const ecole = document.querySelectorAll('#candidature-modal input[type="text"]')[2]?.value.trim() || '';
       const annee = document.querySelector('#candidature-modal select')?.value || '';
@@ -2985,7 +2982,7 @@ async function submitCandidature() {
       const banques = document.querySelectorAll('#candidature-modal input[type="text"]')[4]?.value.trim() || '';
       const parcours = document.querySelectorAll('#candidature-modal textarea')[0]?.value.trim() || '';
       const motiv = document.querySelectorAll('#candidature-modal textarea')[1]?.value.trim() || '';
-      const { error: dbErr } = await _sb.from('candidatures').insert([{ nom, email, telephone: tel, ecole, annee, desk_vise: desk, banques_cibles: banques, parcours, motivation: motiv, cv_url: uploadData.path, status: 'pending', created_at: new Date().toISOString() }]);
+      const { error: dbErr } = await _sb.from('candidatures').insert([{ nom, email, telephone: tel, ecole, annee, desk_vise: desk, banques_cibles: banques, parcours, motivation: motiv, cv_url: cvFileName, status: 'pending', created_at: new Date().toISOString() }]);
       if (dbErr) throw dbErr;
     }
     closeCandidature();
