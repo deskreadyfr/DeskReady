@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@800;900&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+:root {
+  --border: rgba(168,85,247,0.15);
+  --card-bg: rgba(255,255,255,0.03);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: #050508; color: #f8f4ff; font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+@layer utilities {
+  .border-dr { border-color: rgba(168,85,247,0.15); }
+  .bg-card { background: rgba(255,255,255,0.03); }
+}
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes carousel { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes pulse-orb {
+  from { transform: translate(-55%, -55%) scale(1); opacity: 0.8; }
+  to   { transform: translate(-55%, -55%) scale(1.1); opacity: 1; }
+}
+@keyframes cart-pop {
+  0%   { transform: scale(1) rotate(0deg); }
+  25%  { transform: scale(1.4) rotate(-10deg); }
+  50%  { transform: scale(1.2) rotate(8deg); }
+  75%  { transform: scale(1.1) rotate(-4deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+@keyframes toast-in  { from { opacity:0; transform: translateY(12px) scale(0.95); } to { opacity:1; transform: translateY(0) scale(1); } }
+@keyframes toast-out { to   { opacity:0; transform: translateY(-8px) scale(0.95); } }
+@keyframes fade-in { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fade-up { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+@keyframes scroll-banks {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-blink { animation: blink 1.5s infinite; }
+.animate-ticker { animation: ticker 60s linear infinite; }
+.animate-carousel { animation: carousel 40s linear infinite; }
+.animate-cart-pop { animation: cart-pop 0.55s cubic-bezier(0.34,1.56,0.64,1) both; }
+.animate-toast-in { animation: toast-in 0.3s ease; }
+.animate-toast-out { animation: toast-out 0.3s ease forwards; }
+.animate-fade-in { animation: fade-in 0.6s ease both; }
+.animate-fade-up { animation: fade-up 0.8s ease both; }
+.animate-pulse-orb { animation: pulse-orb 6s ease-in-out infinite alternate; }
+.animate-scroll-banks { animation: scroll-banks 35s linear infinite; }
+.animate-scroll-banks:hover { animation-play-state: paused; }
+
+.reveal { opacity:0; transform:translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* Form inputs global style */
+input, select, textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 8px;
+  color: #f8f4ff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  padding: 0.65rem 0.9rem;
+  width: 100%;
+  transition: border-color 0.2s;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: rgba(168,85,247,0.5);
+}
+input::placeholder, textarea::placeholder {
+  color: rgba(160,154,181,0.5);
+}
+select option {
+  background: #0d0d14;
+  color: #f8f4ff;
+}
+label {
+  font-size: 0.82rem;
+  color: #a09ab5;
+  margin-bottom: 0.4rem;
+  display: block;
+}
