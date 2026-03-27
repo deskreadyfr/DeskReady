@@ -3222,6 +3222,7 @@ function updateCart() {
   const itemsEl = document.getElementById('cart-items');
   const totalBlock = document.getElementById('cart-total-block');
   if (cart.length === 0) {
+    document.getElementById('cart-dropdown').style.display = 'none';
     itemsEl.innerHTML = '<div style="text-align:center;color:#a09ab5;font-size:0.88rem;padding:2rem 0;">Votre panier est vide</div>';
     totalBlock.style.display = 'none';
   } else {
