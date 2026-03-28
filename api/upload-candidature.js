@@ -55,6 +55,7 @@ module.exports = async function handler(req, res) {
       ecole: get('ecole'),
       annee: get('annee'),
       desk_vise: get('desk_vise'),
+      linkedin_url: get('linkedin_url'),
       banques_cibles: get('banques_cibles'),
       parcours: get('parcours'),
       motivation: get('motivation'),

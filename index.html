@@ -2812,10 +2812,11 @@
       <div class="form-group"><label>Téléphone</label><input type="tel" placeholder="+33 6 00 00 00 00"></div>
       <div class="form-group"><label>École / Université</label><input type="text" placeholder="SKEMA, HEC, Dauphine..."></div>
       <div class="form-group"><label>Année d'études</label>
-        <select><option value="">Sélectionne</option><option>M1</option><option>M2</option><option>3e année</option><option>4e année</option><option>5e année</option></select>
+        <select><option value="">Sélectionne</option><option>M1</option><option>M2</option><option>L1</option><option>L2</option><option>L3</option><option>Fin des études</option></select>
       </div>
       <div class="modal-section-label">Ton profil & motivation</div>
       <div class="form-group"><label>Desk / Métier visé</label><input type="text" placeholder="Ex: Sales FX, Structuring Rates, Trading..."></div>
+      <div class="form-group"><label>Profil LinkedIn <span style="color:var(--purple-glow);">*</span></label><input type="text" id="input-linkedin" placeholder="https://linkedin.com/in/tonprofil"></div>
       <div class="form-group"><label>Banque(s) cible(s)</label><input type="text" placeholder="Ex: Goldman Sachs, CACIB, BNP..."></div>
       <div class="form-group"><label>Résume ton parcours et tes expériences en finance de marché</label><textarea rows="3" placeholder="Stages, projets, compétences clés..."></textarea></div>
       <div class="form-group"><label>Pourquoi le pack Elite plutôt que Gold ?</label><textarea rows="3" placeholder="Qu'est-ce qui te différencie et justifie une sélection ?"></textarea></div>
@@ -2826,14 +2827,6 @@
           <input type="file" id="upload-cv" accept=".pdf" onchange="setFileName('upload-cv','cv-filename')">
           <div class="upload-icon">📄</div>
           <div class="upload-text" id="cv-filename">Clique pour importer · <span>PDF uniquement</span></div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Relevés de notes (optionnel)</label>
-        <div class="upload-area" onclick="document.getElementById('upload-notes').click()">
-          <input type="file" id="upload-notes" accept=".pdf,.jpg,.png" onchange="setFileName('upload-notes','notes-filename')">
-          <div class="upload-icon">📋</div>
-          <div class="upload-text" id="notes-filename">Clique pour importer · <span>PDF ou image</span></div>
         </div>
       </div>
       <button class="btn-primary" style="justify-content:center;margin-top:0.5rem;" onclick="submitCandidature()">Envoyer ma candidature →</button>
@@ -2977,9 +2970,16 @@ async function submitCandidature() {
     const ecole = document.querySelectorAll('#candidature-modal input[type="text"]')[2]?.value.trim() || '';
     const annee = document.querySelector('#candidature-modal select')?.value || '';
     const desk = document.querySelectorAll('#candidature-modal input[type="text"]')[3]?.value.trim() || '';
-    const banques = document.querySelectorAll('#candidature-modal input[type="text"]')[4]?.value.trim() || '';
+    const linkedin = document.getElementById('input-linkedin').value.trim();
+    const banques = document.querySelectorAll('#candidature-modal input[type="text"]')[5]?.value.trim() || '';
     const parcours = document.querySelectorAll('#candidature-modal textarea')[0]?.value.trim() || '';
     const motiv = document.querySelectorAll('#candidature-modal textarea')[1]?.value.trim() || '';
+
+    if (!linkedin || !linkedin.includes('linkedin.com')) {
+      alert('Profil LinkedIn invalide. Merci d\'entrer une URL LinkedIn valide (ex: https://linkedin.com/in/tonprofil).');
+      submitBtn.textContent = 'Envoyer ma candidature →'; submitBtn.disabled = false;
+      return;
+    }
 
     const fd = new FormData();
     fd.append('nom', nom);
@@ -2988,6 +2988,7 @@ async function submitCandidature() {
     fd.append('ecole', ecole);
     fd.append('annee', annee);
     fd.append('desk_vise', desk);
+    fd.append('linkedin_url', linkedin);
     fd.append('banques_cibles', banques);
     fd.append('parcours', parcours);
     fd.append('motivation', motiv);
