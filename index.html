@@ -3111,7 +3111,7 @@ async function payStripeCart(btn) {
   if (cart.length === 0) { alert('Votre panier est vide'); return; }
   if (btn) { btn.textContent = 'Chargement…'; btn.disabled = true; }
   const url = await createCheckoutSession(cart);
-  if (url) { window.location.href = url; }
+  if (url) { window.open(url, '_blank'); if (btn) { btn.textContent = 'Réserver & payer →'; btn.disabled = false; } }
   else if (btn) { btn.textContent = 'Réserver & payer →'; btn.disabled = false; }
 }
 async function createCheckoutSession(items) {
