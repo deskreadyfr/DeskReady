@@ -2500,6 +2500,15 @@
             <button onclick="payStripe('pack_entretien_coaching')" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer · 55€ →</button>
           </div>
         </div>
+        <div class="offre-card reveal">
+          <div class="offre-name" style="white-space:nowrap;">Liste de contacts</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple-glow);margin-bottom:0.8rem;">35€</div>
+          <p class="offre-desc">Une liste de contacts ciblés pour tes candidatures spontanées dans le secteur financier.</p>
+          <div style="display:flex;flex-direction:column;gap:0.4rem;margin-top:auto;">
+            <button onclick="addToCart('Liste de contacts', 35, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Je veux</button>
+            <button onclick="payStripe('liste_contacts')" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer · 35€ →</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -3022,6 +3031,7 @@ const STRIPE_LINKS = {
   'session_coaching': 'https://buy.stripe.com/dRm28k8Sy2Sg4P550x7Re06',
   'pack_cv_entretien': 'https://buy.stripe.com/28E14gb0GfF2chx3Wt7Re07',
   'pack_entretien_coaching': 'https://buy.stripe.com/fZu3cofgWeAY1CT3Wt7Re05',
+  'liste_contacts': 'REMPLACER_PAR_TON_LIEN_STRIPE',
 };
 const CALENDLY_URL = 'https://calendly.com/deskready-fr/30min';
 
