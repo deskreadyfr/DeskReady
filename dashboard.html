@@ -113,7 +113,7 @@
         <a href="/dashboard.html"><span class="drop-icon">🏠</span>Dashboard</a>
         <a href="/mes-achats.html"><span class="drop-icon">🛒</span>Mes achats</a>
         <a href="/parametres.html"><span class="drop-icon">⚙️</span>Paramètres</a>
-        <a href="#" onclick="handleNavLogout();return false;" style="color:#f87171!important;"><span class="drop-icon" style="background:rgba(248,113,113,0.15);">🚪</span>Déconnecter</a>
+        <a href="#" onclick="handleLogout();return false;" style="color:#f87171!important;"><span class="drop-icon" style="background:rgba(248,113,113,0.15);">🚪</span>Déconnecter</a>
       </div>
     </div>
   </div>
@@ -200,6 +200,10 @@
     const parts = fullName.trim().split(' ');
     const initials = parts.length >= 2 ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase() : fullName.slice(0,2).toUpperCase();
     document.getElementById('nav-user-initials').textContent = initials;
+    const authBtn = document.getElementById('nav-auth-btn');
+    const navDrop = document.getElementById('nav-user-dropdown');
+    if (authBtn) authBtn.style.display = 'none';
+    if (navDrop) navDrop.style.display = 'block';
     document.getElementById('profile-avatar').textContent = initials;
     document.getElementById('profile-name').textContent = fullName;
     document.getElementById('profile-email').textContent = email;
