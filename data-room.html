@@ -699,7 +699,7 @@ document.getElementById('news-tabs').addEventListener('click', e => {
   tab.classList.add('active');
   activeNewsTab = tab.dataset.tab;
   renderNews();
-  requestAnimationFrame(syncNewsPanelHeight);
+  requestAnimationFrame(syncLayout);
 });
 
 function renderCalendar() {
@@ -1021,19 +1021,28 @@ setTimeout(revealOnScroll, 100);
 fetchLiveData();
 fetchNews();
 
-// Sync news panel height to cross-asset panel
-function syncNewsPanelHeight() {
-  const cross = document.querySelector('.panel-cross');
-  const news  = document.querySelector('.panel-news');
-  if (!cross || !news) return;
+// Sync all 3 columns to the same height
+function syncLayout() {
+  const cross    = document.querySelector('.panel-cross');
+  const news     = document.querySelector('.panel-news');
+  const calendar = document.querySelector('.panel-calendar');
+  const levels   = document.querySelector('.panel-levels');
+  if (!cross || !news || !calendar || !levels) return;
   news.style.maxHeight = 'none';
+  calendar.style.maxHeight = 'none';
+  levels.style.maxHeight = 'none';
   requestAnimationFrame(() => {
-    news.style.maxHeight = cross.getBoundingClientRect().height + 'px';
+    const crossH = cross.getBoundingClientRect().height;
+    const gap = parseFloat(getComputedStyle(document.querySelector('.dr-layout')).rowGap) || 19.2;
+    const colH = Math.floor((crossH - gap) / 2);
+    news.style.maxHeight = crossH + 'px';
+    calendar.style.maxHeight = colH + 'px';
+    levels.style.maxHeight = colH + 'px';
   });
 }
-requestAnimationFrame(() => requestAnimationFrame(syncNewsPanelHeight));
-window.addEventListener('load', syncNewsPanelHeight);
-window.addEventListener('resize', syncNewsPanelHeight);
+requestAnimationFrame(() => requestAnimationFrame(syncLayout));
+window.addEventListener('load', syncLayout);
+window.addEventListener('resize', syncLayout);
 </script>
 
 <script>
