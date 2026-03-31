@@ -320,6 +320,10 @@
 
       <!-- MACRO CALENDAR -->
       <div class="dr-panel panel-calendar">
+        <div class="dr-panel-header">
+          <div class="dr-panel-title">🗓️ Macro Calendar</div>
+          <div class="dr-panel-ts" id="cal-date">--</div>
+        </div>
         <div class="cal-list" id="cal-list">
           <!-- populated by JS -->
         </div>
@@ -327,6 +331,9 @@
 
       <!-- KEY LEVELS -->
       <div class="dr-panel panel-levels">
+        <div class="dr-panel-header">
+          <div class="dr-panel-title">📍 Key Levels</div>
+        </div>
         <div class="level-list" id="level-list">
           <!-- populated by JS -->
         </div>
@@ -481,20 +488,30 @@ const NEWS_ITEMS = [
 ];
 
 const MACRO_CALENDAR = [
+  { time: '08:00', flag: '🇩🇪', event: 'IPC Allemagne (fév. final)', prev: '+2.3%', cons: '+2.3%', impact: 'mid' },
+  { time: '08:45', flag: '🇫🇷', event: 'IPC France (fév. final)', prev: '+0.8%', cons: '+0.8%', impact: 'low' },
   { time: '10:00', flag: '🇪🇺', event: 'Production industrielle (jan.)', prev: '-0.2%', cons: '+0.4%', impact: 'mid' },
   { time: '11:00', flag: '🇩🇪', event: 'ZEW Sentiment (mars)', prev: '26.0', cons: '30.5', impact: 'high' },
   { time: '13:30', flag: '🇺🇸', event: 'Empire State Mfg (mars)', prev: '5.7', cons: '6.2', impact: 'low' },
   { time: '14:15', flag: '🇺🇸', event: 'Retail Sales MoM (fév.)', prev: '-0.9%', cons: '+0.6%', impact: 'high' },
-  { time: '15:00', flag: '🇺🇸', event: 'Business Inventories', prev: '+0.2%', cons: '+0.3%', impact: 'low' },
+  { time: '14:15', flag: '🇺🇸', event: 'Retail Sales ex-Auto (fév.)', prev: '-0.4%', cons: '+0.3%', impact: 'mid' },
+  { time: '15:00', flag: '🇺🇸', event: 'Business Inventories (jan.)', prev: '+0.2%', cons: '+0.3%', impact: 'low' },
+  { time: '16:00', flag: '🇺🇸', event: 'NAHB Housing Index (mars)', prev: '42', cons: '43', impact: 'low' },
   { time: '19:30', flag: '🇺🇸', event: 'Discours Williams (Fed)', prev: '—', cons: '—', impact: 'mid' },
+  { time: '20:00', flag: '🇺🇸', event: 'Discours Goolsbee (Fed)', prev: '—', cons: '—', impact: 'low' },
 ];
 
 const KEY_LEVELS = [
-  { asset: 'EUR/USD',     price: 1.1572, support: 1.1510, resist: 1.1600, fill: 48 },
-  { asset: 'UST 10Y',    price: 4.39,   support: 4.20,   resist: 4.60,   fill: 70 },
-  { asset: 'iTraxx Main',price: 72,     support: 60,     resist: 88,     fill: 43 },
-  { asset: 'Gold',       price: 4547,   support: 4400,   resist: 4700,   fill: 65 },
-  { asset: 'WTI',        price: 99.8,   support: 92.0,   resist: 110.0,  fill: 43 },
+  { asset: 'EUR/USD',      price: 1.1498, support: 1.1380, resist: 1.1600, fill: 51 },
+  { asset: 'GBP/USD',      price: 1.3242, support: 1.3100, resist: 1.3400, fill: 48 },
+  { asset: 'USD/JPY',      price: 159.50, support: 155.00, resist: 162.00, fill: 65 },
+  { asset: 'EUR/GBP',      price: 0.8683, support: 0.8580, resist: 0.8780, fill: 52 },
+  { asset: 'UST 10Y',      price: 4.39,   support: 4.20,   resist: 4.60,   fill: 70 },
+  { asset: 'Bund 10Y',     price: 2.88,   support: 2.60,   resist: 3.10,   fill: 56 },
+  { asset: 'iTraxx Main',  price: 72,     support: 60,     resist: 88,     fill: 43 },
+  { asset: 'S&P 500',      price: 6557,   support: 6300,   resist: 6750,   fill: 57 },
+  { asset: 'Gold',         price: 4547,   support: 4400,   resist: 4700,   fill: 65 },
+  { asset: 'WTI',          price: 99.8,   support: 92.0,   resist: 110.0,  fill: 43 },
 ];
 
 // ===== RENDER =====
