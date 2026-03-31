@@ -163,7 +163,7 @@
 
     /* MACRO CALENDAR */
     .panel-calendar { grid-column: 3; grid-row: 1; }
-    .cal-list { overflow-y: auto; max-height: none; }
+    .cal-list { flex: 1; min-height: 0; overflow-y: auto; }
     .cal-item { display: flex; align-items: center; gap: 1rem; padding: 0.7rem 1.2rem; border-bottom: 1px solid rgba(168,85,247,0.07); font-size: 0.82rem; }
     .cal-item:last-child { border-bottom: none; }
     .cal-time { font-family: var(--mono); font-size: 0.72rem; color: var(--grey); width: 50px; flex-shrink: 0; }
@@ -412,7 +412,7 @@ const ASSETS = [
   { cat: 'COMMODITIES', name: 'WTI',  val: '$99.8',  chg: +1.85, chgAbs: '+$1.81' },
 ];
 
-const NEWS_ITEMS = [
+const NEWS_ITEMS_STATIC = [
   // 31 mars 2026
   {
     cat: 'macro', time: '14:00', date: '2026-03-31', impact: 'high',
@@ -598,6 +598,8 @@ const NEWS_ITEMS = [
     url: 'https://www.cnbc.com/2026/03/18/fed-interest-rate-decision-march-2026.html'
   },
 ];
+
+const NEWS_ITEMS = [...NEWS_ITEMS_STATIC];
 
 const MACRO_CALENDAR = [
   { time: '08:00', flag: '🇩🇪', event: 'IPC Allemagne (fév. final)', prev: '+2.3%', cons: '+2.3%', impact: 'mid' },
@@ -983,7 +985,23 @@ async function fetchNews() {
     );
 
     if (translated.length > 0) {
-      NEWS_ITEMS.splice(0, NEWS_ITEMS.length, ...translated);
+      // Fusionner avec les items statiques : Finnhub en priorité, statique en fallback par catégorie
+      const STATIC_BACKUP = NEWS_ITEMS_STATIC || [];
+      const MIN_PER_CAT = 4;
+      const merged = [...translated];
+      const liveBycat = {};
+      CATS.forEach(c => { liveBycat[c] = merged.filter(n => n.cat === c).length; });
+      CATS.forEach(c => {
+        if (liveBycat[c] < MIN_PER_CAT) {
+          const needed = MIN_PER_CAT - liveBycat[c];
+          const liveUrls = new Set(merged.filter(n => n.cat === c).map(n => n.url));
+          const backfill = STATIC_BACKUP.filter(n => n.cat === c && !liveUrls.has(n.url)).slice(0, needed);
+          merged.push(...backfill);
+        }
+      });
+      // Trier par date desc
+      merged.sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+      NEWS_ITEMS.splice(0, NEWS_ITEMS.length, ...merged);
       renderNews();
       const badge = document.getElementById('news-count');
       if (badge) badge.style.color = '#4ade80';
