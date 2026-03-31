@@ -836,6 +836,40 @@ function syncKeyLevels() {
   });
 }
 
+const YF_SYMBOLS = '^STOXX50E,^GDAXI,^FCHI,^FTSE,^GSPC,^NDX,^DJI,^N225,^VIX,GC=F,CL=F';
+const YF_NAME_MAP = {
+  '^STOXX50E': 'Euro Stoxx 50', '^GDAXI': 'DAX', '^FCHI': 'CAC 40',
+  '^FTSE': 'FTSE 100', '^GSPC': 'S&P 500', '^NDX': 'Nasdaq 100',
+  '^DJI': 'Dow Jones', '^N225': 'Nikkei 225', '^VIX': 'VIX',
+  'GC=F': 'Gold', 'CL=F': 'WTI'
+};
+
+async function fetchYahooQuotes() {
+  const yfUrl = 'https://query1.finance.yahoo.com/v7/finance/quote?symbols=' + YF_SYMBOLS;
+  const urls = [
+    yfUrl,
+    'https://corsproxy.io/?' + encodeURIComponent(yfUrl)
+  ];
+  for (const url of urls) {
+    try {
+      const r = await fetch(url);
+      const d = await r.json();
+      const results = d.quoteResponse && d.quoteResponse.result;
+      if (!results || !results.length) continue;
+      let ok = false;
+      results.forEach(function(q) {
+        const name = YF_NAME_MAP[q.symbol];
+        if (name && q.regularMarketPrice && q.regularMarketPreviousClose) {
+          patchAsset(name, q.regularMarketPrice, q.regularMarketPreviousClose);
+          ok = true;
+        }
+      });
+      if (ok) return true;
+    } catch(e) { console.warn('[Yahoo] ' + url.slice(0, 40) + '...', e.message); }
+  }
+  return false;
+}
+
 async function fetchLiveData() {
   let fxOk = false, equityOk = false;
 
@@ -864,47 +898,26 @@ async function fetchLiveData() {
     fxOk = true;
   } catch(e) { console.warn('[FX open.er-api]', e); }
 
-  // 2. Equities + Commodities via Yahoo Finance (query2 first, query1 fallback)
-  const yf = [
-    { sym: '^STOXX50E', name: 'Euro Stoxx 50' },
-    { sym: '^GDAXI',    name: 'DAX' },
-    { sym: '^FCHI',     name: 'CAC 40' },
-    { sym: '^FTSE',     name: 'FTSE 100' },
-    { sym: '^GSPC',     name: 'S&P 500' },
-    { sym: '^NDX',      name: 'Nasdaq 100' },
-    { sym: '^DJI',      name: 'Dow Jones' },
-    { sym: '^N225',     name: 'Nikkei 225' },
-    { sym: '^VIX',      name: 'VIX' },
-    { sym: 'GC=F',      name: 'Gold' },
-    { sym: 'CL=F',      name: 'WTI' }
-  ];
-  await Promise.allSettled(yf.map(async function(item) {
-    const endpoints = [
-      'https://query2.finance.yahoo.com/v8/finance/chart/' + item.sym + '?interval=1d&range=2d',
-      'https://query1.finance.yahoo.com/v8/finance/chart/' + item.sym + '?interval=1d&range=2d'
-    ];
-    for (const url of endpoints) {
-      try {
-        const r = await fetch(url);
-        const d = await r.json();
-        const meta = d.chart.result[0].meta;
-        patchAsset(item.name, meta.regularMarketPrice, meta.chartPreviousClose);
-        equityOk = true;
-        break;
-      } catch(e) { /* try next endpoint */ }
-    }
-    if (!equityOk) console.warn('[Yahoo] failed:', item.name);
-  }));
+  // 2. Equities + Commodities — batch quote request, corsproxy.io fallback
+  equityOk = await fetchYahooQuotes();
 
   syncKeyLevels();
   renderAssets(); renderTicker(); renderCarousel(); renderLevels();
 
-  // Update live badge
+  // Update live badge with timestamp
   const badge = document.querySelector('.live-badge');
-  if (badge && (fxOk || equityOk)) {
-    badge.innerHTML = '<div class="live-dot"></div> Live';
-    badge.style.borderColor = 'rgba(34,197,94,0.5)';
+  if (badge) {
+    if (fxOk || equityOk) {
+      const now = new Date();
+      const hm = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      badge.innerHTML = '<div class="live-dot"></div> Live · ' + hm;
+      badge.style.borderColor = 'rgba(34,197,94,0.5)';
+    } else {
+      badge.innerHTML = '<div class="live-dot" style="background:#ef4444"></div> Données offline';
+      badge.style.borderColor = 'rgba(239,68,68,0.5)';
+    }
   }
+  console.log('[DeskReady] fetchLiveData — fx:', fxOk, 'equity:', equityOk);
 }
 
 // Auto-refresh every 5 minutes
