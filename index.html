@@ -2958,7 +2958,9 @@ function carouselInit() { carouselBuild(); carouselDots(); carouselSetPosition(0
 document.addEventListener('DOMContentLoaded', () => {
   carouselInit();
   window.addEventListener('resize', () => carouselSetPosition(carouselIndex, false));
-  if (window.location.hash) {
+  if (window.location.hash === '#login') {
+    setTimeout(() => openAuthModal(), 300);
+  } else if (window.location.hash) {
     setTimeout(() => {
       const target = document.querySelector(window.location.hash);
       if (target) target.scrollIntoView({ behavior: 'smooth' });
