@@ -140,9 +140,9 @@
         <div class="dash-section-title">⚡ Ressources rapides</div>
         <div class="quick-links-grid">
           <a href="mailto:support@deskready.fr" class="quick-link"><span class="quick-link-icon">💬</span><span class="quick-link-label">Chat support</span><span class="quick-link-sub">Réponse sous 24h</span></a>
-          <a href="#" class="quick-link"><span class="quick-link-icon">📄</span><span class="quick-link-label">Télécharger mon CV</span><span class="quick-link-sub">Template DeskReady</span></a>
-          <a href="#" class="quick-link"><span class="quick-link-icon">📅</span><span class="quick-link-label">Calendrier coaching</span><span class="quick-link-sub">Réserver une session</span></a>
-          <a href="#" class="quick-link"><span class="quick-link-icon">❓</span><span class="quick-link-label">FAQ</span><span class="quick-link-sub">Questions fréquentes</span></a>
+          <a href="/#offres" class="quick-link"><span class="quick-link-icon">🎯</span><span class="quick-link-label">Voir nos offres</span><span class="quick-link-sub">Formations DeskReady</span></a>
+          <a href="#" id="quick-link-coaching" class="quick-link"><span class="quick-link-icon">📅</span><span class="quick-link-label">Calendrier coaching</span><span class="quick-link-sub">Réserver une session</span></a>
+          <a href="/#faq" class="quick-link"><span class="quick-link-icon">❓</span><span class="quick-link-label">FAQ</span><span class="quick-link-sub">Questions fréquentes</span></a>
         </div>
       </div>
     </div>
@@ -203,6 +203,10 @@
           <a href="/plateforme.html" class="btn-access">Accéder au contenu →</a>
         </div>`).join('');
     }
+    const hasCoaching = purchases.some(p => /coaching/i.test(p.product_name));
+    const coachingLink = document.getElementById('quick-link-coaching');
+    if (coachingLink) coachingLink.style.display = hasCoaching ? 'none' : '';
+
     document.getElementById('page-content').style.display = 'block';
   }
 

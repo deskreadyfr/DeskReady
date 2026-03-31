@@ -334,17 +334,17 @@
             <span class="quick-link-label">Chat support</span>
             <span class="quick-link-sub">Réponse sous 24h</span>
           </a>
-          <a href="#" class="quick-link">
-            <span class="quick-link-icon">📄</span>
-            <span class="quick-link-label">Télécharger mon CV</span>
-            <span class="quick-link-sub">Template DeskReady</span>
+          <a href="/index.html#offres" class="quick-link">
+            <span class="quick-link-icon">🎯</span>
+            <span class="quick-link-label">Voir nos offres</span>
+            <span class="quick-link-sub">Formations DeskReady</span>
           </a>
-          <a href="#" class="quick-link">
+          <a href="#" id="quick-link-coaching" class="quick-link">
             <span class="quick-link-icon">📅</span>
             <span class="quick-link-label">Calendrier coaching</span>
             <span class="quick-link-sub">Réserver une session</span>
           </a>
-          <a href="#" class="quick-link">
+          <a href="/index.html#faq" class="quick-link">
             <span class="quick-link-icon">❓</span>
             <span class="quick-link-label">FAQ</span>
             <span class="quick-link-sub">Questions fréquentes</span>
@@ -706,6 +706,10 @@
         </div>
       `).join('');
     }
+
+    const hasCoaching = purchases.some(p => /coaching/i.test(p.product_name));
+    const coachingLink = document.getElementById('quick-link-coaching');
+    if (coachingLink) coachingLink.style.display = hasCoaching ? 'none' : '';
 
     document.getElementById('user-dashboard').style.display = 'block';
   }
