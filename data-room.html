@@ -62,12 +62,14 @@
     @media (max-width: 900px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } }
 
     /* TICKER TAPE */
-    .ticker-wrap { flex: 1; overflow: hidden; position: relative; height: 24px; mask-image: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%); }
-    .ticker-track { display: flex; gap: 0; white-space: nowrap; animation: ticker 60s linear infinite; }
-    .ticker-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0 1.5rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.02em; }
-    .ticker-name { color: var(--grey); }
-    .ticker-val { color: var(--white); font-weight: 500; }
+    .ticker-wrap { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(90deg, transparent 0%, black 4%, black 96%, transparent 100%); }
+    .ticker-track { display: flex; align-items: center; gap: 0; white-space: nowrap; animation: ticker 60s linear infinite; }
+    .ticker-item { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0 1.8rem; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.02em; border-right: 1px solid rgba(168,85,247,0.15); }
+    .ticker-item:last-child { border-right: none; }
+    .ticker-name { color: var(--grey); font-weight: 500; }
+    .ticker-val { color: var(--white); font-weight: 600; }
     .ticker-chg { font-weight: 600; }
+    .ticker-sep { width: 1px; height: 18px; background: rgba(168,85,247,0.3); flex-shrink: 0; }
     .up { color: var(--up); }
     .down { color: var(--down); }
     .flat { color: var(--flat); }
@@ -79,15 +81,17 @@
 
     /* TICKER BAR */
     .ticker-bar {
-      display: flex; align-items: center; gap: 1rem;
+      display: flex; align-items: center; gap: 0;
       background: rgba(5,5,8,0.7); border: 1px solid var(--border);
-      border-radius: 10px; padding: 0.55rem 1rem; margin-bottom: 1.8rem;
+      border-radius: 10px; padding: 0.45rem 0.8rem; margin-bottom: 1.8rem;
+      height: 36px;
     }
     .ticker-label {
       font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
       color: var(--up); background: rgba(34,197,94,0.1);
       border: 1px solid rgba(34,197,94,0.25); border-radius: 4px;
       padding: 0.15rem 0.5rem; flex-shrink: 0; text-transform: uppercase;
+      margin-right: 0.8rem;
     }
     .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple-glow); margin-bottom: 0.6rem; }
     .page-title { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: -0.03em; line-height: 1; }
@@ -288,6 +292,7 @@
 
     <div class="ticker-bar reveal">
       <span class="ticker-label">Live</span>
+      <div class="ticker-sep"></div>
       <div class="ticker-wrap">
         <div class="ticker-track" id="ticker-track"></div>
       </div>
@@ -882,7 +887,7 @@ async function fetchLiveData() {
   // Update live badge
   const badge = document.querySelector('.live-badge');
   if (badge && (fxOk || equityOk)) {
-    badge.innerHTML = '<div class="live-dot"></div> ' + (fxOk && equityOk ? 'Live' : fxOk ? 'FX Live' : 'Live partiel');
+    badge.innerHTML = '<div class="live-dot"></div> Live';
     badge.style.borderColor = 'rgba(34,197,94,0.5)';
   }
 }
