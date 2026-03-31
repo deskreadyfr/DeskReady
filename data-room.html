@@ -841,10 +841,24 @@ function patchAsset(name, curr, prev) {
   }
 }
 
+// Sync all KEY_LEVELS prices from current ASSETS values
+function syncKeyLevels() {
+  KEY_LEVELS.forEach(function(kl) {
+    const a = ASSETS.find(x => x.name === kl.asset);
+    if (!a) return;
+    const price = parseFloat(String(a.val).replace(/\s/g, '').replace(',', '.').replace('$', '').replace(/[^0-9.-]/g, ''));
+    if (!isNaN(price) && price > 0) {
+      kl.price = price;
+      kl.fill = Math.min(99, Math.max(1, Math.round((price - kl.support) / (kl.resist - kl.support) * 100)));
+    }
+  });
+}
+
 async function fetchLiveData() {
   let fxOk = false, equityOk = false;
 
-  // 1. FX via Frankfurter (ECB rates, free, no key, CORS-enabled)
+  // 1. FX via open.er-api.com (market rates, hourly updates, free, no key, CORS-enabled)
+  //    Previous day via Frankfurter for % change calculation
   try {
     const yd = new Date();
     yd.setDate(yd.getDate() - 1);
@@ -853,7 +867,7 @@ async function fetchLiveData() {
     const ydStr = yd.toISOString().slice(0, 10);
 
     const [todayResp, ydResp] = await Promise.all([
-      fetch('https://api.frankfurter.app/latest?from=EUR&to=USD,GBP,JPY'),
+      fetch('https://open.er-api.com/v6/latest/EUR'),
       fetch('https://api.frankfurter.app/' + ydStr + '?from=EUR&to=USD,GBP,JPY')
     ]);
     const tod = await todayResp.json();
@@ -865,18 +879,10 @@ async function fetchLiveData() {
     patchAsset('GBP/USD', t.USD / t.GBP, y.USD / y.GBP);
     patchAsset('USD/JPY', t.JPY / t.USD, y.JPY / y.USD);
 
-    ['EUR/USD', 'EUR/GBP'].forEach(function(name) {
-      var kl = KEY_LEVELS.find(function(k) { return k.asset === name; });
-      var a = ASSETS.find(function(x) { return x.name === name; });
-      if (kl && a) {
-        kl.price = parseFloat(a.val);
-        kl.fill = Math.min(99, Math.max(1, Math.round((kl.price - kl.support) / (kl.resist - kl.support) * 100)));
-      }
-    });
     fxOk = true;
-  } catch(e) { console.warn('[FX Frankfurter]', e); }
+  } catch(e) { console.warn('[FX open.er-api]', e); }
 
-  // 2. Equities + Commodities via Yahoo Finance
+  // 2. Equities + Commodities via Yahoo Finance (query2 first, query1 fallback)
   const yf = [
     { sym: '^STOXX50E', name: 'Euro Stoxx 50' },
     { sym: '^GDAXI',    name: 'DAX' },
@@ -891,15 +897,24 @@ async function fetchLiveData() {
     { sym: 'CL=F',      name: 'WTI' }
   ];
   await Promise.allSettled(yf.map(async function(item) {
-    try {
-      const r = await fetch('https://query1.finance.yahoo.com/v8/finance/chart/' + item.sym + '?interval=1d&range=2d');
-      const d = await r.json();
-      const meta = d.chart.result[0].meta;
-      patchAsset(item.name, meta.regularMarketPrice, meta.chartPreviousClose);
-      equityOk = true;
-    } catch(e) { console.warn('[Yahoo ' + item.name + ']', e); }
+    const endpoints = [
+      'https://query2.finance.yahoo.com/v8/finance/chart/' + item.sym + '?interval=1d&range=2d',
+      'https://query1.finance.yahoo.com/v8/finance/chart/' + item.sym + '?interval=1d&range=2d'
+    ];
+    for (const url of endpoints) {
+      try {
+        const r = await fetch(url);
+        const d = await r.json();
+        const meta = d.chart.result[0].meta;
+        patchAsset(item.name, meta.regularMarketPrice, meta.chartPreviousClose);
+        equityOk = true;
+        break;
+      } catch(e) { /* try next endpoint */ }
+    }
+    if (!equityOk) console.warn('[Yahoo] failed:', item.name);
   }));
 
+  syncKeyLevels();
   renderAssets(); renderTicker(); renderCarousel(); renderLevels();
 
   // Update live badge
@@ -909,6 +924,9 @@ async function fetchLiveData() {
     badge.style.borderColor = 'rgba(34,197,94,0.5)';
   }
 }
+
+// Auto-refresh every 5 minutes
+setInterval(fetchLiveData, 5 * 60 * 1000);
 
 // REVEAL
 function revealOnScroll() {
