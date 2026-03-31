@@ -169,8 +169,9 @@
     .cal-time { font-family: var(--mono); font-size: 0.72rem; color: var(--grey); width: 50px; flex-shrink: 0; }
     .cal-flag { font-size: 1rem; flex-shrink: 0; }
     .cal-event { flex: 1; color: var(--white); font-size: 0.82rem; }
-    .cal-prev { font-family: var(--mono); font-size: 0.72rem; color: var(--grey); }
-    .cal-cons { font-family: var(--mono); font-size: 0.72rem; }
+    .cal-prev { font-family: var(--mono); font-size: 0.72rem; color: var(--grey); display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+    .cal-cons { font-family: var(--mono); font-size: 0.72rem; display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+    .cal-label { font-size: 0.6rem; color: rgba(148,163,184,0.5); text-transform: uppercase; letter-spacing: 0.04em; font-family: var(--sans); }
     .impact-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 
     /* KEY LEVELS */
@@ -398,14 +399,14 @@ const ASSETS = [
   { cat: 'CREDIT', name: 'iTraxx Xover', val: '312 bp', chg: +15.0, chgAbs: '+15.0 bp' },
   { cat: 'CREDIT', name: 'CDX IG',       val: '62 bp',  chg: +3.8,  chgAbs: '+3.8 bp' },
   // EQUITY / VOL
-  { cat: 'EQUITY', name: 'Euro Stoxx 50', val: '5 412',  chg: -0.95, chgAbs: '-51.9 pts' },
-  { cat: 'EQUITY', name: 'DAX',           val: '22 738', chg: -0.82, chgAbs: '-187.6 pts' },
-  { cat: 'EQUITY', name: 'CAC 40',        val: '8 021',  chg: -0.71, chgAbs: '-57.5 pts' },
-  { cat: 'EQUITY', name: 'FTSE 100',      val: '9 284',  chg: -0.53, chgAbs: '-49.6 pts' },
-  { cat: 'EQUITY', name: 'S&P 500',       val: '6 557',  chg: -0.73, chgAbs: '-48.3 pts' },
-  { cat: 'EQUITY', name: 'Nasdaq 100',    val: '22 481', chg: -0.91, chgAbs: '-206.2 pts' },
-  { cat: 'EQUITY', name: 'Dow Jones',     val: '46 124', chg: -0.18, chgAbs: '-84.4 pts' },
-  { cat: 'EQUITY', name: 'Nikkei 225',    val: '53 749', chg: +2.87, chgAbs: '+1499.8 pts' },
+  { cat: 'EQUITY', name: 'Euro Stoxx 50', val: '5.412',  chg: -0.95, chgAbs: '-51.9 pts' },
+  { cat: 'EQUITY', name: 'DAX',           val: '22.738', chg: -0.82, chgAbs: '-187.6 pts' },
+  { cat: 'EQUITY', name: 'CAC 40',        val: '8.021',  chg: -0.71, chgAbs: '-57.5 pts' },
+  { cat: 'EQUITY', name: 'FTSE 100',      val: '9.284',  chg: -0.53, chgAbs: '-49.6 pts' },
+  { cat: 'EQUITY', name: 'S&P 500',       val: '6.557',  chg: -0.73, chgAbs: '-48.3 pts' },
+  { cat: 'EQUITY', name: 'Nasdaq 100',    val: '22.481', chg: -0.91, chgAbs: '-206.2 pts' },
+  { cat: 'EQUITY', name: 'Dow Jones',     val: '46.124', chg: -0.18, chgAbs: '-84.4 pts' },
+  { cat: 'EQUITY', name: 'Nikkei 225',    val: '53.749', chg: +2.87, chgAbs: '+1499.8 pts' },
   { cat: 'EQUITY', name: 'VIX',           val: '24.9',   chg: +5.21, chgAbs: '+1.24' },
   // COMMODS
   { cat: 'COMMODITIES', name: 'Gold', val: '$4,547', chg: +0.82, chgAbs: '+$36.9' },
@@ -709,8 +710,8 @@ function renderCalendar() {
       <div class="cal-time">${e.time}</div>
       <div class="cal-flag">${e.flag}</div>
       <div class="cal-event">${e.event}</div>
-      <div class="cal-prev">${e.prev}</div>
-      <div class="cal-cons ${colorClass(0)}">${e.cons}</div>
+      <div class="cal-prev"><span class="cal-label">Préc.</span>${e.prev}</div>
+      <div class="cal-cons ${colorClass(0)}"><span class="cal-label">Cons.</span>${e.cons}</div>
       <div class="impact-dot" style="background:${impactColors[e.impact]}"></div>
     </div>`).join('');
 
