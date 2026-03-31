@@ -788,7 +788,25 @@ function driftPrices() {
   ASSETS.forEach(a => {
     const drift = (Math.random() - 0.5) * 0.02;
     a.chg = parseFloat((a.chg + drift).toFixed(2));
-    a.chgAbs = a.chg >= 0 ? `+${Math.abs(a.chg).toFixed(2)}` : `-${Math.abs(a.chg).toFixed(2)}`;
+    // Preserve category-specific units
+    if (a.cat === 'RATES' || a.cat === 'CREDIT') {
+      a.chgAbs = (a.chg >= 0 ? '+' : '') + Math.abs(a.chg).toFixed(1) + ' bp';
+    } else if (a.cat === 'FX') {
+      const dec = a.name === 'USD/JPY' ? 2 : 4;
+      const numVal = parseFloat(a.val);
+      const absChg = a.chg / 100 * numVal;
+      a.chgAbs = (absChg >= 0 ? '+' : '') + absChg.toFixed(dec);
+    } else if (a.cat === 'EQUITY' && a.name !== 'VIX') {
+      const numVal = parseFloat(a.val.replace(/\s/g, '').replace(',', '.'));
+      const absPts = a.chg / 100 * numVal;
+      a.chgAbs = (absPts >= 0 ? '+' : '') + absPts.toFixed(1) + ' pts';
+    } else if (a.cat === 'COMMODITIES') {
+      const numVal = parseFloat(a.val.replace('$', '').replace(/,/g, ''));
+      const absChg = a.chg / 100 * numVal;
+      a.chgAbs = (absChg >= 0 ? '+$' : '-$') + Math.abs(absChg).toFixed(a.name === 'WTI' ? 2 : 1);
+    } else {
+      a.chgAbs = a.chg >= 0 ? `+${Math.abs(a.chg).toFixed(2)}` : `-${Math.abs(a.chg).toFixed(2)}`;
+    }
   });
   renderAssets();
   renderTicker();
