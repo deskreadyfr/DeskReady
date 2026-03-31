@@ -840,6 +840,10 @@ const MARKET_DATA_URL = 'https://lysibziqgissumqszedk.supabase.co/functions/v1/m
 const MARKET_DATA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5c2liemlxZ2lzc3VtcXN6ZWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5OTA4MzcsImV4cCI6MjA4ODU2NjgzN30.3M85rhh4AltDZnm743ntap6_j9T1wApOiNkELLvC9hs';
 
 const YF_NAME_MAP = {
+  'EURUSD=X':  'EUR/USD',
+  'GBPUSD=X':  'GBP/USD',
+  'USDJPY=X':  'USD/JPY',
+  'EURGBP=X':  'EUR/GBP',
   '^STOXX50E': 'Euro Stoxx 50', '^GDAXI': 'DAX', '^FCHI': 'CAC 40',
   '^FTSE': 'FTSE 100', '^GSPC': 'S&P 500', '^NDX': 'Nasdaq 100',
   '^DJI': 'Dow Jones', '^N225': 'Nikkei 225', '^VIX': 'VIX',
@@ -855,21 +859,13 @@ async function fetchLiveData() {
     });
     const data = await r.json();
 
-    // FX
-    if (data.fxCurr && data.fxPrev) {
-      const t = data.fxCurr, y = data.fxPrev;
-      patchAsset('EUR/USD', t.USD, y.USD);
-      patchAsset('EUR/GBP', t.GBP, y.GBP);
-      patchAsset('GBP/USD', t.USD / t.GBP, y.USD / y.GBP);
-      patchAsset('USD/JPY', t.JPY / t.USD, y.JPY / y.USD);
-      fxOk = true;
-    }
-
-    // Equities + Commodities
     if (data.quotes && data.quotes.length) {
       data.quotes.forEach(function(q) {
         const name = YF_NAME_MAP[q.symbol];
-        if (name) { patchAsset(name, q.price, q.prev); equityOk = true; }
+        if (!name) return;
+        patchAsset(name, q.price, q.prev);
+        if (['EUR/USD','GBP/USD','USD/JPY','EUR/GBP'].includes(name)) fxOk = true;
+        else equityOk = true;
       });
     }
   } catch(e) {
