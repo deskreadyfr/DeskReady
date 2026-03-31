@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog · DeskReady</title>
+  <title>Plateforme · DeskReady</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800;900&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
@@ -41,91 +41,43 @@
 
     /* NAV */
 
-    /* HERO */
+    /* PLATFORM */
     .page-hero { padding: 5rem 0 4rem; }
     .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple-glow); margin-bottom: 1rem; }
     .page-title { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
     .page-desc { color: var(--grey); font-size: 1.05rem; font-weight: 300; max-width: 520px; line-height: 1.7; }
-
-    /* FILTERS */
-    .filters { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 3rem; }
-    .filter-btn {
-      padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.82rem; font-weight: 500;
-      border: 1px solid var(--border); background: var(--card-bg); color: var(--grey);
-      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+    .section-block { margin-bottom: 4rem; }
+    .block-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 1.8rem; }
+    .resources-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+    .res-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.8rem; display: flex; flex-direction: column; gap: 0.5rem; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.25s; }
+    .res-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--purple-glow), transparent); opacity: 0; transition: opacity 0.3s; }
+    .res-card:hover { border-color: rgba(168,85,247,0.4); transform: translateY(-3px); }
+    .res-card:hover::before { opacity: 1; }
+    .res-card.featured { border-color: rgba(168,85,247,0.5); background: rgba(124,58,237,0.08); }
+    .res-card.featured::before { opacity: 1; }
+    .res-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+    .res-icon { font-size: 2rem; }
+    .res-lock { font-size: 1rem; opacity: 0.45; }
+    .res-tag { display: inline-block; background: rgba(124,58,237,0.2); border: 1px solid rgba(168,85,247,0.25); color: var(--purple-soft); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.6rem; border-radius: 999px; width: fit-content; }
+    .res-name { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; }
+    .res-price { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--purple-glow); }
+    .res-desc { font-size: 0.85rem; color: var(--grey); line-height: 1.55; font-weight: 300; flex-grow: 1; }
+    .btn-unlock { display: inline-block; margin-top: 0.5rem; padding: 0.5rem 1.2rem; border-radius: 6px; background: var(--purple-core); color: var(--white); font-size: 0.83rem; font-weight: 500; text-decoration: none; transition: background 0.2s; text-align: center; }
+    .btn-unlock:hover { background: var(--purple-glow); }
+    .tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+    .tool-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; text-decoration: none; color: var(--white); display: flex; flex-direction: column; gap: 0.4rem; transition: border-color 0.3s, background 0.3s, transform 0.25s; }
+    .tool-card:hover { border-color: rgba(168,85,247,0.4); background: rgba(124,58,237,0.06); transform: translateY(-3px); }
+    .tool-icon { font-size: 1.8rem; }
+    .tool-name { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+    .tool-desc { font-size: 0.8rem; color: var(--grey); line-height: 1.45; font-weight: 300; flex-grow: 1; }
+    .tool-cta { font-size: 0.8rem; color: var(--purple-glow); font-weight: 500; margin-top: 0.5rem; }
+    @media (max-width: 900px) {
+      .resources-grid { grid-template-columns: 1fr 1fr; }
+      .tools-grid { grid-template-columns: 1fr 1fr; }
     }
-    .filter-btn:hover, .filter-btn.active { background: rgba(124,58,237,0.2); border-color: rgba(168,85,247,0.5); color: var(--white); }
-
-    /* FEATURED ARTICLE */
-    .featured-article {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 18px; overflow: hidden;
-      border: 1px solid rgba(168,85,247,0.25); background: var(--card-bg); margin-bottom: 3rem;
-      transition: border-color 0.3s, transform 0.25s; text-decoration: none; color: var(--white);
-      position: relative;
+    @media (max-width: 600px) {
+      .resources-grid, .tools-grid { grid-template-columns: 1fr; }
     }
-    .featured-article:hover { border-color: rgba(168,85,247,0.5); transform: translateY(-3px); }
-    .featured-img {
-      background: linear-gradient(135deg, var(--purple-dim) 0%, #1a0535 50%, var(--purple-core) 100%);
-      min-height: 280px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
-    }
-    .featured-img::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 30% 50%, rgba(168,85,247,0.3) 0%, transparent 60%);
-    }
-    .featured-img-icon { font-size: 4rem; position: relative; z-index: 1; }
-    .featured-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: space-between; }
-    .featured-tag { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); color: var(--purple-soft); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.7rem; border-radius: 999px; margin-bottom: 1rem; width: fit-content; }
-    .featured-badge { background: rgba(168,85,247,0.25); color: var(--purple-glow); margin-right: 0.5rem; }
-    .featured-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; line-height: 1.25; margin-bottom: 0.9rem; }
-    .featured-excerpt { color: var(--grey); font-size: 0.9rem; line-height: 1.65; font-weight: 300; margin-bottom: 1.5rem; flex-grow: 1; }
-    .featured-meta { display: flex; align-items: center; gap: 1.2rem; font-size: 0.8rem; color: var(--grey); }
-    .meta-author { display: flex; align-items: center; gap: 0.5rem; }
-    .meta-avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-dim), var(--purple-core)); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
-    .meta-sep { opacity: 0.3; }
-
-    /* ARTICLES GRID */
-    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; margin-bottom: 4rem; }
-    .article-card {
-      background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
-      overflow: hidden; text-decoration: none; color: var(--white);
-      transition: border-color 0.3s, background 0.3s, transform 0.25s; display: flex; flex-direction: column;
-    }
-    .article-card:hover { border-color: rgba(168,85,247,0.4); background: rgba(124,58,237,0.06); transform: translateY(-3px); }
-    .article-thumb {
-      height: 140px;
-      background: linear-gradient(135deg, var(--purple-dim), #0d0120);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2.2rem; position: relative; overflow: hidden;
-    }
-    .article-thumb::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(180deg, transparent 50%, rgba(5,5,8,0.6));
-    }
-    .article-body { padding: 1.4rem; flex-grow: 1; display: flex; flex-direction: column; }
-    .article-tag { display: inline-block; background: rgba(124,58,237,0.2); border: 1px solid rgba(168,85,247,0.25); color: var(--purple-soft); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.6rem; border-radius: 999px; margin-bottom: 0.8rem; }
-    .article-title { font-family: 'Syne', sans-serif; font-size: 0.98rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.6rem; }
-    .article-excerpt { font-size: 0.82rem; color: var(--grey); line-height: 1.55; font-weight: 300; flex-grow: 1; margin-bottom: 1rem; }
-    .article-footer { display: flex; align-items: center; justify-content: space-between; font-size: 0.76rem; color: var(--grey); padding-top: 0.8rem; border-top: 1px solid var(--border); }
-    .read-time { display: flex; align-items: center; gap: 0.3rem; }
-
-    /* EMPTY STATE */
-    .empty-state { text-align: center; padding: 5rem 2rem; }
-    .empty-icon { font-size: 3rem; margin-bottom: 1.2rem; opacity: 0.5; }
-    .empty-title { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--grey); }
-    .empty-desc { color: var(--grey); font-size: 0.9rem; opacity: 0.7; }
-
-    /* COMING SOON BANNER */
-    .coming-soon-banner {
-      background: rgba(124,58,237,0.08); border: 1px solid rgba(168,85,247,0.2);
-      border-radius: 14px; padding: 1.5rem 2rem; margin-bottom: 3rem;
-      display: flex; align-items: center; gap: 1rem;
-    }
-    .cs-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--purple-glow); animation: blink 1.5s infinite; flex-shrink: 0; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-    .cs-text { font-size: 0.88rem; color: var(--grey); }
-    .cs-text strong { color: var(--white); }
-
-    /* FOOTER */
     footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 1rem 0; }
     footer .container { max-width: none; padding: 0; }
     .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-left: 4rem; padding-right: 220px; }
@@ -226,6 +178,7 @@
         <a href="/career-tracker.html"><span class="drop-icon">🎯</span>Career Tracker</a>
         <a href="/pricer.html"><span class="drop-icon">📊</span>Pricer</a>
         <a href="/data-room.html"><span class="drop-icon">📡</span>Data Room</a>
+        <a href="/plateforme.html"><span class="drop-icon">🔐</span>Plateforme</a>
       </div>
     </li>
     <li><a href="/#faq">FAQ</a></li>
@@ -240,32 +193,129 @@
   <div class="container">
 
     <div class="page-hero reveal">
-      <div class="section-label">Blog</div>
-      <h1 class="page-title">Insights & stratégies<br>pour le desk</h1>
-      <p class="page-desc">Articles techniques, networking et stratégie carrière rédigés par des professionnels en activité en finance de marché.</p>
+      <div class="section-label">Espace membre</div>
+      <h1 class="page-title">Ta plateforme<br><span style="color:var(--purple-glow)">DeskReady</span></h1>
+      <p class="page-desc">Toutes tes ressources payantes et gratuites au même endroit. Achète un accès pour débloquer les contenus premium.</p>
     </div>
 
-    <div class="coming-soon-banner reveal">
-      <div class="cs-dot"></div>
-      <p class="cs-text"><strong>Bientôt disponible —</strong> Les premiers articles arrivent prochainement. Rejoins DeskReady pour être notifié dès la publication.</p>
+    <!-- FORMATIONS -->
+    <div class="section-block reveal">
+      <div class="section-label">Formations</div>
+      <h2 class="block-title">Programmes de formation</h2>
+      <div class="resources-grid">
+
+        <div class="res-card locked">
+          <div class="res-card-top"><div class="res-icon">📘</div><div class="res-lock">🔒</div></div>
+          <div class="res-tag">Formation</div>
+          <div class="res-name">Formation Basic</div>
+          <div class="res-price">199€ — accès à vie</div>
+          <p class="res-desc">Renforce tes bases techniques et développe ton réseau. Pour ceux qui ont déjà une première expérience en finance de marché.</p>
+          <a href="/#offres" class="btn-unlock">Débloquer →</a>
+        </div>
+
+        <div class="res-card locked featured">
+          <div class="res-card-top"><div class="res-icon">⭐</div><div class="res-lock">🔒</div></div>
+          <div class="res-tag">Le plus populaire</div>
+          <div class="res-name">Formation Gold</div>
+          <div class="res-price">399€ — accès à vie</div>
+          <p class="res-desc">Acquiers des bases solides en finance de marché et construis ton réseau pour décrocher un premier stage.</p>
+          <a href="/#offres" class="btn-unlock">Débloquer →</a>
+        </div>
+
+        <div class="res-card locked">
+          <div class="res-card-top"><div class="res-icon">💎</div><div class="res-lock">🔒</div></div>
+          <div class="res-tag">Sur candidature</div>
+          <div class="res-name">Formation Elite</div>
+          <div class="res-price">Sur devis</div>
+          <p class="res-desc">Conçu pour les candidats visant les desks les plus sélectifs. Accès sur candidature uniquement.</p>
+          <a href="/#offres" class="btn-unlock">Candidater →</a>
+        </div>
+
+      </div>
     </div>
 
-    <div class="filters reveal" id="filters">
-      <button class="filter-btn active" data-filter="all">Tous</button>
-      <button class="filter-btn" data-filter="technique">Technique</button>
-      <button class="filter-btn" data-filter="networking">Networking</button>
-      <button class="filter-btn" data-filter="entretien">Entretien</button>
-      <button class="filter-btn" data-filter="marche">Marchés</button>
-      <button class="filter-btn" data-filter="carriere">Carrière</button>
+    <!-- À LA CARTE -->
+    <div class="section-block reveal">
+      <div class="section-label">À la carte</div>
+      <h2 class="block-title">Ressources à l'unité</h2>
+      <div class="resources-grid">
+
+        <div class="res-card locked">
+          <div class="res-card-top"><div class="res-icon">📄</div><div class="res-lock">🔒</div></div>
+          <div class="res-name">Review de CV</div>
+          <div class="res-price">9€</div>
+          <p class="res-desc">Retour détaillé sur ton CV par un professionnel du secteur.</p>
+          <a href="/#offres" class="btn-unlock">Débloquer →</a>
+        </div>
+
+        <div class="res-card locked">
+          <div class="res-card-top"><div class="res-icon">🎤</div><div class="res-lock">🔒</div></div>
+          <div class="res-name">Entretien blanc</div>
+          <div class="res-price">39€</div>
+          <p class="res-desc">Simulation d'entretien réaliste avec feedback personnalisé.</p>
+          <a href="/#offres" class="btn-unlock">Débloquer →</a>
+        </div>
+
+        <div class="res-card locked">
+          <div class="res-card-top"><div class="res-icon">🧭</div><div class="res-lock">🔒</div></div>
+          <div class="res-name">Session coaching</div>
+          <div class="res-price">29€</div>
+          <p class="res-desc">Call stratégique pour définir ta roadmap et tes prochaines étapes.</p>
+          <a href="/#offres" class="btn-unlock">Débloquer →</a>
+        </div>
+
+        <div class="res-card locked">
+          <div class="res-card-top"><div class="res-icon">🎯</div><div class="res-lock">🔒</div></div>
+          <div class="res-name">Pack CV + Entretien</div>
+          <div class="res-price">45€</div>
+          <p class="res-desc">Review de CV complète suivie d'un entretien blanc pour maximiser tes chances.</p>
+          <a href="/#offres" class="btn-unlock">Débloquer →</a>
+        </div>
+
+        <div class="res-card locked">
+          <div class="res-card-top"><div class="res-icon">📋</div><div class="res-lock">🔒</div></div>
+          <div class="res-name">Liste de contacts</div>
+          <div class="res-price">35€</div>
+          <p class="res-desc">Liste de contacts ciblés pour tes candidatures spontanées dans le secteur financier.</p>
+          <a href="/#offres" class="btn-unlock">Débloquer →</a>
+        </div>
+
+      </div>
     </div>
 
-    <!-- Articles grid — populated by JS -->
-    <div class="articles-grid reveal" id="articles-grid">
-      <!-- Empty state shown when no articles -->
+    <!-- OUTILS GRATUITS -->
+    <div class="section-block reveal">
+      <div class="section-label">Accès gratuit</div>
+      <h2 class="block-title">Outils & ressources libres</h2>
+      <div class="tools-grid">
+        <a href="/blog.html" class="tool-card">
+          <div class="tool-icon">📝</div>
+          <div class="tool-name">Blog</div>
+          <p class="tool-desc">Insights & stratégies pour le desk</p>
+          <span class="tool-cta">Accéder →</span>
+        </a>
+        <a href="/career-tracker.html" class="tool-card">
+          <div class="tool-icon">🎯</div>
+          <div class="tool-name">Career Tracker</div>
+          <p class="tool-desc">Suivi de tes candidatures</p>
+          <span class="tool-cta">Accéder →</span>
+        </a>
+        <a href="/pricer.html" class="tool-card">
+          <div class="tool-icon">📊</div>
+          <div class="tool-name">Pricer</div>
+          <p class="tool-desc">Outils de pricing financier</p>
+          <span class="tool-cta">Accéder →</span>
+        </a>
+        <a href="/data-room.html" class="tool-card">
+          <div class="tool-icon">📡</div>
+          <div class="tool-name">Data Room</div>
+          <p class="tool-desc">Données de marché en temps réel</p>
+          <span class="tool-cta">Accéder →</span>
+        </a>
+      </div>
     </div>
 
   </div>
-</main>
 
 <footer>
   <div class="container">
@@ -294,125 +344,11 @@
 </footer>
 
 <script>
-/* ——— DATA ———
-   Pour ajouter un article, ajouter un objet dans ce tableau.
-   tag: 'technique' | 'networking' | 'entretien' | 'marche' | 'carriere'
-   icon: emoji affiché dans la thumbnail
-*/
-const ARTICLES = [
-  // Exemple — à décommenter et compléter pour publier
-  /*
-  {
-    id: 1,
-    title: "Comment aborder un call informationnel en finance de marché",
-    excerpt: "Le call informationnel est l'arme secrète du candidat bien préparé. Voici comment le structurer pour maximiser son impact.",
-    tag: "networking",
-    icon: "📞",
-    author: "Adam",
-    authorInitials: "A",
-    date: "12 jan. 2025",
-    readTime: "6 min",
-    featured: false,
-    url: "#"
-  },
-  */
-];
-
-const CATEGORIES = { all: 'Tous', technique: 'Technique', networking: 'Networking', entretien: 'Entretien', marche: 'Marchés', carriere: 'Carrière' };
-
-let activeFilter = 'all';
-
-function getFiltered() {
-  return activeFilter === 'all' ? ARTICLES : ARTICLES.filter(a => a.tag === activeFilter);
-}
-
-function renderArticles() {
-  const grid = document.getElementById('articles-grid');
-  const articles = getFiltered();
-
-  if (articles.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state" style="grid-column:1/-1">
-        <div class="empty-icon">��</div>
-        <div class="empty-title">Aucun article pour l'instant</div>
-        <div class="empty-desc">Les premiers articles arrivent bientôt.</div>
-      </div>`;
-    return;
-  }
-
-  // Featured = first article if featured:true, else just show grid
-  const featured = articles.find(a => a.featured);
-  const rest = articles.filter(a => !a.featured);
-
-  let html = '';
-
-  if (featured) {
-    // Insert featured before grid
-    const featuredHTML = `
-      <a href="${featured.url}" class="featured-article reveal" style="grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;">
-        <div class="featured-img"><div class="featured-img-icon">${featured.icon}</div></div>
-        <div class="featured-content">
-          <div>
-            <div class="featured-tag"><span class="featured-badge">★ À la une</span>${CATEGORIES[featured.tag]}</div>
-            <div class="featured-title">${featured.title}</div>
-            <div class="featured-excerpt">${featured.excerpt}</div>
-          </div>
-          <div class="featured-meta">
-            <div class="meta-author">
-              <div class="meta-avatar">${featured.authorInitials}</div>
-              <span>${featured.author}</span>
-            </div>
-            <span class="meta-sep">·</span>
-            <span>${featured.date}</span>
-            <span class="meta-sep">·</span>
-            <span>${featured.readTime} de lecture</span>
-          </div>
-        </div>
-      </a>`;
-    grid.insertAdjacentHTML('beforeend', featuredHTML);
-  }
-
-  rest.forEach(a => {
-    html += `
-      <a href="${a.url}" class="article-card">
-        <div class="article-thumb" style="background:linear-gradient(135deg,var(--purple-dim),#0d0120);">
-          <span style="position:relative;z-index:1">${a.icon}</span>
-        </div>
-        <div class="article-body">
-          <span class="article-tag">${CATEGORIES[a.tag]}</span>
-          <div class="article-title">${a.title}</div>
-          <div class="article-excerpt">${a.excerpt}</div>
-          <div class="article-footer">
-            <div class="read-time">�� ${a.readTime}</div>
-            <span>${a.date}</span>
-          </div>
-        </div>
-      </a>`;
-  });
-
-  grid.innerHTML = html;
-}
-
-// Filters
-document.getElementById('filters').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if (!btn) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilter = btn.dataset.filter;
-  renderArticles();
-});
-
-// Reveal on scroll
-function revealOnScroll() {
-  document.querySelectorAll('.reveal').forEach(el => {
-    if (el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('visible');
-  });
-}
-window.addEventListener('scroll', revealOnScroll, { passive: true });
-
-renderArticles();
-setTimeout(revealOnScroll, 100);
+  // Reveal on scroll
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
