@@ -130,6 +130,7 @@
 
     /* Quick links */
     .quick-links-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+    .quick-links-grid.centered { grid-template-columns: repeat(3, minmax(0, 280px)); justify-content: center; }
     .quick-link { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-start; text-decoration: none; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; color: var(--white); transition: border-color 0.3s, background 0.3s, transform 0.25s; }
     .quick-link:hover { border-color: rgba(168,85,247,0.4); background: rgba(124,58,237,0.06); transform: translateY(-2px); }
     .quick-link-icon { font-size: 1.5rem; }
@@ -328,7 +329,7 @@
       <!-- BESOIN D'AIDE -->
       <div class="dash-section">
         <div class="dash-section-title">🙋 Besoin d'aide ?</div>
-        <div class="quick-links-grid">
+        <div class="quick-links-grid centered">
           <a href="mailto:support@deskready.fr" class="quick-link">
             <span class="quick-link-icon">💬</span>
             <span class="quick-link-label">Chat support</span>
