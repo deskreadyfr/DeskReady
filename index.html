@@ -631,7 +631,20 @@
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:1rem;">
-    <button onclick="openAuthModal()" class="nav-cta" style="font-size:0.85rem;padding:0.45rem 1rem;border:none;cursor:pointer;">S'inscrire / Se connecter</button>
+    <button id="nav-auth-btn" onclick="openAuthModal()" class="nav-cta" style="font-size:0.85rem;padding:0.45rem 1rem;border:none;cursor:pointer;">S'inscrire / Se connecter</button>
+    <div id="nav-user-dropdown" class="nav-dropdown" style="display:none;">
+      <button class="nav-dropdown-toggle nav-cta" style="font-size:0.85rem;padding:0.45rem 1rem;">
+        <span id="nav-user-initials" style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.2);display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;">?</span>
+        Mon espace
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-dropdown-menu" style="min-width:200px;">
+        <a href="/dashboard.html"><span class="drop-icon">🏠</span>Dashboard</a>
+        <a href="/mes-achats.html"><span class="drop-icon">🛒</span>Mes achats</a>
+        <a href="/parametres.html"><span class="drop-icon">⚙️</span>Paramètres</a>
+        <a href="#" onclick="handleNavLogout();return false;" style="color:#f87171!important;"><span class="drop-icon" style="background:rgba(248,113,113,0.15);">🚪</span>Déconnecter</a>
+      </div>
+    </div>
     <div id="cart-icon" onclick="toggleCart()" style="position:relative;cursor:pointer;width:38px;height:38px;background:rgba(124,58,237,0.15);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;transition:border-color 0.2s;">
       🛒
       <span id="cart-count" style="display:none;position:absolute;top:-6px;right:-6px;background:var(--purple-glow);color:white;font-size:0.65rem;font-weight:700;width:18px;height:18px;border-radius:50%;align-items:center;justify-content:center;">0</span>
@@ -3266,8 +3279,16 @@ async function handleReset() {
   showAuthMsg('reset-success', '✓ Email envoyé ! Vérifie ta boîte mail.', 'success');
 }
 async function updateNavForLoggedIn(user) {
-  const btn = document.querySelector('button[onclick="openAuthModal()"]');
-  if (btn) { btn.textContent = 'Mon espace →'; btn.onclick = () => window.location.href = PLATFORM_URL; }
+  const meta = user.user_metadata || {};
+  const fullName = meta.full_name || meta.name || user.email.split('@')[0];
+  const parts = fullName.trim().split(' ');
+  const initials = parts.length >= 2 ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase() : fullName.slice(0,2).toUpperCase();
+  const el = document.getElementById('nav-user-initials');
+  if (el) el.textContent = initials;
+  const authBtn = document.getElementById('nav-auth-btn');
+  const dropdown = document.getElementById('nav-user-dropdown');
+  if (authBtn) authBtn.style.display = 'none';
+  if (dropdown) dropdown.style.display = 'block';
 
   const { data: purchases } = await _sb
     .from('user_purchases')
@@ -3278,8 +3299,10 @@ async function updateNavForLoggedIn(user) {
   renderUserDashboard(user, purchases || []);
 }
 function updateNavForLoggedOut() {
-  const btn = document.querySelector('.nav-cta');
-  if (btn) { btn.textContent = "S'inscrire / Se connecter"; btn.onclick = openAuthModal; }
+  const authBtn = document.getElementById('nav-auth-btn');
+  const dropdown = document.getElementById('nav-user-dropdown');
+  if (authBtn) authBtn.style.display = 'block';
+  if (dropdown) dropdown.style.display = 'none';
   const dash = document.getElementById('user-dashboard');
   if (dash) dash.style.display = 'none';
 }
@@ -3321,6 +3344,7 @@ async function handleLogout() {
   await _sb.auth.signOut();
   window.location.href = 'index.html';
 }
+function handleNavLogout() { handleLogout(); }
 async function payStripe(productKey, btn) {
   const productNameMap = {
     'basic':                   'Basic — Accès à vie',
