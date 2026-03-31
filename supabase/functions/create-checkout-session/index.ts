@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
       mode: 'payment',
       line_items: lineItems,
       success_url: 'https://platform.deskready.com/plateforme.html',
-      cancel_url: 'https://deskready.com/#offres',
+      cancel_url: 'https://deskready.vercel.app/#offres',
       metadata: {
         user_id: user_id || '',
         user_email: email || '',
