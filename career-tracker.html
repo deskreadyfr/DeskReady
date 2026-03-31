@@ -242,9 +242,87 @@
     border-radius: 6px; display: flex; align-items: center;
     justify-content: center; font-size: 0.8rem; flex-shrink: 0;
   }
+  /* AUTH GATE & MODAL */
+  .modal-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; width: 100%; max-width: 420px; transform: translateY(20px) scale(0.97); transition: transform 0.3s; }
+  .modal-overlay.open .modal-box { transform: translateY(0) scale(1); }
+  .modal-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.8rem; }
+  .modal-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.3rem; }
+  .modal-subtitle { font-size: 0.83rem; color: var(--grey); margin-top: 0.3rem; }
+  .modal-close { background: none; border: none; color: var(--grey); font-size: 1.3rem; cursor: pointer; padding: 0; line-height: 1; transition: color 0.2s; }
+  .modal-close:hover { color: var(--white); }
+  .auth-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 1.8rem; }
+  .auth-tab { flex: 1; padding: 0.7rem; text-align: center; font-size: 0.88rem; font-weight: 500; cursor: pointer; color: var(--grey); background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.2s, border-color 0.2s; }
+  .auth-tab.active { color: var(--white); border-bottom-color: #a855f7; }
+  .auth-panel { display: none; flex-direction: column; gap: 1rem; }
+  .auth-panel.active { display: flex; }
+  .auth-error { font-size: 0.82rem; color: #f87171; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 0.6rem 0.9rem; display: none; }
+  .auth-success { font-size: 0.82rem; color: #86efac; background: rgba(134,239,172,0.1); border: 1px solid rgba(134,239,172,0.25); border-radius: 8px; padding: 0.6rem 0.9rem; display: none; }
+  .auth-footer { font-size: 0.78rem; color: var(--grey); text-align: center; margin-top: 0.5rem; }
+  .auth-footer a { color: #a855f7; text-decoration: none; }
+  .form-group-auth { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group-auth label { font-size: 0.8rem; font-weight: 500; color: var(--grey); }
+  .form-group-auth input { background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 8px; padding: 0.65rem 0.9rem; color: var(--white); font-size: 0.9rem; font-family: inherit; outline: none; transition: border-color 0.2s; }
+  .form-group-auth input:focus { border-color: rgba(168,85,247,0.5); }
+  .btn-auth { display: flex; align-items: center; justify-content: center; width: 100%; margin-top: 0.3rem; padding: 0.75rem 1.5rem; border-radius: 10px; background: #7c3aed; color: #f8f4ff; font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; font-family: inherit; }
+  .btn-auth:hover { background: #a855f7; }
+  .btn-auth:disabled { opacity: 0.6; pointer-events: none; }
 </style>
 </head>
 <body>
+
+<!-- AUTH GATE -->
+<div id="auth-gate" style="position:fixed;inset:0;z-index:300;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;">
+  <div style="max-width:420px;width:100%;">
+    <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#f8f4ff;margin-bottom:0.3rem;">DeskReady</div>
+    <div style="color:#a855f7;font-size:0.72rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.8rem;">Career Tracker</div>
+    <p style="color:#a09ab5;font-size:0.95rem;margin-bottom:2rem;line-height:1.6;">Connecte-toi pour accéder à ton Career Tracker et sauvegarder tes candidatures.</p>
+    <div id="gate-loading" style="color:#a09ab5;font-size:0.85rem;">Vérification en cours…</div>
+    <button id="gate-btn" onclick="openAuthModal()" style="display:none;width:100%;padding:0.8rem 1.5rem;border-radius:10px;background:#7c3aed;color:#f8f4ff;font-size:0.95rem;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:background 0.2s;" onmouseover="this.style.background='#a855f7'" onmouseout="this.style.background='#7c3aed'">Se connecter / S'inscrire →</button>
+    <a href="/" style="display:block;margin-top:1.2rem;color:#a09ab5;font-size:0.85rem;text-decoration:none;" onmouseover="this.style.color='#f8f4ff'" onmouseout="this.style.color='#a09ab5'">← Retour à l'accueil</a>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div id="auth-modal" class="modal-overlay" onclick="if(event.target===this)closeAuthModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">Bienvenue sur DeskReady</div>
+        <div class="modal-subtitle">Connecte-toi pour accéder à ton Career Tracker.</div>
+      </div>
+      <button class="modal-close" onclick="closeAuthModal()">✕</button>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Se connecter</button>
+      <button class="auth-tab" onclick="switchAuthTab('signup')">S'inscrire</button>
+    </div>
+    <div id="auth-login" class="auth-panel active">
+      <div id="login-error" class="auth-error"></div>
+      <div id="login-success" class="auth-success"></div>
+      <div class="form-group-auth"><label>Email</label><input type="email" id="login-email" placeholder="jean@skema.edu" autocomplete="email"></div>
+      <div class="form-group-auth"><label>Mot de passe</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
+      <button id="login-btn" class="btn-auth" onclick="handleLogin()">Se connecter →</button>
+      <div class="auth-footer"><a href="#" onclick="switchAuthTab('reset');return false;">Mot de passe oublié ?</a></div>
+    </div>
+    <div id="auth-signup" class="auth-panel">
+      <div id="signup-error" class="auth-error"></div>
+      <div id="signup-success" class="auth-success"></div>
+      <div class="form-group-auth"><label>Prénom & Nom</label><input type="text" id="signup-name" placeholder="Jean Dupont"></div>
+      <div class="form-group-auth"><label>Email</label><input type="email" id="signup-email" placeholder="jean@skema.edu" autocomplete="email"></div>
+      <div class="form-group-auth"><label>Mot de passe</label><input type="password" id="signup-password" placeholder="8 caractères minimum" autocomplete="new-password"></div>
+      <button id="signup-btn" class="btn-auth" onclick="handleSignup()">Créer mon compte →</button>
+      <div class="auth-footer">Déjà un compte ? <a href="#" onclick="switchAuthTab('login');return false;">Se connecter</a></div>
+    </div>
+    <div id="auth-reset" class="auth-panel">
+      <div id="reset-error" class="auth-error"></div>
+      <div id="reset-success" class="auth-success"></div>
+      <p style="font-size:0.85rem;color:#a09ab5;margin-bottom:0.5rem;">Entre ton email pour recevoir un lien de réinitialisation.</p>
+      <div class="form-group-auth"><label>Email</label><input type="email" id="reset-email" placeholder="jean@skema.edu"></div>
+      <button id="reset-btn" class="btn-auth" onclick="handleReset()">Envoyer le lien →</button>
+      <div class="auth-footer"><a href="#" onclick="switchAuthTab('login');return false;">← Retour à la connexion</a></div>
+    </div>
+  </div>
+</div>
 
 <nav>
   <a href="/" class="nav-logo">
@@ -714,52 +792,117 @@ document.addEventListener('keydown', e => {
 </script>
 
 <script>
-(function() {
   const SUPABASE_URL  = 'https://lysibziqgissumqszedk.supabase.co';
   const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5c2liemlxZ2lzc3VtcXN6ZWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5OTA4MzcsImV4cCI6MjA4ODU2NjgzN30.3M85rhh4AltDZnm743ntap6_j9T1wApOiNkELLvC9hs';
-  const s = document.createElement('script');
-  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
-  s.onload = async () => {
-    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
-    const { data: { user } } = await sb.auth.getUser();
 
-    if (!user) {
-      window.location.href = '/index.html?login=1';
-      return;
-    }
+  async function initTracker() {
+    const sbScript = document.createElement('script');
+    sbScript.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+    sbScript.onload = async () => {
+      const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+      window.__sb = sb;
+      const { data: { user } } = await sb.auth.getUser();
 
-    __sb = sb;
-    __userId = user.id;
-    window.__navSb = sb;
+      if (!user) {
+        document.getElementById('gate-loading').style.display = 'none';
+        document.getElementById('gate-btn').style.display = 'block';
+        return;
+      }
 
-    // Mise à jour nav
-    const meta = user.user_metadata || {};
-    const fullName = meta.full_name || meta.name || user.email.split('@')[0];
-    const parts = fullName.trim().split(' ');
-    const initials = parts.length >= 2 ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase() : fullName.slice(0,2).toUpperCase();
-    const el = document.getElementById('nav-user-initials');
-    if (el) el.textContent = initials;
-    const authBtn = document.getElementById('nav-auth-btn');
-    const dropdown = document.getElementById('nav-user-dropdown');
-    if (authBtn) authBtn.style.display = 'none';
-    if (dropdown) dropdown.style.display = 'block';
+      __sb = sb;
+      __userId = user.id;
+      window.__navSb = sb;
 
-    // Chargement des candidatures depuis Supabase
-    const { data: rows, error } = await sb
-      .from('career_tracker')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('updated_at', { ascending: false });
+      // Mise à jour nav
+      const meta = user.user_metadata || {};
+      const fullName = meta.full_name || meta.name || user.email.split('@')[0];
+      const parts = fullName.trim().split(' ');
+      const initials = parts.length >= 2 ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase() : fullName.slice(0,2).toUpperCase();
+      const el = document.getElementById('nav-user-initials');
+      if (el) el.textContent = initials;
+      const authBtn = document.getElementById('nav-auth-btn');
+      const dropdown = document.getElementById('nav-user-dropdown');
+      if (authBtn) authBtn.style.display = 'none';
+      if (dropdown) dropdown.style.display = 'block';
 
-    if (!error) data = rows || [];
-    renderContent();
-  };
-  document.head.appendChild(s);
-})();
+      // Chargement des candidatures
+      const { data: rows, error } = await sb
+        .from('career_tracker')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('updated_at', { ascending: false });
 
-function handleNavLogout() {
-  if (window.__navSb) window.__navSb.auth.signOut().then(() => window.location.href = '/index.html');
-  else window.location.href = '/index.html';
-}
+      if (!error) data = rows || [];
+
+      document.getElementById('auth-gate').style.display = 'none';
+      renderContent();
+    };
+    document.head.appendChild(sbScript);
+  }
+
+  initTracker();
+
+  function openAuthModal() {
+    ['login-error','login-success','signup-error','signup-success','reset-error','reset-success'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+    document.getElementById('auth-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAuthModal() { document.getElementById('auth-modal').classList.remove('open'); document.body.style.overflow = ''; }
+  function switchAuthTab(tab) {
+    ['login-error','login-success','signup-error','signup-success','reset-error','reset-success'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+    if (tab === 'login') { document.querySelectorAll('.auth-tab')[0].classList.add('active'); document.getElementById('auth-login').classList.add('active'); }
+    if (tab === 'signup') { document.querySelectorAll('.auth-tab')[1].classList.add('active'); document.getElementById('auth-signup').classList.add('active'); }
+    if (tab === 'reset') { document.getElementById('auth-reset').classList.add('active'); }
+  }
+  async function handleLogin() {
+    const sb = window.__sb; if (!sb) return;
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errEl = document.getElementById('login-error');
+    const okEl = document.getElementById('login-success');
+    errEl.style.display = 'none'; okEl.style.display = 'none';
+    if (!email || !password) { errEl.textContent = 'Remplis tous les champs.'; errEl.style.display = 'block'; return; }
+    const btn = document.getElementById('login-btn'); btn.disabled = true; btn.textContent = 'Connexion…';
+    const { error } = await sb.auth.signInWithPassword({ email, password });
+    btn.disabled = false; btn.textContent = 'Se connecter →';
+    if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
+    okEl.textContent = '✓ Connecté !'; okEl.style.display = 'block';
+    setTimeout(() => { closeAuthModal(); initTracker(); }, 800);
+  }
+  async function handleSignup() {
+    const sb = window.__sb; if (!sb) return;
+    const name = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const pass = document.getElementById('signup-password').value;
+    const errEl = document.getElementById('signup-error');
+    const okEl = document.getElementById('signup-success');
+    errEl.style.display = 'none'; okEl.style.display = 'none';
+    if (!name || !email || !pass) { errEl.textContent = 'Remplis tous les champs.'; errEl.style.display = 'block'; return; }
+    if (pass.length < 8) { errEl.textContent = 'Le mot de passe doit faire 8 caractères minimum.'; errEl.style.display = 'block'; return; }
+    const btn = document.getElementById('signup-btn'); btn.disabled = true; btn.textContent = 'Création…';
+    const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name } } });
+    btn.disabled = false; btn.textContent = 'Créer mon compte →';
+    if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
+    okEl.textContent = '✓ Compte créé ! Vérifie tes emails pour confirmer.'; okEl.style.display = 'block';
+  }
+  async function handleReset() {
+    const sb = window.__sb; if (!sb) return;
+    const email = document.getElementById('reset-email').value.trim();
+    const errEl = document.getElementById('reset-error');
+    const okEl = document.getElementById('reset-success');
+    errEl.style.display = 'none'; okEl.style.display = 'none';
+    if (!email) { errEl.textContent = 'Entre ton email.'; errEl.style.display = 'block'; return; }
+    const btn = document.getElementById('reset-btn'); btn.disabled = true; btn.textContent = 'Envoi…';
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.href });
+    btn.disabled = false; btn.textContent = 'Envoyer le lien →';
+    if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
+    okEl.textContent = '✓ Email envoyé ! Vérifie ta boîte mail.'; okEl.style.display = 'block';
+  }
+  function handleNavLogout() {
+    if (window.__navSb) window.__navSb.auth.signOut().then(() => window.location.reload());
+    else window.location.reload();
+  }
 </script></body>
 </html>
