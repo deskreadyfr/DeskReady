@@ -462,15 +462,9 @@ const STATUS_CONFIG = {
 };
 const PRIORITY_COLORS = { high: '#ef4444', mid: '#f59e0b', low: '#22c55e' };
 
-// STORAGE
-function loadData() {
-  try { return JSON.parse(localStorage.getItem('dr_tracker_v1') || '[]'); } catch { return []; }
-}
-function saveData(data) {
-  try { localStorage.setItem('dr_tracker_v1', JSON.stringify(data)); } catch {}
-}
-
-let data = loadData();
+let data = [];
+let __sb = null;
+let __userId = null;
 let editingId = null;
 let searchQ = '';
 let filterStatus = 'all';
@@ -663,7 +657,7 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-function saveEntry() {
+async function saveEntry() {
   const bank = document.getElementById('f-bank').value.trim();
   const desk = document.getElementById('f-desk').value.trim();
   const status = document.getElementById('f-status').value;
@@ -671,6 +665,7 @@ function saveEntry() {
 
   const entry = {
     id: editingId || generateId(),
+    user_id: __userId,
     bank, desk, status,
     type: document.getElementById('f-type').value,
     date: document.getElementById('f-date').value,
@@ -678,8 +673,11 @@ function saveEntry() {
     contact: document.getElementById('f-contact').value.trim(),
     priority: document.getElementById('f-priority').value,
     notes: document.getElementById('f-notes').value.trim(),
-    updatedAt: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   };
+
+  const { error } = await __sb.from('career_tracker').upsert(entry);
+  if (error) { alert('Erreur de sauvegarde : ' + error.message); return; }
 
   if (editingId) {
     const idx = data.findIndex(x => x.id === editingId);
@@ -688,15 +686,15 @@ function saveEntry() {
     data.unshift(entry);
   }
 
-  saveData(data);
   closeModal();
   renderContent();
 }
 
-function deleteEntry(id) {
+async function deleteEntry(id) {
   if (!confirm('Supprimer cette candidature ?')) return;
+  const { error } = await __sb.from('career_tracker').delete().eq('id', id).eq('user_id', __userId);
+  if (error) { alert('Erreur de suppression : ' + error.message); return; }
   data = data.filter(x => x.id !== id);
-  saveData(data);
   renderContent();
 }
 
@@ -713,8 +711,6 @@ document.getElementById('filter-type').addEventListener('change', e => { filterT
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeModal(); closeDetail(); }
 });
-
-renderContent();
 </script>
 
 <script>
@@ -726,7 +722,17 @@ renderContent();
   s.onload = async () => {
     const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
     const { data: { user } } = await sb.auth.getUser();
-    if (!user) return;
+
+    if (!user) {
+      window.location.href = '/index.html?login=1';
+      return;
+    }
+
+    __sb = sb;
+    __userId = user.id;
+    window.__navSb = sb;
+
+    // Mise à jour nav
     const meta = user.user_metadata || {};
     const fullName = meta.full_name || meta.name || user.email.split('@')[0];
     const parts = fullName.trim().split(' ');
@@ -737,10 +743,20 @@ renderContent();
     const dropdown = document.getElementById('nav-user-dropdown');
     if (authBtn) authBtn.style.display = 'none';
     if (dropdown) dropdown.style.display = 'block';
-    window.__navSb = sb;
+
+    // Chargement des candidatures depuis Supabase
+    const { data: rows, error } = await sb
+      .from('career_tracker')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('updated_at', { ascending: false });
+
+    if (!error) data = rows || [];
+    renderContent();
   };
   document.head.appendChild(s);
 })();
+
 function handleNavLogout() {
   if (window.__navSb) window.__navSb.auth.signOut().then(() => window.location.href = '/index.html');
   else window.location.href = '/index.html';
