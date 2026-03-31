@@ -3090,7 +3090,7 @@ async function submitCandidature() {
 
 const SUPABASE_URL  = 'https://lysibziqgissumqszedk.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5c2liemlxZ2lzc3VtcXN6ZWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5OTA4MzcsImV4cCI6MjA4ODU2NjgzN30.3M85rhh4AltDZnm743ntap6_j9T1wApOiNkELLvC9hs';
-const PLATFORM_URL  = 'https://platform.deskready.com';
+const PLATFORM_URL  = 'https://deskready.vercel.app';
 const STRIPE_LINKS = {
   'basic': 'https://buy.stripe.com/5kQbIUecS1Oc81hdx37Re00',
   'gold': 'https://buy.stripe.com/8x25kw7Ou1OcdlB1Ol7Re01',
@@ -3147,7 +3147,7 @@ async function handleSignup() {
   if (!name || !email || !pass) { showAuthMsg('signup-error', 'Remplis tous les champs.', 'error'); return; }
   if (pass.length < 8) { showAuthMsg('signup-error', 'Le mot de passe doit faire 8 caractères minimum.', 'error'); return; }
   const btn = document.getElementById('signup-btn'); btn.classList.add('btn-loading'); btn.textContent = 'Création…';
-  const { data, error } = await _sb.auth.signUp({ email, password: pass, options: { data: { full_name: name } } });
+  const { data, error } = await _sb.auth.signUp({ email, password: pass, options: { data: { full_name: name }, emailRedirectTo: PLATFORM_URL + '/' } });
   btn.classList.remove('btn-loading'); btn.textContent = 'Créer mon compte →';
   if (error) { showAuthMsg('signup-error', error.message, 'error'); return; }
   showAuthMsg('signup-success', '✓ Compte créé ! Vérifie tes emails pour confirmer.', 'success');
