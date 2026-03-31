@@ -560,44 +560,6 @@
 
   .calendly-badge { display:none; }
 
-  /* ===== DASHBOARD UTILISATEUR ===== */
-  .user-dashboard { max-width: 1100px; margin: 0 auto; padding: 0 2rem 3rem; }
-
-  .profile-bar { display: flex; align-items: center; gap: 1.2rem; background: rgba(124,58,237,0.08); border: 1px solid rgba(168,85,247,0.25); border-radius: 14px; padding: 1.2rem 1.6rem; margin-bottom: 1.6rem; flex-wrap: wrap; }
-  .profile-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--purple-core), var(--purple-glow)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #fff; flex-shrink: 0; }
-  .profile-info { flex: 1; min-width: 0; }
-  .profile-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
-  .profile-email { font-size: 0.82rem; color: var(--grey); }
-  .btn-logout { padding: 0.5rem 1.2rem; border-radius: 8px; background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.3); color: #f87171; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background 0.2s, border-color 0.2s; font-family: inherit; }
-  .btn-logout:hover { background: rgba(248,113,113,0.22); border-color: rgba(248,113,113,0.5); }
-  .btn-platform { padding: 0.5rem 1.2rem; border-radius: 8px; background: var(--purple-core); color: #fff; font-size: 0.82rem; font-weight: 600; cursor: pointer; border: none; font-family: inherit; transition: background 0.2s; text-decoration: none; display: inline-block; }
-  .btn-platform:hover { background: var(--purple-glow); }
-
-  .dash-section { background: rgba(255,255,255,0.03); border: 1px solid rgba(168,85,247,0.15); border-radius: 16px; padding: 1.8rem; margin-bottom: 1.6rem; }
-  .dash-section-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1.2rem; }
-  .dash-info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-  .dash-info-item label { font-size: 0.73rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); display: block; margin-bottom: 0.3rem; }
-  .dash-info-item span { font-size: 0.95rem; }
-  .btn-settings { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.2rem; padding: 0.55rem 1.3rem; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(168,85,247,0.15); color: var(--grey); font-size: 0.83rem; font-weight: 500; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-  .btn-settings:hover { border-color: rgba(168,85,247,0.4); color: #f8f4ff; }
-
-  .purchase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-  .purchase-card { background: rgba(124,58,237,0.06); border: 1px solid rgba(168,85,247,0.3); border-radius: 12px; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
-  .purchase-card-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
-  .badge-active { display: inline-block; background: rgba(134,239,172,0.15); border: 1px solid rgba(134,239,172,0.3); color: #86efac; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.65rem; border-radius: 999px; width: fit-content; }
-  .btn-access { margin-top: auto; padding: 0.5rem 1rem; border-radius: 7px; background: var(--purple-core); color: #fff; font-size: 0.8rem; font-weight: 600; border: none; cursor: pointer; text-align: center; text-decoration: none; transition: background 0.2s; font-family: inherit; display: block; }
-  .btn-access:hover { background: var(--purple-glow); }
-  .purchase-empty { color: var(--grey); font-size: 0.9rem; font-weight: 300; }
-
-  .quick-links-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-  .quick-link { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-start; text-decoration: none; background: rgba(255,255,255,0.02); border: 1px solid rgba(168,85,247,0.15); border-radius: 12px; padding: 1.2rem; color: #f8f4ff; transition: border-color 0.3s, background 0.3s, transform 0.25s; }
-  .quick-link:hover { border-color: rgba(168,85,247,0.4); background: rgba(124,58,237,0.06); transform: translateY(-2px); }
-  .quick-link-icon { font-size: 1.5rem; }
-  .quick-link-label { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; }
-  .quick-link-sub { font-size: 0.75rem; color: var(--grey); }
-
-  @media (max-width: 900px) { .dash-info-grid { grid-template-columns: 1fr 1fr; } .quick-links-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px) { .dash-info-grid { grid-template-columns: 1fr; } .quick-links-grid { grid-template-columns: 1fr 1fr; } }
 </style>
 
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
@@ -673,69 +635,6 @@
   </div>
 </div>
 
-<!-- DASHBOARD UTILISATEUR (affiché quand connecté) -->
-<div id="user-dashboard" style="display:none;">
-  <div class="user-dashboard">
-
-    <!-- BARRE DE PROFIL -->
-    <div class="profile-bar">
-      <div class="profile-avatar" id="profile-avatar">??</div>
-      <div class="profile-info">
-        <div class="profile-name" id="profile-name">—</div>
-        <div class="profile-email" id="profile-email">—</div>
-      </div>
-      <a id="btn-my-space" href="https://deskready.vercel.app/plateforme.html" class="btn-platform">Mon espace →</a>
-      <button class="btn-logout" onclick="handleLogout()">Déconnecter</button>
-    </div>
-
-    <!-- MES INFORMATIONS -->
-    <div class="dash-section">
-      <div class="dash-section-title">👤 Mes informations</div>
-      <div class="dash-info-grid">
-        <div class="dash-info-item"><label>Nom complet</label><span id="info-name">—</span></div>
-        <div class="dash-info-item"><label>Email</label><span id="info-email">—</span></div>
-        <div class="dash-info-item"><label>Membre depuis</label><span id="info-date">—</span></div>
-      </div>
-      <button class="btn-settings">⚙️ Modifier les paramètres</button>
-    </div>
-
-    <!-- MES ACHATS -->
-    <div class="dash-section">
-      <div class="dash-section-title">🛒 Mes achats</div>
-      <div id="purchase-grid" class="purchase-grid">
-        <p class="purchase-empty">Chargement…</p>
-      </div>
-    </div>
-
-    <!-- RESSOURCES RAPIDES -->
-    <div class="dash-section">
-      <div class="dash-section-title">⚡ Ressources rapides</div>
-      <div class="quick-links-grid">
-        <a href="mailto:support@deskready.fr" class="quick-link">
-          <span class="quick-link-icon">💬</span>
-          <span class="quick-link-label">Chat support</span>
-          <span class="quick-link-sub">Réponse sous 24h</span>
-        </a>
-        <a href="#" class="quick-link">
-          <span class="quick-link-icon">📄</span>
-          <span class="quick-link-label">Télécharger mon CV</span>
-          <span class="quick-link-sub">Template DeskReady</span>
-        </a>
-        <a href="#" class="quick-link">
-          <span class="quick-link-icon">📅</span>
-          <span class="quick-link-label">Calendrier coaching</span>
-          <span class="quick-link-sub">Réserver une session</span>
-        </a>
-        <a href="#" class="quick-link">
-          <span class="quick-link-icon">❓</span>
-          <span class="quick-link-label">FAQ</span>
-          <span class="quick-link-sub">Questions fréquentes</span>
-        </a>
-      </div>
-    </div>
-
-  </div>
-</div>
 
 <section id="hero">
   <div class="hero-orb"></div>
@@ -3290,54 +3189,12 @@ async function updateNavForLoggedIn(user) {
   if (authBtn) authBtn.style.display = 'none';
   if (dropdown) dropdown.style.display = 'block';
 
-  const { data: purchases } = await _sb
-    .from('user_purchases')
-    .select('product_name')
-    .eq('user_id', user.id)
-    .eq('status', 'completed');
-
-  renderUserDashboard(user, purchases || []);
 }
 function updateNavForLoggedOut() {
   const authBtn = document.getElementById('nav-auth-btn');
   const dropdown = document.getElementById('nav-user-dropdown');
   if (authBtn) authBtn.style.display = 'block';
   if (dropdown) dropdown.style.display = 'none';
-  const dash = document.getElementById('user-dashboard');
-  if (dash) dash.style.display = 'none';
-}
-function renderUserDashboard(user, purchases) {
-  const meta = user.user_metadata || {};
-  const fullName = meta.full_name || meta.name || user.email.split('@')[0];
-  const email = user.email || '';
-  const createdAt = user.created_at ? new Date(user.created_at).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : '—';
-
-  const parts = fullName.trim().split(' ');
-  const initials = parts.length >= 2
-    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-    : fullName.slice(0, 2).toUpperCase();
-
-  document.getElementById('profile-avatar').textContent = initials;
-  document.getElementById('profile-name').textContent = fullName;
-  document.getElementById('profile-email').textContent = email;
-  document.getElementById('info-name').textContent = fullName;
-  document.getElementById('info-email').textContent = email;
-  document.getElementById('info-date').textContent = createdAt;
-
-  const grid = document.getElementById('purchase-grid');
-  if (!purchases.length) {
-    grid.innerHTML = '<p class="purchase-empty">Aucun achat pour l\'instant.</p>';
-  } else {
-    grid.innerHTML = purchases.map(p => `
-      <div class="purchase-card">
-        <div class="purchase-card-name">${p.product_name}</div>
-        <span class="badge-active">Accès actif</span>
-        <a href="${PLATFORM_URL}/plateforme.html" class="btn-access">Accéder au contenu →</a>
-      </div>
-    `).join('');
-  }
-
-  document.getElementById('user-dashboard').style.display = 'block';
 }
 async function handleLogout() {
   if (!window._sb) return;
