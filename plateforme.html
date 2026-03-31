@@ -198,6 +198,10 @@
       <p class="page-desc">Toutes tes ressources payantes et gratuites au même endroit. Achète un accès pour débloquer les contenus premium.</p>
     </div>
 
+    <div id="auth-banner" style="display:none; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3); border-radius: 10px; padding: 0.9rem 1.4rem; margin-bottom: 2rem; font-size: 0.9rem; color: var(--purple-soft);">
+      🔐 <a href="/" style="color: var(--purple-glow); text-decoration: underline;">Connectez-vous</a> pour voir vos achats et accéder à vos ressources débloquées.
+    </div>
+
     <!-- FORMATIONS -->
     <div class="section-block reveal">
       <div class="section-label">Formations</div>
@@ -349,6 +353,69 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+<script>
+  const SUPABASE_URL  = 'https://lysibziqgissumqszedk.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5c2liemlxZ2lzc3VtcXN6ZWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5OTA4MzcsImV4cCI6MjA4ODU2NjgzN30.3M85rhh4AltDZnm743ntap6_j9T1wApOiNkELLvC9hs';
+
+  // Map: res-name text → product_name stored in DB
+  const PRODUCT_MAP = {
+    'Formation Basic':          'Basic',
+    'Formation Gold':           'Gold',
+    'Review de CV':             'CV Review',
+    'Entretien blanc':          'Entretien blanc',
+    'Session coaching':         'Session coaching',
+    'Pack CV + Entretien':      'Pack CV + Entretien',
+    'Pack Entretien + Coaching':'Pack Entretien + Coaching',
+    'Liste de contacts':        'Liste de contacts'
+  };
+
+  function unlockCard(card) {
+    card.classList.remove('locked');
+    const lockIcon = card.querySelector('.res-lock');
+    if (lockIcon) lockIcon.textContent = '✅';
+    const btn = card.querySelector('.btn-unlock');
+    if (btn && btn.textContent.trim() === 'Débloquer →') {
+      btn.textContent = 'Accéder →';
+      btn.href = '#';
+    }
+  }
+
+  async function initPurchases() {
+    const sbScript = document.createElement('script');
+    sbScript.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+    sbScript.onload = async () => {
+      const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+      const { data: { user } } = await sb.auth.getUser();
+
+      if (!user) {
+        document.getElementById('auth-banner').style.display = 'block';
+        return;
+      }
+
+      const { data: purchases } = await sb
+        .from('user_purchases')
+        .select('product_name')
+        .eq('user_id', user.id)
+        .eq('status', 'completed');
+
+      const owned = new Set((purchases || []).map(p => p.product_name));
+
+      document.querySelectorAll('.res-card.locked').forEach(card => {
+        const nameEl = card.querySelector('.res-name');
+        if (!nameEl) return;
+        const resName = nameEl.textContent.trim();
+        const productName = PRODUCT_MAP[resName];
+        if (productName && owned.has(productName)) {
+          unlockCard(card);
+        }
+      });
+    };
+    document.head.appendChild(sbScript);
+  }
+
+  initPurchases();
 </script>
 </body>
 </html>
