@@ -325,24 +325,19 @@
         </div>
       </div>
 
-      <!-- RESSOURCES RAPIDES -->
+      <!-- BESOIN D'AIDE -->
       <div class="dash-section">
-        <div class="dash-section-title">⚡ Ressources rapides</div>
+        <div class="dash-section-title">🙋 Besoin d'aide ?</div>
         <div class="quick-links-grid">
           <a href="mailto:support@deskready.fr" class="quick-link">
             <span class="quick-link-icon">💬</span>
             <span class="quick-link-label">Chat support</span>
-            <span class="quick-link-sub">Réponse sous 24h</span>
-          </a>
-          <a href="/index.html#offres" class="quick-link">
-            <span class="quick-link-icon">🎯</span>
-            <span class="quick-link-label">Voir nos offres</span>
-            <span class="quick-link-sub">Formations DeskReady</span>
+            <span class="quick-link-sub">Réponse sous 48h</span>
           </a>
           <a href="#" id="quick-link-coaching" class="quick-link">
             <span class="quick-link-icon">📅</span>
-            <span class="quick-link-label">Calendrier coaching</span>
-            <span class="quick-link-sub">Réserver une session</span>
+            <span class="quick-link-label">Premier call gratuit</span>
+            <span class="quick-link-sub">Réserver mon appel</span>
           </a>
           <a href="/index.html#faq" class="quick-link">
             <span class="quick-link-icon">❓</span>
@@ -731,8 +726,9 @@
     }
 
     const hasCoaching = purchases.some(p => /coaching/i.test(p.product_name));
+    const hasProgram = purchases.some(p => /programme|formation/i.test(p.product_name));
     const coachingLink = document.getElementById('quick-link-coaching');
-    if (coachingLink) coachingLink.style.display = hasCoaching ? 'none' : '';
+    if (coachingLink) coachingLink.style.display = (hasCoaching || hasProgram) ? 'none' : '';
 
     document.getElementById('user-dashboard').style.display = 'block';
   }
