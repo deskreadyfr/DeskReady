@@ -2414,7 +2414,7 @@
         </ul>
         <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
           <button onclick="addToCart('Basic — Accès à vie', 199, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
-          <button onclick="payStripe('basic')" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 199€ →</button>
+          <button onclick="payStripe('basic', this)" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 199€ →</button>
         </div>
       </div>
       <div class="offre-card featured reveal">
@@ -2431,7 +2431,7 @@
         </ul>
         <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
           <button onclick="addToCart('Gold — Accès à vie', 399, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
-          <button onclick="payStripe('gold')" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 399€ →</button>
+          <button onclick="payStripe('gold', this)" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 399€ →</button>
         </div>
       </div>
       <div class="offre-card reveal">
@@ -3106,10 +3106,35 @@ function updateNavForLoggedOut() {
   const btn = document.querySelector('.nav-cta');
   if (btn) { btn.textContent = "S'inscrire / Se connecter"; btn.onclick = openAuthModal; }
 }
-function payStripe(productKey) {
-  const link = STRIPE_LINKS[productKey];
-  if (!link || link.includes('REMPLACER')) { alert('Lien de paiement non configuré. Merci de contacter contact@deskready.com'); return; }
-  window.open(link, '_blank');
+async function payStripe(productKey, btn) {
+  const productNameMap = {
+    'basic':                    'Basic — Accès à vie',
+    'gold':                     'Gold — Accès à vie',
+    'review_cv':                'Review de CV',
+    'entretien_blanc':          'Entretien blanc',
+    'session_coaching':         'Session de coaching',
+    'pack_cv_entretien':        'Pack CV + Entretien',
+    'pack_entretien_coaching':  'Pack Entretien + Coaching',
+    'liste_contacts':           'Liste de contacts',
+  };
+  const priceMap = {
+    'basic':                    199,
+    'gold':                     399,
+    'review_cv':                9,
+    'entretien_blanc':          39,
+    'session_coaching':         29,
+    'pack_cv_entretien':        45,
+    'pack_entretien_coaching':  55,
+    'liste_contacts':           35,
+  };
+  const name = productNameMap[productKey];
+  const price = priceMap[productKey];
+  if (!name) { alert('Produit non configuré.'); return; }
+  const savedCart = [...cart];
+  cart = [{ name, price, qty: 1 }];
+  if (btn) { btn.textContent = 'Chargement…'; btn.disabled = true; }
+  await checkoutFlow(btn);
+  cart = savedCart;
 }
 async function payStripeCart(btn) {
   if (cart.length === 0) { alert('Votre panier est vide'); return; }
