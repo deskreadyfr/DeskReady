@@ -384,7 +384,7 @@
 
     <div class="controls">
       <div class="search-wrap">
-        <span class="search-icon">�</span>
+        <span class="search-icon"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
         <input type="text" class="search-input" id="search-input" placeholder="Rechercher banque, desk...">
       </div>
       <select class="filter-select" id="filter-status">
@@ -465,6 +465,10 @@
         <div class="form-group">
           <label class="form-label">Contact (nom)</label>
           <input type="text" class="form-input" id="f-contact" placeholder="ex. Jean Dupont">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Lien de l'offre</label>
+          <input type="url" class="form-input" id="f-url" placeholder="https://...">
         </div>
         <div class="form-group">
           <label class="form-label">Priorité</label>
@@ -682,6 +686,7 @@ function openDetail(id) {
       </span>
     </div>
     ${d.contact ? `<div class="detail-section"><div class="detail-section-title">Contact</div><div style="font-size:0.88rem;color:var(--white)">${d.contact}</div></div>` : ''}
+    ${d.url ? `<div class="detail-section"><div class="detail-section-title">Lien de l'offre</div><a href="${d.url}" target="_blank" rel="noopener" style="font-size:0.85rem;color:#a855f7;word-break:break-all;">Voir l'offre →</a></div>` : ''}
     ${d.followup ? `<div class="detail-section"><div class="detail-section-title">Prochain rappel</div><div style="font-size:0.88rem;color:var(--white)">${new Date(d.followup).toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</div></div>` : ''}
     ${d.notes ? `<div class="detail-section"><div class="detail-section-title">Notes</div><div class="detail-notes">${d.notes}</div></div>` : ''}
     <button class="detail-edit-btn" onclick="openEditModal('${d.id}');closeDetail();">&#9998; Modifier cette candidature</button>`;
@@ -702,7 +707,7 @@ document.getElementById('detail-overlay').addEventListener('click', e => { if (e
 function openAddModal() {
   editingId = null;
   document.getElementById('modal-title').textContent = 'Nouvelle candidature';
-  ['f-bank','f-desk','f-contact','f-notes'].forEach(id => document.getElementById(id).value = '');
+  ['f-bank','f-desk','f-contact','f-notes','f-url'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('f-date').value = new Date().toISOString().split('T')[0];
   document.getElementById('f-followup').value = '';
   document.getElementById('f-status').value = 'Candidature envoyée';
@@ -724,6 +729,7 @@ function openEditModal(id) {
   document.getElementById('f-date').value = d.date||'';
   document.getElementById('f-followup').value = d.followup||'';
   document.getElementById('f-contact').value = d.contact||'';
+  document.getElementById('f-url').value = d.url||'';
   document.getElementById('f-priority').value = d.priority||'mid';
   document.getElementById('f-notes').value = d.notes||'';
   document.getElementById('modal-overlay').classList.add('open');
@@ -749,6 +755,7 @@ async function saveEntry() {
     date: document.getElementById('f-date').value,
     followup: document.getElementById('f-followup').value,
     contact: document.getElementById('f-contact').value.trim(),
+    url: document.getElementById('f-url').value.trim(),
     priority: document.getElementById('f-priority').value,
     notes: document.getElementById('f-notes').value.trim(),
     updated_at: new Date().toISOString(),
