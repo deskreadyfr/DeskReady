@@ -238,6 +238,15 @@
     .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(248,244,255,0.2); border-top-color: var(--white); border-radius: 50%; animation: spin 0.6s linear infinite; margin: 0 auto; }
     .spinner.show { display: block; }
     @keyframes spin { to { transform: rotate(360deg); } }
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 0; margin-top: 4rem; }
+    footer .container { max-width: none; padding: 0; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; padding-left: 4rem; padding-right: 220px; }
+    .footer-logo { display: flex; align-items: center; text-decoration: none; }
+    .footer-logo img { height: 36px; width: auto; max-width: 180px; display: block; object-fit: contain; }
+    .footer-copy { font-size: 0.78rem; color: var(--grey); }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.82rem; color: var(--grey); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
   </style>
 </head>
 <body>
@@ -752,6 +761,31 @@ function handleNavLogout() {
   if (window.__navSb) window.__navSb.auth.signOut().then(() => window.location.href = '/index.html');
   else window.location.href = '/index.html';
 }
-</script></body>
+</script>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="footer-logo">
+        <img id="footer-logo-img" src="" alt="DeskReady">
+      </a>
+      <span class="footer-copy">© 2025 DeskReady</span>
+      <ul class="footer-links">
+        <li><a href="/#offres">Offres</a></li>
+        <li><a href="/plateforme.html">Plateforme</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+<script>
+  (function() {
+    var navImg = document.querySelector('.nav-logo img');
+    if (navImg) document.getElementById('footer-logo-img').src = navImg.src;
+  })();
+</script>
+</body>
 </html>
 
