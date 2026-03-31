@@ -508,6 +508,17 @@
 </footer>
 
 <!-- MODALE AUTH -->
+<!-- AUTH GATE — blocks page until logged in -->
+<div id="auth-gate" style="position:fixed;inset:0;z-index:200;background:#050508;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;">
+  <div style="max-width:420px;width:100%;">
+    <div style="font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:#f8f4ff;margin-bottom:0.3rem;">DeskReady</div>
+    <div style="color:#a855f7;font-size:0.72rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:1.8rem;">Espace membre</div>
+    <p style="color:#a09ab5;font-size:0.95rem;margin-bottom:2rem;line-height:1.6;">Connecte-toi ou crée un compte pour accéder à ta plateforme et à toutes tes ressources.</p>
+    <div id="gate-loading" style="color:#a09ab5;font-size:0.85rem;">Vérification en cours…</div>
+    <button id="gate-btn" onclick="openAuthModal()" style="display:none;width:100%;padding:0.8rem 1.5rem;border-radius:10px;background:#7c3aed;color:#f8f4ff;font-size:0.95rem;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:background 0.2s;" onmouseover="this.style.background='#a855f7'" onmouseout="this.style.background='#7c3aed'">Se connecter / S'inscrire →</button>
+  </div>
+</div>
+
 <div id="auth-modal" class="modal-overlay" onclick="if(event.target===this)closeAuthModal()">
   <div class="modal-box">
     <div class="modal-header">
@@ -594,6 +605,9 @@
 
       if (!user) {
         document.getElementById('auth-banner').style.display = 'block';
+        document.getElementById('gate-loading').style.display = 'none';
+        document.getElementById('gate-btn').style.display = 'block';
+        openAuthModal();
         return;
       }
 
@@ -605,6 +619,7 @@
 
       const owned = new Set((purchases || []).map(p => p.product_name));
 
+      document.getElementById('auth-gate').style.display = 'none';
       renderUserDashboard(user, purchases || []);
       renderNavUser(user);
 
@@ -650,7 +665,7 @@
     btn.disabled = false; btn.textContent = 'Se connecter →';
     if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
     okEl.textContent = '✓ Connecté !'; okEl.style.display = 'block';
-    setTimeout(() => { closeAuthModal(); document.getElementById('auth-banner').style.display = 'none'; initPurchases(); }, 800);
+    setTimeout(() => { closeAuthModal(); document.getElementById('auth-banner').style.display = 'none'; document.getElementById('auth-gate').style.display = 'none'; initPurchases(); }, 800);
   }
   async function handleSignup() {
     const sb = window.__sb; if (!sb) return;
