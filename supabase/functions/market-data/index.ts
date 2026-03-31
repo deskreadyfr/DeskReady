@@ -3,13 +3,39 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const YF_SYMBOLS = '^STOXX50E,^GDAXI,^FCHI,^FTSE,^GSPC,^NDX,^DJI,^N225,^VIX,GC=F,CL=F';
+const YF_CHART_SYMBOLS = [
+  '^STOXX50E', '^GDAXI', '^FCHI', '^FTSE',
+  '^GSPC', '^NDX', '^DJI', '^N225', '^VIX',
+  'GC=F', 'CL=F',
+];
+
+const YF_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  'Accept': 'application/json',
+};
 
 function prevBusinessDay(): string {
   const d = new Date();
   d.setDate(d.getDate() - 1);
   while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() - 1);
   return d.toISOString().slice(0, 10);
+}
+
+async function fetchChart(sym: string): Promise<{ symbol: string; price: number; prev: number } | null> {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=2d`;
+  try {
+    const r = await fetch(url, { headers: YF_HEADERS });
+    const d = await r.json();
+    const meta = d?.chart?.result?.[0]?.meta;
+    if (meta?.regularMarketPrice && meta?.chartPreviousClose) {
+      return { symbol: sym, price: meta.regularMarketPrice, prev: meta.chartPreviousClose };
+    }
+    console.warn(`[market-data] ${sym}: missing price in response`);
+    return null;
+  } catch (e) {
+    console.warn(`[market-data] ${sym}: fetch error`, e);
+    return null;
+  }
 }
 
 Deno.serve(async (req) => {
@@ -20,13 +46,11 @@ Deno.serve(async (req) => {
   try {
     const ydStr = prevBusinessDay();
 
-    const [fxCurrRes, fxPrevRes, yfRes] = await Promise.allSettled([
+    // Fetch FX + all equity charts in parallel
+    const [fxCurrRes, fxPrevRes, ...chartResults] = await Promise.allSettled([
       fetch('https://open.er-api.com/v6/latest/EUR'),
       fetch(`https://api.frankfurter.app/${ydStr}?from=EUR&to=USD,GBP,JPY`),
-      fetch(
-        `https://query1.finance.yahoo.com/v7/finance/quote?symbols=${YF_SYMBOLS}`,
-        { headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DeskReady/1.0)' } }
-      ),
+      ...YF_CHART_SYMBOLS.map(fetchChart),
     ]);
 
     // FX current rates
@@ -44,21 +68,12 @@ Deno.serve(async (req) => {
     }
 
     // Equities + Commodities
-    let quotes: Array<{ symbol: string; price: number; prev: number }> = [];
-    if (yfRes.status === 'fulfilled') {
-      const d = await yfRes.value.json();
-      const results = d?.quoteResponse?.result ?? [];
-      quotes = results
-        .filter((q: any) => q.regularMarketPrice && q.regularMarketPreviousClose)
-        .map((q: any) => ({
-          symbol: q.symbol,
-          price: q.regularMarketPrice,
-          prev: q.regularMarketPreviousClose,
-        }));
-    }
+    const quotes = chartResults
+      .map(r => r.status === 'fulfilled' ? r.value : null)
+      .filter(Boolean) as Array<{ symbol: string; price: number; prev: number }>;
 
     const payload = { fxCurr, fxPrev, quotes };
-    console.log('[market-data] fxCurr ok:', !!fxCurr, '| fxPrev ok:', !!fxPrev, '| quotes:', quotes.length);
+    console.log('[market-data] fxCurr:', !!fxCurr, '| fxPrev:', !!fxPrev, '| quotes:', quotes.length, '/', YF_CHART_SYMBOLS.length);
 
     return new Response(JSON.stringify(payload), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
