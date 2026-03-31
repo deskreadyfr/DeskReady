@@ -716,8 +716,8 @@ function renderCalendar() {
       <div class="cal-time">${e.time}</div>
       <div class="cal-flag">${e.flag}</div>
       <div class="cal-event">${e.event}</div>
-      <div class="cal-prev"><span class="cal-label">Préc.</span>${e.prev}</div>
-      <div class="cal-cons ${colorClass(0)}"><span class="cal-label">Cons.</span>${e.cons}</div>
+      <div class="cal-prev"><span class="cal-label">Précédent</span>${e.prev}</div>
+      <div class="cal-cons ${colorClass(0)}"><span class="cal-label">Actuel</span>${e.cons}</div>
       <div class="impact-dot" style="background:${impactColors[e.impact]}"></div>
     </div>`).join('');
 
