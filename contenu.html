@@ -466,17 +466,16 @@
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { errorEl.textContent = 'Session expirée, reconnecte-toi.'; errorEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Envoyer mon CV →'; return; }
 
-    // Convert file to base64
-    const fileBase64 = await new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = e => resolve(e.target.result.split(',')[1]);
-      reader.readAsDataURL(file);
-    });
+    // Upload directly to Supabase Storage
+    const filePath = `${session.user.id}/${Date.now()}_${file.name}`;
+    const { error: uploadError } = await sb.storage.from('cv-reviews').upload(filePath, file, { contentType: 'application/pdf', upsert: true });
+    if (uploadError) { errorEl.textContent = 'Erreur upload : ' + uploadError.message; errorEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Envoyer mon CV →'; return; }
 
+    // Notify team via edge function
     const res = await fetch('https://lysibziqgissumqszedk.supabase.co/functions/v1/submit-cv', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ token: session.access_token, fileName: file.name, fileBase64 }),
+      body: JSON.stringify({ token: session.access_token, filePath, fileName: file.name }),
     });
 
     if (res.ok) {
