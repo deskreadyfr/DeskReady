@@ -314,39 +314,43 @@
     document.getElementById('page-title').textContent = label.title;
     document.getElementById('page-desc').textContent = label.desc;
 
-    // PDFs
-    const pdfGrid = document.getElementById('pdf-grid');
-    if (pdfs.length === 0) {
-      pdfGrid.innerHTML = '<p class="empty-state">Aucun document disponible pour le moment.</p>';
+    // PDFs + Videos (masqués pour entretien-blanc)
+    if (slug === 'entretien-blanc') {
+      document.querySelector('.content-section').style.display = 'none';
+      document.querySelectorAll('.content-section')[1].style.display = 'none';
     } else {
-      pdfGrid.innerHTML = pdfs.map(pdf => `
-        <a href="${pdf.url}" target="_blank" rel="noopener" class="pdf-card">
-          <div class="pdf-icon">📄</div>
-          <div class="pdf-info">
-            <div class="pdf-name">${pdf.name}</div>
-            <div class="pdf-meta">PDF · Ouvrir dans un nouvel onglet</div>
-          </div>
-          <div class="pdf-arrow">↗</div>
-        </a>
-      `).join('');
-    }
+      const pdfGrid = document.getElementById('pdf-grid');
+      if (pdfs.length === 0) {
+        pdfGrid.innerHTML = '<p class="empty-state">Aucun document disponible pour le moment.</p>';
+      } else {
+        pdfGrid.innerHTML = pdfs.map(pdf => `
+          <a href="${pdf.url}" target="_blank" rel="noopener" class="pdf-card">
+            <div class="pdf-icon">📄</div>
+            <div class="pdf-info">
+              <div class="pdf-name">${pdf.name}</div>
+              <div class="pdf-meta">PDF · Ouvrir dans un nouvel onglet</div>
+            </div>
+            <div class="pdf-arrow">↗</div>
+          </a>
+        `).join('');
+      }
 
-    // Videos
-    const videoGrid = document.getElementById('video-grid');
-    if (videos.length === 0) {
-      videoGrid.innerHTML = `
-        <div class="coming-soon">
-          <div class="coming-soon-icon">🎬</div>
-          <div class="coming-soon-title">Vidéos à venir</div>
-          <div class="coming-soon-sub">Les vidéos de cette formation seront disponibles très prochainement.</div>
-        </div>`;
-    } else {
-      videoGrid.innerHTML = `<div class="video-grid">${videos.map(v => `
-        <div class="video-card">
-          <iframe class="video-embed" src="${v.url}" allowfullscreen></iframe>
-          <div class="video-title">${v.title}</div>
-        </div>
-      `).join('')}</div>`;
+      const videoGrid = document.getElementById('video-grid');
+      if (videos.length === 0) {
+        videoGrid.innerHTML = `
+          <div class="coming-soon">
+            <div class="coming-soon-icon">🎬</div>
+            <div class="coming-soon-title">Vidéos à venir</div>
+            <div class="coming-soon-sub">Les vidéos de cette formation seront disponibles très prochainement.</div>
+          </div>`;
+      } else {
+        videoGrid.innerHTML = `<div class="video-grid">${videos.map(v => `
+          <div class="video-card">
+            <iframe class="video-embed" src="${v.url}" allowfullscreen></iframe>
+            <div class="video-title">${v.title}</div>
+          </div>
+        `).join('')}</div>`;
+      }
     }
 
     // Calendly (entretien-blanc only)
