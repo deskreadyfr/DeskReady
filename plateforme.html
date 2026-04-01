@@ -715,17 +715,32 @@
     document.getElementById('info-email').textContent = email;
     document.getElementById('info-date').textContent = createdAt;
 
+    const PRODUCT_SLUG = {
+      'Basic':                    'basic',
+      'Gold':                     'gold',
+      'CV Review':                'cv-review',
+      'Entretien blanc':          'entretien-blanc',
+      'Session coaching':         'coaching',
+      'Pack CV + Entretien':      'pack-cv-entretien',
+      'Pack Entretien + Coaching':'pack-entretien-coaching',
+      'Liste de contacts':        'contacts',
+    };
+
     const grid = document.getElementById('purchase-grid');
     if (!purchases.length) {
       grid.innerHTML = '<p class="purchase-empty">Aucun achat pour l\'instant.</p>';
     } else {
-      grid.innerHTML = purchases.map(p => `
-        <div class="purchase-card">
-          <div class="purchase-card-name">${p.product_name}</div>
-          <span class="badge-active">Accès actif</span>
-          <a href="#" class="btn-access">Accéder au contenu →</a>
-        </div>
-      `).join('');
+      grid.innerHTML = purchases.map(p => {
+        const slug = PRODUCT_SLUG[p.product_name];
+        const href = slug ? `/contenu.html?produit=${slug}` : '#';
+        return `
+          <div class="purchase-card">
+            <div class="purchase-card-name">${p.product_name}</div>
+            <span class="badge-active">Accès actif</span>
+            <a href="${href}" class="btn-access">Accéder au contenu →</a>
+          </div>
+        `;
+      }).join('');
     }
 
     const hasCoaching = purchases.some(p => /coaching/i.test(p.product_name));

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contenu · DeskReady</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800;900&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #050508;
+      --purple-core: #7c3aed;
+      --purple-glow: #a855f7;
+      --purple-soft: #c084fc;
+      --purple-dim: #3b0764;
+      --white: #f8f4ff;
+      --grey: #a09ab5;
+      --card-bg: rgba(255,255,255,0.03);
+      --border: rgba(168,85,247,0.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, rgba(168,85,247,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 10%, rgba(248,244,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 35%, rgba(168,85,247,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 60%, rgba(248,244,255,0.25) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 75%, rgba(168,85,247,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 90%, rgba(248,244,255,0.2) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 10% 85%, rgba(168,85,247,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 55%, rgba(248,244,255,0.3) 0%, transparent 100%);
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 4rem;
+      backdrop-filter: blur(20px);
+      background: rgba(5,5,8,0.6);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; max-width: 180px; display: block; object-fit: contain; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; flex: 1; justify-content: center; }
+    .nav-links a { color: var(--white); text-decoration: none; font-size: 0.88rem; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta { background: var(--purple-core); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 500 !important; font-family: 'Syne', sans-serif; font-weight: 700 !important; }
+    .nav-cta:hover { background: var(--purple-glow) !important; }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle {
+      color: var(--white); text-decoration: none; font-size: 0.88rem;
+      font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s;
+      display: flex; align-items: center; gap: 0.3rem; cursor: pointer;
+      background: none; border: none; padding: 0.2rem 0;
+    }
+    .nav-dropdown::after { content: ''; position: absolute; top: 100%; left: -20px; right: -20px; height: 18px; }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 14px); left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      background: #0d0d14; border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.5rem; min-width: 210px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+    .nav-dropdown-toggle svg { transition: transform 0.2s; }
+    .nav-dropdown-menu a {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.85rem; border-radius: 8px;
+      color: rgba(248,244,255,0.75); text-decoration: none;
+      font-size: 0.84rem; font-weight: 400;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap; font-family: 'DM Sans', sans-serif;
+    }
+    .nav-dropdown-menu a:hover { background: rgba(124,58,237,0.18); color: var(--white); }
+    .nav-dropdown-menu .drop-icon {
+      width: 26px; height: 26px; background: rgba(124,58,237,0.2);
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.8rem; flex-shrink: 0;
+    }
+
+    /* MAIN */
+    main { padding-top: 5rem; padding-bottom: 4rem; }
+    .page-header { padding: 2.5rem 0 2rem; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--grey); font-size: 0.83rem; text-decoration: none; transition: color 0.2s; margin-bottom: 1.5rem; }
+    .back-link:hover { color: var(--white); }
+    .product-badge { display: inline-block; background: rgba(124,58,237,0.2); border: 1px solid rgba(168,85,247,0.3); color: var(--purple-soft); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.8rem; border-radius: 999px; margin-bottom: 0.8rem; }
+    .page-title { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+    .page-desc { color: var(--grey); font-size: 1rem; font-weight: 300; }
+
+    /* SECTIONS */
+    .content-section { margin-bottom: 3rem; }
+    .section-heading { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+    .section-heading span { font-size: 1.2rem; }
+
+    /* PDF CARDS */
+    .pdf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .pdf-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.4rem; display: flex; align-items: center; gap: 1rem;
+      text-decoration: none; color: var(--white);
+      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+    }
+    .pdf-card:hover { border-color: rgba(168,85,247,0.45); background: rgba(124,58,237,0.07); transform: translateY(-2px); }
+    .pdf-icon { width: 44px; height: 44px; background: rgba(124,58,237,0.18); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .pdf-info { flex: 1; min-width: 0; }
+    .pdf-name { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; text-transform: capitalize; }
+    .pdf-meta { font-size: 0.75rem; color: var(--grey); margin-top: 0.2rem; }
+    .pdf-arrow { color: var(--purple-glow); font-size: 1rem; flex-shrink: 0; }
+
+    /* VIDEO CARDS */
+    .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem; }
+    .video-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .video-embed { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+    .video-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; padding: 1rem; }
+
+    /* COMING SOON */
+    .coming-soon {
+      background: rgba(124,58,237,0.04); border: 1px dashed rgba(168,85,247,0.25);
+      border-radius: 14px; padding: 2.5rem; text-align: center; color: var(--grey);
+    }
+    .coming-soon-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .coming-soon-title { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+    .coming-soon-sub { font-size: 0.85rem; }
+
+    /* EMPTY STATE */
+    .empty-state { padding: 2rem; text-align: center; color: var(--grey); font-size: 0.9rem; }
+
+    /* LOADING */
+    #loading { text-align: center; padding: 4rem 0; color: var(--grey); font-size: 0.95rem; }
+    .spinner { width: 32px; height: 32px; border: 3px solid rgba(168,85,247,0.2); border-top-color: var(--purple-glow); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 1rem 0; }
+    footer .container { max-width: none; padding: 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-left: 4rem; padding-right: 220px; }
+    .footer-logo { display: flex; align-items: center; text-decoration: none; }
+    .footer-logo img { height: 36px; width: auto; max-width: 180px; display: block; object-fit: contain; }
+    .footer-copy { font-size: 0.8rem; color: var(--grey); }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.82rem; color: var(--grey); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="assets/logo-deskready.png" alt="DeskReady" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Syne,sans-serif;font-weight:800;font-size:1.1rem;\'>DeskReady</span>'">
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#offres">Offres</a></li>
+    <li>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle">
+          Ressources
+          <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown-menu">
+          <a href="/data-room.html"><span class="drop-icon">📊</span>Data Room</a>
+          <a href="/blog.html"><span class="drop-icon">✍️</span>Blog</a>
+          <a href="/career-tracker.html"><span class="drop-icon">🎯</span>Tracker</a>
+          <a href="/pricer.html"><span class="drop-icon">💰</span>Pricer</a>
+        </div>
+      </div>
+    </li>
+    <li><a href="/plateforme.html">Plateforme</a></li>
+    <li><a href="/#about">À propos</a></li>
+    <li><a href="/#testimonials">Témoignages</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <div id="nav-user-dropdown" class="nav-dropdown" style="display:none;">
+      <button class="nav-dropdown-toggle nav-cta" style="font-size:0.85rem;padding:0.45rem 1rem;font-family:'Syne',sans-serif;font-weight:700;">
+        <span id="nav-user-initials" style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.2);display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;">?</span>
+        Mon espace
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-dropdown-menu" style="min-width:200px;">
+        <a href="/plateforme.html"><span class="drop-icon">🏠</span>Mon espace</a>
+        <a href="/mes-achats.html"><span class="drop-icon">🛒</span>Mes achats</a>
+        <a href="/parametres.html"><span class="drop-icon">⚙️</span>Paramètres</a>
+        <a href="#" onclick="handleLogout();return false;" style="color:#f87171 !important;"><span class="drop-icon" style="background:rgba(248,113,113,0.15);">🚪</span>Déconnecter</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+    <div id="loading">
+      <div class="spinner"></div>
+      Chargement du contenu…
+    </div>
+
+    <div id="content-area" style="display:none;">
+      <div class="page-header">
+        <a href="/plateforme.html" class="back-link">← Retour à mon espace</a>
+        <div id="product-badge" class="product-badge"></div>
+        <h1 id="page-title" class="page-title"></h1>
+        <p id="page-desc" class="page-desc"></p>
+      </div>
+
+      <!-- PDFs -->
+      <div class="content-section reveal">
+        <div class="section-heading"><span>📄</span> Documents PDF</div>
+        <div id="pdf-grid" class="pdf-grid"></div>
+      </div>
+
+      <!-- Vidéos -->
+      <div class="content-section reveal">
+        <div class="section-heading"><span>🎬</span> Vidéos</div>
+        <div id="video-grid"></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="footer-logo">
+        <img src="assets/logo-deskready.png" alt="DeskReady" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\'font-family:Syne,sans-serif;font-weight:800;font-size:0.95rem;\'>DeskReady</span>'">
+      </a>
+      <span class="footer-copy">© 2025 DeskReady — From School to the Desk</span>
+      <ul class="footer-links">
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+        <li><a href="/politique-confidentialite.html">Confidentialité</a></li>
+        <li><a href="mailto:support@deskready.fr">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  const SUPABASE_URL  = 'https://lysibziqgissumqszedk.supabase.co';
+  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5c2liemlxZ2lzc3VtcXN6ZWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5OTA4MzcsImV4cCI6MjA4ODU2NjgzN30.3M85rhh4AltDZnm743ntap6_j9T1wApOiNkELLvC9hs';
+  const EDGE_URL      = 'https://lysibziqgissumqszedk.supabase.co/functions/v1/get-content';
+
+  const PRODUCT_LABELS = {
+    'basic':                   { title: 'Formation Basic',              desc: 'Tes ressources pour démarrer — fiches techniques, CV, networking.' },
+    'gold':                    { title: 'Formation Gold',               desc: 'Accès complet — fiches, contacts certifiés, entretiens & coaching.' },
+    'cv-review':               { title: 'Review de CV',                 desc: 'Tous les documents liés à ta review de CV.' },
+    'entretien-blanc':         { title: 'Entretien blanc',              desc: 'Ressources de préparation à ton entretien.' },
+    'coaching':                { title: 'Session coaching',             desc: 'Supports et ressources de ta session coaching.' },
+    'pack-cv-entretien':       { title: 'Pack CV + Entretien',          desc: 'Toutes les ressources de ton pack CV & Entretien.' },
+    'pack-entretien-coaching': { title: 'Pack Entretien + Coaching',    desc: 'Toutes les ressources de ton pack Entretien & Coaching.' },
+    'contacts':                { title: 'Liste de contacts',            desc: 'Ta liste de contacts certifiés en salle de marché.' },
+  };
+
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  async function init() {
+    const slug = new URLSearchParams(window.location.search).get('produit');
+    if (!slug) { window.location.href = '/plateforme.html'; return; }
+
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { window.location.href = '/plateforme.html'; return; }
+
+    // Update nav
+    const meta = session.user.user_metadata || {};
+    const fullName = meta.full_name || meta.name || session.user.email.split('@')[0];
+    const parts = fullName.trim().split(' ');
+    const initials = parts.length >= 2 ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase() : fullName.slice(0,2).toUpperCase();
+    const initialsEl = document.getElementById('nav-user-initials');
+    if (initialsEl) initialsEl.textContent = initials;
+    const navDropdown = document.getElementById('nav-user-dropdown');
+    if (navDropdown) navDropdown.style.display = 'block';
+
+    // Fetch content from edge function
+    const res = await fetch(`${EDGE_URL}?produit=${slug}`, {
+      headers: { Authorization: `Bearer ${session.access_token}` }
+    });
+
+    if (res.status === 403) { window.location.href = '/plateforme.html'; return; }
+    if (!res.ok) { showError('Erreur lors du chargement du contenu.'); return; }
+
+    const { product, pdfs, videos } = await res.json();
+    const label = PRODUCT_LABELS[slug] || { title: product, desc: '' };
+
+    document.title = `${label.title} · DeskReady`;
+    document.getElementById('product-badge').textContent = 'Accès actif';
+    document.getElementById('page-title').textContent = label.title;
+    document.getElementById('page-desc').textContent = label.desc;
+
+    // PDFs
+    const pdfGrid = document.getElementById('pdf-grid');
+    if (pdfs.length === 0) {
+      pdfGrid.innerHTML = '<p class="empty-state">Aucun document disponible pour le moment.</p>';
+    } else {
+      pdfGrid.innerHTML = pdfs.map(pdf => `
+        <a href="${pdf.url}" target="_blank" rel="noopener" class="pdf-card">
+          <div class="pdf-icon">📄</div>
+          <div class="pdf-info">
+            <div class="pdf-name">${pdf.name}</div>
+            <div class="pdf-meta">PDF · Ouvrir dans un nouvel onglet</div>
+          </div>
+          <div class="pdf-arrow">↗</div>
+        </a>
+      `).join('');
+    }
+
+    // Videos
+    const videoGrid = document.getElementById('video-grid');
+    if (videos.length === 0) {
+      videoGrid.innerHTML = `
+        <div class="coming-soon">
+          <div class="coming-soon-icon">🎬</div>
+          <div class="coming-soon-title">Vidéos à venir</div>
+          <div class="coming-soon-sub">Les vidéos de cette formation seront disponibles très prochainement.</div>
+        </div>`;
+    } else {
+      videoGrid.innerHTML = `<div class="video-grid">${videos.map(v => `
+        <div class="video-card">
+          <iframe class="video-embed" src="${v.url}" allowfullscreen></iframe>
+          <div class="video-title">${v.title}</div>
+        </div>
+      `).join('')}</div>`;
+    }
+
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('content-area').style.display = 'block';
+
+    // Reveal animations
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  }
+
+  function showError(msg) {
+    document.getElementById('loading').innerHTML = `<p style="color:#f87171">${msg}</p><a href="/plateforme.html" style="color:var(--purple-glow);font-size:0.9rem;">← Retour à mon espace</a>`;
+  }
+
+  async function handleLogout() {
+    await sb.auth.signOut();
+    window.location.href = '/';
+  }
+
+  init();
+</script>
+</body>
+</html>
