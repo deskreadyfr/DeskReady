@@ -124,6 +124,11 @@
     .video-embed { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
     .video-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; padding: 1rem; }
 
+    /* CALENDLY */
+    .calendly-section { background: var(--card-bg); border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 2rem; margin-bottom: 3rem; }
+    .calendly-intro { color: var(--grey); font-size: 0.9rem; font-weight: 300; margin-bottom: 1.5rem; line-height: 1.6; }
+    .calendly-embed { border-radius: 12px; overflow: hidden; min-height: 650px; }
+
     /* COMING SOON */
     .coming-soon {
       background: rgba(124,58,237,0.04); border: 1px dashed rgba(168,85,247,0.25);
@@ -225,6 +230,17 @@
       <div class="content-section reveal">
         <div class="section-heading"><span>🎬</span> Vidéos</div>
         <div id="video-grid"></div>
+      </div>
+
+      <!-- Calendly (entretien-blanc uniquement) -->
+      <div id="calendly-section" style="display:none;" class="reveal">
+        <div class="section-heading"><span>📅</span> Réserver ton entretien blanc</div>
+        <div class="calendly-section">
+          <p class="calendly-intro">Choisis un créneau ci-dessous pour réserver ton entretien blanc. Tu recevras une confirmation par email avec les détails de connexion.</p>
+          <div class="calendly-embed">
+            <iframe id="calendly-iframe" src="https://calendly.com/deskready-fr/entretien-blanc?hide_gdpr_banner=1&primary_color=7c3aed&background_color=050508&text_color=f8f4ff" width="100%" height="650" frameborder="0"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -331,6 +347,17 @@
           <div class="video-title">${v.title}</div>
         </div>
       `).join('')}</div>`;
+    }
+
+    // Calendly (entretien-blanc only)
+    if (slug === 'entretien-blanc') {
+      const section = document.getElementById('calendly-section');
+      section.style.display = 'block';
+      // Pre-fill name + email in Calendly URL
+      const email = session.user.email || '';
+      const name = encodeURIComponent(fullName);
+      const iframe = document.getElementById('calendly-iframe');
+      iframe.src = `https://calendly.com/deskready-fr/entretien-blanc?hide_gdpr_banner=1&primary_color=7c3aed&background_color=050508&text_color=f8f4ff&name=${name}&email=${encodeURIComponent(email)}`;
     }
 
     document.getElementById('loading').style.display = 'none';
