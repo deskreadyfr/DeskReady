@@ -120,8 +120,8 @@
     .btn-settings:hover { border-color: rgba(168,85,247,0.4); color: var(--white); }
 
     /* Purchase cards */
-    .purchase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
-    .purchase-card { background: rgba(124,58,237,0.06); border: 1px solid rgba(168,85,247,0.3); border-radius: 12px; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .purchase-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .purchase-card { background: rgba(124,58,237,0.06); border: 1px solid rgba(168,85,247,0.3); border-radius: 12px; padding: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 0 1 280px; min-width: 240px; }
     .purchase-card-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; }
     .badge-active { display: inline-block; background: rgba(134,239,172,0.15); border: 1px solid rgba(134,239,172,0.3); color: #86efac; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.65rem; border-radius: 999px; width: fit-content; }
     .btn-access { margin-top: auto; padding: 0.5rem 1rem; border-radius: 7px; background: var(--purple-core); color: #fff; font-size: 0.8rem; font-weight: 600; border: none; cursor: pointer; text-align: center; text-decoration: none; transition: background 0.2s; font-family: inherit; display: block; }
