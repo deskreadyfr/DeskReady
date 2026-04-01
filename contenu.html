@@ -255,16 +255,16 @@
       <div id="cv-upload-section" style="display:none;" class="reveal">
         <div class="section-heading"><span>📤</span> Dépose ton CV</div>
         <div class="cv-upload-section">
-          <p class="cv-upload-intro">Dépose ton CV ci-dessous. Notre équipe le reviewera et te contactera par email sous 48h avec un retour détaillé.</p>
+          <p class="cv-upload-intro">Dépose ton CV ci-dessous. Notre équipe le reviewera et te contactera par email sous 1 semaine avec un retour détaillé.</p>
           <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('cv-file-input').click()">
             <div class="upload-dropzone-icon">📄</div>
             <div class="upload-dropzone-label">Clique ou glisse ton CV ici</div>
-            <div class="upload-dropzone-sub">PDF, Word — 10 Mo max</div>
+            <div class="upload-dropzone-sub">PDF uniquement — 10 Mo max</div>
             <div id="file-selected" class="upload-file-selected" style="display:none;"></div>
-            <input type="file" id="cv-file-input" accept=".pdf,.doc,.docx" onchange="onFileSelected(this)">
+            <input type="file" id="cv-file-input" accept=".pdf" onchange="onFileSelected(this)">
           </div>
           <button class="btn-submit-cv" id="btn-submit-cv" onclick="submitCV()" disabled>Envoyer mon CV →</button>
-          <div id="cv-success" class="cv-success">✓ CV envoyé ! Notre équipe te contactera sous 48h.</div>
+          <div id="cv-success" class="cv-success">✓ CV envoyé ! Notre équipe te contactera sous 1 semaine.</div>
           <div id="cv-error" class="cv-error"></div>
         </div>
       </div>
