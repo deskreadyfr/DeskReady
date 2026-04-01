@@ -466,13 +466,17 @@
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { errorEl.textContent = 'Session expirée, reconnecte-toi.'; errorEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Envoyer mon CV →'; return; }
 
-    const formData = new FormData();
-    formData.append('cv', file);
+    // Convert file to base64
+    const fileBase64 = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = e => resolve(e.target.result.split(',')[1]);
+      reader.readAsDataURL(file);
+    });
 
     const res = await fetch('https://lysibziqgissumqszedk.supabase.co/functions/v1/submit-cv', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${session.access_token}` },
-      body: formData,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: session.access_token, fileName: file.name, fileBase64 }),
     });
 
     if (res.ok) {
