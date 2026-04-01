@@ -316,9 +316,9 @@
 
     // Slugs sans PDF/vidéo — uniquement Calendly
     const CALENDLY_ONLY = {
-      'entretien-blanc':         { heading: 'Réserver ton entretien blanc',     intro: 'Choisis un créneau pour ton entretien blanc simulé. Tu recevras une confirmation par email avec les détails de connexion.',     url: 'https://calendly.com/deskready-fr/entretien-blanc' },
-      'coaching':                { heading: 'Réserver ta session coaching',      intro: 'Choisis un créneau pour ta session de coaching. Tu recevras une confirmation par email avec les détails de connexion.',           url: 'https://calendly.com/deskready-fr/coaching' },
-      'pack-entretien-coaching': { heading: 'Réserver ton entretien + coaching', intro: 'Choisis un créneau pour ton entretien blanc et ta session coaching. Tu recevras une confirmation par email.',                    url: 'https://calendly.com/deskready-fr/entretien-blanc-coaching' },
+      'entretien-blanc':         { heading: 'Réserver ton entretien blanc',     intro: 'Choisis un créneau pour ton entretien blanc simulé. Tu recevras une confirmation par email avec les détails de connexion.',     url: 'https://cal.eu/deskready-1obytz/entretien' },
+      'coaching':                { heading: 'Réserver ta session coaching',      intro: 'Choisis un créneau pour ta session de coaching. Tu recevras une confirmation par email avec les détails de connexion.',           url: 'https://cal.eu/deskready-1obytz/coaching' },
+      'pack-entretien-coaching': { heading: 'Réserver ton entretien + coaching', intro: 'Choisis un créneau pour ton entretien blanc et ta session coaching. Tu recevras une confirmation par email.',                    url: 'https://cal.eu/deskready-1obytz/entretien-coaching' },
     };
 
     if (CALENDLY_ONLY[slug]) {
@@ -366,7 +366,7 @@
       const name = encodeURIComponent(fullName);
       document.getElementById('calendly-heading').textContent = cfg.heading;
       document.getElementById('calendly-intro').textContent = cfg.intro;
-      document.getElementById('calendly-iframe').src = `${cfg.url}?hide_gdpr_banner=1&primary_color=7c3aed&background_color=050508&text_color=f8f4ff&name=${name}&email=${email}`;
+      document.getElementById('calendly-iframe').src = `${cfg.url}?name=${name}&email=${email}`;
       document.getElementById('calendly-section').style.display = 'block';
     }
 
