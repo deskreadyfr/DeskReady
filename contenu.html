@@ -232,13 +232,13 @@
         <div id="video-grid"></div>
       </div>
 
-      <!-- Calendly (entretien-blanc uniquement) -->
+      <!-- Calendly -->
       <div id="calendly-section" style="display:none;" class="reveal">
-        <div class="section-heading"><span>📅</span> Réserver ton entretien blanc</div>
+        <div class="section-heading"><span>📅</span> <span id="calendly-heading"></span></div>
         <div class="calendly-section">
-          <p class="calendly-intro">Choisis un créneau ci-dessous pour réserver ton entretien blanc. Tu recevras une confirmation par email avec les détails de connexion.</p>
+          <p id="calendly-intro" class="calendly-intro"></p>
           <div class="calendly-embed">
-            <iframe id="calendly-iframe" src="https://calendly.com/deskready-fr/entretien-blanc?hide_gdpr_banner=1&primary_color=7c3aed&background_color=050508&text_color=f8f4ff" width="100%" height="650" frameborder="0"></iframe>
+            <iframe id="calendly-iframe" src="" width="100%" height="650" frameborder="0"></iframe>
           </div>
         </div>
       </div>
@@ -314,8 +314,14 @@
     document.getElementById('page-title').textContent = label.title;
     document.getElementById('page-desc').textContent = label.desc;
 
-    // PDFs + Videos (masqués pour entretien-blanc)
-    if (slug === 'entretien-blanc') {
+    // Slugs sans PDF/vidéo — uniquement Calendly
+    const CALENDLY_ONLY = {
+      'entretien-blanc':         { heading: 'Réserver ton entretien blanc',     intro: 'Choisis un créneau pour ton entretien blanc simulé. Tu recevras une confirmation par email avec les détails de connexion.',     url: 'https://calendly.com/deskready-fr/entretien-blanc' },
+      'coaching':                { heading: 'Réserver ta session coaching',      intro: 'Choisis un créneau pour ta session de coaching. Tu recevras une confirmation par email avec les détails de connexion.',           url: 'https://calendly.com/deskready-fr/coaching' },
+      'pack-entretien-coaching': { heading: 'Réserver ton entretien + coaching', intro: 'Choisis un créneau pour ton entretien blanc et ta session coaching. Tu recevras une confirmation par email.',                    url: 'https://calendly.com/deskready-fr/entretien-blanc-coaching' },
+    };
+
+    if (CALENDLY_ONLY[slug]) {
       document.querySelector('.content-section').style.display = 'none';
       document.querySelectorAll('.content-section')[1].style.display = 'none';
     } else {
@@ -353,15 +359,15 @@
       }
     }
 
-    // Calendly (entretien-blanc only)
-    if (slug === 'entretien-blanc') {
-      const section = document.getElementById('calendly-section');
-      section.style.display = 'block';
-      // Pre-fill name + email in Calendly URL
-      const email = session.user.email || '';
+    // Calendly
+    if (CALENDLY_ONLY[slug]) {
+      const cfg = CALENDLY_ONLY[slug];
+      const email = encodeURIComponent(session.user.email || '');
       const name = encodeURIComponent(fullName);
-      const iframe = document.getElementById('calendly-iframe');
-      iframe.src = `https://calendly.com/deskready-fr/entretien-blanc?hide_gdpr_banner=1&primary_color=7c3aed&background_color=050508&text_color=f8f4ff&name=${name}&email=${encodeURIComponent(email)}`;
+      document.getElementById('calendly-heading').textContent = cfg.heading;
+      document.getElementById('calendly-intro').textContent = cfg.intro;
+      document.getElementById('calendly-iframe').src = `${cfg.url}?hide_gdpr_banner=1&primary_color=7c3aed&background_color=050508&text_color=f8f4ff&name=${name}&email=${email}`;
+      document.getElementById('calendly-section').style.display = 'block';
     }
 
     document.getElementById('loading').style.display = 'none';
