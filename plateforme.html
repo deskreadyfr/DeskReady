@@ -673,6 +673,7 @@
     const okEl = document.getElementById('signup-success');
     errEl.style.display = 'none'; okEl.style.display = 'none';
     if (!name || !email || !pass) { errEl.textContent = 'Remplis tous les champs.'; errEl.style.display = 'block'; return; }
+    if (name.trim().split(/\s+/).length < 2) { errEl.textContent = 'Entre ton prénom ET ton nom.'; errEl.style.display = 'block'; return; }
     if (pass.length < 8) { errEl.textContent = 'Le mot de passe doit faire 8 caractères minimum.'; errEl.style.display = 'block'; return; }
     const btn = document.getElementById('signup-btn'); btn.disabled = true; btn.textContent = 'Création…';
     const { error } = await sb.auth.signUp({ email, password: pass, options: { data: { full_name: name } } });

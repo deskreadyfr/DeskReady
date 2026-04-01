@@ -3160,6 +3160,7 @@ async function handleSignup() {
   const email = document.getElementById('signup-email').value.trim();
   const pass = document.getElementById('signup-password').value;
   if (!name || !email || !pass) { showAuthMsg('signup-error', 'Remplis tous les champs.', 'error'); return; }
+  if (name.trim().split(/\s+/).length < 2) { showAuthMsg('signup-error', 'Entre ton prénom ET ton nom.', 'error'); return; }
   if (pass.length < 8) { showAuthMsg('signup-error', 'Le mot de passe doit faire 8 caractères minimum.', 'error'); return; }
   const btn = document.getElementById('signup-btn'); btn.classList.add('btn-loading'); btn.textContent = 'Création…';
   const { data, error } = await _sb.auth.signUp({ email, password: pass, options: { data: { full_name: name }, emailRedirectTo: PLATFORM_URL + '/' } });
