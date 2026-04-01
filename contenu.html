@@ -124,6 +124,25 @@
     .video-embed { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
     .video-title { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; padding: 1rem; }
 
+    /* CV UPLOAD */
+    .cv-upload-section { background: var(--card-bg); border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 2rem; }
+    .cv-upload-intro { color: var(--grey); font-size: 0.9rem; font-weight: 300; margin-bottom: 1.8rem; line-height: 1.6; }
+    .upload-dropzone {
+      border: 2px dashed rgba(168,85,247,0.35); border-radius: 12px; padding: 2.5rem;
+      text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    }
+    .upload-dropzone:hover, .upload-dropzone.drag-over { border-color: var(--purple-glow); background: rgba(124,58,237,0.06); }
+    .upload-dropzone-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+    .upload-dropzone-label { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .upload-dropzone-sub { font-size: 0.8rem; color: var(--grey); }
+    .upload-dropzone input[type="file"] { display: none; }
+    .upload-file-selected { margin-top: 1rem; font-size: 0.85rem; color: var(--purple-soft); font-weight: 500; }
+    .btn-submit-cv { display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.4rem; width: 100%; padding: 0.85rem; border-radius: 10px; background: var(--purple-core); color: #fff; font-size: 0.95rem; font-weight: 600; border: none; cursor: pointer; transition: background 0.2s; font-family: inherit; }
+    .btn-submit-cv:hover { background: var(--purple-glow); }
+    .btn-submit-cv:disabled { opacity: 0.6; pointer-events: none; }
+    .cv-success { margin-top: 1.2rem; padding: 1rem 1.2rem; background: rgba(134,239,172,0.1); border: 1px solid rgba(134,239,172,0.25); border-radius: 10px; color: #86efac; font-size: 0.88rem; display: none; }
+    .cv-error { margin-top: 1.2rem; padding: 1rem 1.2rem; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); border-radius: 10px; color: #f87171; font-size: 0.88rem; display: none; }
+
     /* CALENDLY */
     .calendly-section { background: var(--card-bg); border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 2rem; margin-bottom: 3rem; }
     .calendly-intro { color: var(--grey); font-size: 0.9rem; font-weight: 300; margin-bottom: 1.5rem; line-height: 1.6; }
@@ -232,6 +251,24 @@
         <div id="video-grid"></div>
       </div>
 
+      <!-- CV Upload (cv-review uniquement) -->
+      <div id="cv-upload-section" style="display:none;" class="reveal">
+        <div class="section-heading"><span>📤</span> Dépose ton CV</div>
+        <div class="cv-upload-section">
+          <p class="cv-upload-intro">Dépose ton CV ci-dessous. Notre équipe le reviewera et te contactera par email sous 48h avec un retour détaillé.</p>
+          <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('cv-file-input').click()">
+            <div class="upload-dropzone-icon">📄</div>
+            <div class="upload-dropzone-label">Clique ou glisse ton CV ici</div>
+            <div class="upload-dropzone-sub">PDF, Word — 10 Mo max</div>
+            <div id="file-selected" class="upload-file-selected" style="display:none;"></div>
+            <input type="file" id="cv-file-input" accept=".pdf,.doc,.docx" onchange="onFileSelected(this)">
+          </div>
+          <button class="btn-submit-cv" id="btn-submit-cv" onclick="submitCV()" disabled>Envoyer mon CV →</button>
+          <div id="cv-success" class="cv-success">✓ CV envoyé ! Notre équipe te contactera sous 48h.</div>
+          <div id="cv-error" class="cv-error"></div>
+        </div>
+      </div>
+
       <!-- Calendly -->
       <div id="calendly-section" style="display:none;" class="reveal">
         <div class="section-heading"><span>📅</span> <span id="calendly-heading"></span></div>
@@ -321,7 +358,12 @@
       'pack-entretien-coaching': { heading: 'Réserver ton entretien + coaching', intro: 'Choisis un créneau pour ton entretien blanc et ta session coaching. Tu recevras une confirmation par email.',                    url: 'https://cal.eu/deskready-1obytz/entretien-coaching' },
     };
 
-    if (CALENDLY_ONLY[slug]) {
+    // cv-review : upload uniquement
+    if (slug === 'cv-review') {
+      document.querySelector('.content-section').style.display = 'none';
+      document.querySelectorAll('.content-section')[1].style.display = 'none';
+      document.getElementById('cv-upload-section').style.display = 'block';
+    } else if (CALENDLY_ONLY[slug]) {
       document.querySelector('.content-section').style.display = 'none';
       document.querySelectorAll('.content-section')[1].style.display = 'none';
     } else {
@@ -382,6 +424,66 @@
 
   function showError(msg) {
     document.getElementById('loading').innerHTML = `<p style="color:#f87171">${msg}</p><a href="/plateforme.html" style="color:var(--purple-glow);font-size:0.9rem;">← Retour à mon espace</a>`;
+  }
+
+  // CV Upload
+  let _cvSession = null;
+  function onFileSelected(input) {
+    const file = input.files[0];
+    if (!file) return;
+    document.getElementById('file-selected').textContent = `📎 ${file.name}`;
+    document.getElementById('file-selected').style.display = 'block';
+    document.getElementById('btn-submit-cv').disabled = false;
+  }
+
+  // Drag & drop
+  const dropzone = document.getElementById('dropzone');
+  if (dropzone) {
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault(); dropzone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        const input = document.getElementById('cv-file-input');
+        const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files;
+        onFileSelected(input);
+      }
+    });
+  }
+
+  async function submitCV() {
+    const input = document.getElementById('cv-file-input');
+    const file = input.files[0];
+    if (!file) return;
+
+    const btn = document.getElementById('btn-submit-cv');
+    const successEl = document.getElementById('cv-success');
+    const errorEl = document.getElementById('cv-error');
+    btn.disabled = true; btn.textContent = 'Envoi en cours…';
+    successEl.style.display = 'none'; errorEl.style.display = 'none';
+
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { errorEl.textContent = 'Session expirée, reconnecte-toi.'; errorEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Envoyer mon CV →'; return; }
+
+    const formData = new FormData();
+    formData.append('cv', file);
+
+    const res = await fetch('https://lysibziqgissumqszedk.supabase.co/functions/v1/submit-cv', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${session.access_token}` },
+      body: formData,
+    });
+
+    if (res.ok) {
+      successEl.style.display = 'block';
+      btn.textContent = 'CV envoyé ✓';
+    } else {
+      const err = await res.json();
+      errorEl.textContent = err.error || 'Erreur lors de l\'envoi.';
+      errorEl.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Envoyer mon CV →';
+    }
   }
 
   async function handleLogout() {
