@@ -467,7 +467,9 @@
     if (!session) { errorEl.textContent = 'Session expirée, reconnecte-toi.'; errorEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Envoyer mon CV →'; return; }
 
     // Upload directly to Supabase Storage
-    const filePath = `${session.user.id}/${Date.now()}_${file.name}`;
+    const rawName = session.user.user_metadata?.full_name || session.user.email || session.user.id;
+    const folderName = rawName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const filePath = `${folderName}/${Date.now()}_${file.name}`;
     const { error: uploadError } = await sb.storage.from('cv-reviews').upload(filePath, file, { contentType: 'application/pdf', upsert: true });
     if (uploadError) { errorEl.textContent = 'Erreur upload : ' + uploadError.message; errorEl.style.display = 'block'; btn.disabled = false; btn.textContent = 'Envoyer mon CV →'; return; }
 
