@@ -4,7 +4,7 @@ const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY') || '';
-const TEAM_EMAIL = 'contact@deskready.com';
+const TEAM_EMAIL = 'deskready.fr@gmail.com';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -86,7 +86,7 @@ Deno.serve(async (req) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'DeskReady <noreply@deskready.com>',
+            from: 'onboarding@resend.dev',
             to: [TEAM_EMAIL],
             subject: `Nouveau CV à reviewer — ${fileName}`,
             html: `
