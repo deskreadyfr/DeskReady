@@ -161,6 +161,17 @@
   }
   .btn-ghost:hover { border-color: var(--purple-glow); transform: translateY(-2px); }
 
+  .btn-alt {
+    background: #0ea5e9; color: #041016;
+    padding: 0.85rem 2rem; border-radius: 8px;
+    font-size: 0.95rem; font-weight: 600; text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-alt:hover { background: #38bdf8; transform: translateY(-2px); }
+
   .carousel-track-wrapper {
     overflow: hidden; width: 100%;
     background: rgba(255,255,255,0.92);
@@ -638,12 +649,12 @@
 
 <section id="hero">
   <div class="hero-orb"></div>
-  <div class="hero-badge">From School to the Desk</div>
   <h1 class="hero-title">La formation qui te prépare<br><span class="accent">vraiment aux desks de sales</span></h1>
   <p class="hero-sub">Networking, technique et codes de la salle des marchés — tout ce que l'école ne t'apprend pas, réuni dans une formation conçue par des professionnels du métier.</p>
 
   <div class="hero-actions">
-    <a href="#offres" class="btn-primary">Découvrir les offres →</a>
+    <a href="#a-la-carte" class="btn-alt">Refaire mon CV</a>
+    <a href="#offres" class="btn-primary">Se former →</a>
   </div>
 
   <div class="hero-carousel">
@@ -2467,7 +2478,7 @@
       </div>
     </div>
 
-    <div style="margin-top:5rem;">
+    <div id="a-la-carte" style="margin-top:5rem;scroll-margin-top:6rem;">
       <div class="section-label" style="margin-bottom:0.5rem;">À la carte</div>
       <p style="color:var(--grey);font-size:1rem;font-weight:300;margin-bottom:2rem;">Besoin d'un coup de pouce rapide ?</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
