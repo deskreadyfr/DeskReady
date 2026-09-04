@@ -223,7 +223,7 @@
   .section-desc { color: var(--grey); font-size: 1rem; font-weight: 300; max-width: 520px; line-height: 1.7; }
   .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
 
-  #offres { padding: 3rem 0; }
+  #offres, #offres-a-la-carte { padding: 3rem 0; }
   .offres-header { text-align: center; margin-bottom: 4rem; }
   .offres-header .section-desc { margin: 0 auto; }
   .offres-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
@@ -2358,12 +2358,64 @@
   </div>
 </section>
 
-<section id="ce-quon-propose" style="padding:3rem 0 1rem;">
+<section id="offres" style="padding:3rem 0;">
   <div class="container">
     <div class="offres-header reveal">
       <div class="section-label">Ce qu'on propose</div>
       <h2 class="section-title">Des offres pensées<br>pour chaque parcours</h2>
       <p class="section-desc">Du premier contact avec le milieu jusqu'à la préparation d'un entretien.</p>
+    </div>
+
+    <div class="section-label" style="margin-bottom:1.5rem;">Nos Formations</div>
+    <div class="offres-grid">
+      <div class="offre-card reveal">
+        <div class="offre-tag">Le + accessible</div>
+        <div class="offre-name">Basic · 199€ · Accès à vie</div>
+        <p class="offre-desc">Pensée pour renforcer ses bases techniques et développer son réseau, destinée aux étudiants ayant déjà une première expérience en finance de marché.</p>
+        <ul class="offre-list">
+          <li>Fiches sur la technique & le networking</li>
+          <li>1 Review de CV</li>
+          <li>Accès au groupe WhatsApp général</li>
+          <li>Accès au groupe LinkedIn</li>
+        </ul>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
+          <button onclick="addToCart('Basic — Accès à vie', 199, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
+          <button onclick="payStripe('basic', this)" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 199€ →</button>
+        </div>
+      </div>
+      <div class="offre-card featured reveal">
+        <div class="offre-tag">⭐ Populaire</div>
+        <div class="offre-name">Gold · 399€ · Accès à vie</div>
+        <p class="offre-desc">Idéale pour acquérir des bases solides en finance de marché et construire son réseau afin de décrocher un premier stage (césure, summer, fin d'études).</p>
+        <ul class="offre-list">
+          <li>Fiches sur la technique & le networking</li>
+          <li>Contacts certifiés pour candidatures spontanées</li>
+          <li>2 Review de CV</li>
+          <li>1 Entretien blanc</li>
+          <li>Accès au groupe WhatsApp général</li>
+          <li>Accès au groupe LinkedIn</li>
+        </ul>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
+          <button onclick="addToCart('Gold — Accès à vie', 399, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
+          <button onclick="payStripe('gold', this)" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 399€ →</button>
+        </div>
+      </div>
+      <div class="offre-card reveal">
+        <div class="offre-tag">Premium</div>
+        <div class="offre-name">Elite · 599€ · Accès à vie</div>
+        <p class="offre-desc">Accès sur candidature uniquement. Conçu pour les candidats visant les desks les plus sélectifs.</p>
+        <ul class="offre-list">
+          <li>Offre de stages exclusives</li>
+          <li>Fiches sur la technique & le networking</li>
+          <li>Contacts certifiés pour candidatures spontanées</li>
+          <li>3 Entretiens blancs</li>
+          <li>2 Sessions de coaching</li>
+          <li>Accès aux groupes WhatsApp (Elite + Général)</li>
+          <li>Accès au groupe LinkedIn</li>
+          <li>Et bien + encore (Review Cv & Linkedin)</li>
+        </ul>
+        <button onclick="openCandidature()" class="btn-ghost" style="text-align:center;font-size:0.88rem;margin-top:auto;display:block;width:100%;cursor:pointer;">Candidater →</button>
+      </div>
     </div>
   </div>
 </section>
@@ -2428,61 +2480,9 @@
   </div>
 </section>
 
-<section id="offres">
+<section id="offres-a-la-carte">
   <div class="container">
-    <div class="section-label" style="margin-bottom:1.5rem;">Nos Formations</div>
-    <div class="offres-grid">
-      <div class="offre-card reveal">
-        <div class="offre-tag">Le + accessible</div>
-        <div class="offre-name">Basic · 199€ · Accès à vie</div>
-        <p class="offre-desc">Pensée pour renforcer ses bases techniques et développer son réseau, destinée aux étudiants ayant déjà une première expérience en finance de marché.</p>
-        <ul class="offre-list">
-          <li>Fiches sur la technique & le networking</li>
-          <li>1 Review de CV</li>
-          <li>Accès au groupe WhatsApp général</li>
-          <li>Accès au groupe LinkedIn</li>
-        </ul>
-        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
-          <button onclick="addToCart('Basic — Accès à vie', 199, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
-          <button onclick="payStripe('basic', this)" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 199€ →</button>
-        </div>
-      </div>
-      <div class="offre-card featured reveal">
-        <div class="offre-tag">⭐ Populaire</div>
-        <div class="offre-name">Gold · 399€ · Accès à vie</div>
-        <p class="offre-desc">Idéale pour acquérir des bases solides en finance de marché et construire son réseau afin de décrocher un premier stage (césure, summer, fin d'études).</p>
-        <ul class="offre-list">
-          <li>Fiches sur la technique & le networking</li>
-          <li>Contacts certifiés pour candidatures spontanées</li>
-          <li>2 Review de CV</li>
-          <li>1 Entretien blanc</li>
-          <li>Accès au groupe WhatsApp général</li>
-          <li>Accès au groupe LinkedIn</li>
-        </ul>
-        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
-          <button onclick="addToCart('Gold — Accès à vie', 399, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
-          <button onclick="payStripe('gold', this)" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer maintenant · 399€ →</button>
-        </div>
-      </div>
-      <div class="offre-card reveal">
-        <div class="offre-tag">Premium</div>
-        <div class="offre-name">Elite · 599€ · Accès à vie</div>
-        <p class="offre-desc">Accès sur candidature uniquement. Conçu pour les candidats visant les desks les plus sélectifs.</p>
-        <ul class="offre-list">
-          <li>Offre de stages exclusives</li>
-          <li>Fiches sur la technique & le networking</li>
-          <li>Contacts certifiés pour candidatures spontanées</li>
-          <li>3 Entretiens blancs</li>
-          <li>2 Sessions de coaching</li>
-          <li>Accès aux groupes WhatsApp (Elite + Général)</li>
-          <li>Accès au groupe LinkedIn</li>
-          <li>Et bien + encore (Review Cv & Linkedin)</li>
-        </ul>
-        <button onclick="openCandidature()" class="btn-ghost" style="text-align:center;font-size:0.88rem;margin-top:auto;display:block;width:100%;cursor:pointer;">Candidater →</button>
-      </div>
-    </div>
-
-    <div id="a-la-carte" style="margin-top:5rem;scroll-margin-top:6rem;">
+    <div id="a-la-carte" style="scroll-margin-top:6rem;">
       <div class="section-label" style="margin-bottom:0.5rem;">À la carte</div>
       <p style="color:var(--grey);font-size:1rem;font-weight:300;margin-bottom:2rem;">Besoin d'un coup de pouce rapide ?</p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
