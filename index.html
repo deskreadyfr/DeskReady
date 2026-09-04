@@ -279,6 +279,20 @@
   .value-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.3rem; }
   .value-desc { font-size: 0.85rem; color: var(--grey); line-height: 1.5; }
 
+  #cv-review { padding: 3rem 0; background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04) 50%, transparent); }
+  .cv-review-inner { display: grid; grid-template-columns: 1.05fr 0.75fr 340px; gap: 2.5rem; align-items: stretch; }
+  .cv-review-text .section-desc { max-width: none; margin-bottom: 1rem; }
+  .cv-review-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.6rem; }
+  .cv-review-points li { position: relative; padding-left: 1.6rem; color: var(--grey); font-size: 0.92rem; line-height: 1.55; font-weight: 300; }
+  .cv-review-points li::before { content: '→'; position: absolute; left: 0; color: var(--purple-glow); font-weight: 700; }
+  .cv-review-img { border: 1px dashed rgba(168,85,247,0.35); border-radius: 16px; background: rgba(124,58,237,0.05); display: flex; align-items: center; justify-content: center; min-height: 320px; color: var(--grey); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; overflow: hidden; }
+  .cv-review-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; }
+  .cv-review-buy { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2.2rem 2rem; display: flex; flex-direction: column; }
+  @media (max-width: 980px) {
+    .cv-review-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .cv-review-img { min-height: 220px; }
+  }
+
   #temoignages { padding: 3rem 0; }
   .temoignages-header { text-align: center; margin-bottom: 4rem; }
   .temoignages-header .section-desc { margin: 0 auto; }
@@ -2475,6 +2489,38 @@
         <div class="stat-card"><div class="stat-num">+15</div><div class="stat-label">banques représentées dans notre réseau d'élèves</div></div>
         <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">semaines en moyenne du premier contact à l'offre</div></div>
         <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">des contenus rédigés par des professionnels en activité</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cv-review">
+  <div class="container">
+    <div class="cv-review-inner">
+      <div class="cv-review-text reveal">
+        <div class="section-label">Review de CV</div>
+        <h2 class="section-title" style="font-size: clamp(1.6rem, 3vw, 2.2rem);">Ton CV, ta première impression</h2>
+        <p class="section-desc">En finance de marché, ton CV est filtré en quelques secondes. Un recruteur en lit des centaines : le moindre détail mal calibré — format, ordre des expériences, vocabulaire, mise en avant des projets — peut suffire à écarter une candidature pourtant solide.</p>
+        <p class="section-desc">Les codes attendus sur un desk ne sont pas ceux d'un CV classique. Un regard de professionnel du secteur te permet d'identifier ce qui accroche vraiment, ce qui dessert ta candidature, et comment présenter ton parcours pour maximiser tes chances de décrocher un entretien.</p>
+        <ul class="cv-review-points">
+          <li>Un retour ligne par ligne sur le fond et la forme</li>
+          <li>Les attentes réelles des recruteurs en finance de marché</li>
+          <li>Comment valoriser tes expériences et projets techniques</li>
+          <li>Les erreurs qui coûtent un entretien</li>
+        </ul>
+      </div>
+      <div class="cv-review-img reveal">
+        <!-- Remplace ce bloc par : <img src="chemin/vers/image.jpg" alt="Review de CV"> -->
+        Image
+      </div>
+      <div class="cv-review-buy reveal">
+        <div class="offre-name" style="white-space:nowrap;">Review de CV</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple-glow);margin-bottom:0.8rem;">9€</div>
+        <p class="offre-desc">Un retour détaillé sur ton CV par un professionnel du secteur.</p>
+        <div style="display:flex;flex-direction:column;gap:0.4rem;margin-top:auto;">
+          <button onclick="addToCart('Review de CV', 9, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Je veux</button>
+          <button onclick="payStripe('review_cv')" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer · 9€ →</button>
+        </div>
       </div>
     </div>
   </div>
