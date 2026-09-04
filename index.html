@@ -3012,6 +3012,13 @@
 <button onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" class="floating-cta" style="border:none;cursor:pointer;">Réserve un call gratuit ↗</button>
 
 <script>
+// Empêche le navigateur de restaurer la position de scroll au refresh :
+// on revient toujours en haut de page, sauf si l'URL contient une ancre explicite (#offres, etc.)
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.addEventListener('pageshow', function () {
+  if (!window.location.hash) window.scrollTo(0, 0);
+});
+
 function toggleFaq(el) {
   var isOpen = el.classList.contains('open');
   document.querySelectorAll('.faq-item.open').forEach(function(f){ f.classList.remove('open'); });
