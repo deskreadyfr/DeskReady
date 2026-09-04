@@ -3012,11 +3012,24 @@
 <button onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" class="floating-cta" style="border:none;cursor:pointer;">Réserve un call gratuit ↗</button>
 
 <script>
-// Empêche le navigateur de restaurer la position de scroll au refresh :
-// on revient toujours en haut de page, sauf si l'URL contient une ancre explicite (#offres, etc.)
+// Empêche le navigateur de restaurer la position de scroll au refresh.
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+// Détecte un rechargement de page (F5 / bouton refresh).
+var IS_RELOAD = (function () {
+  try {
+    var nav = performance.getEntriesByType('navigation')[0];
+    if (nav) return nav.type === 'reload';
+    return performance.navigation && performance.navigation.type === 1;
+  } catch (e) { return false; }
+})();
+
+// Au refresh : on nettoie l'ancre laissée dans l'URL par le menu et on remonte tout en haut.
+if (IS_RELOAD && window.location.hash) {
+  history.replaceState(null, '', window.location.pathname + window.location.search);
+}
 window.addEventListener('pageshow', function () {
-  if (!window.location.hash) window.scrollTo(0, 0);
+  if (IS_RELOAD || !window.location.hash) window.scrollTo(0, 0);
 });
 
 function toggleFaq(el) {
@@ -3103,7 +3116,11 @@ function carouselInit() { carouselBuild(); carouselDots(); carouselSetPosition(0
 document.addEventListener('DOMContentLoaded', () => {
   carouselInit();
   window.addEventListener('resize', () => carouselSetPosition(carouselIndex, false));
-  if (window.location.hash === '#login') {
+  if (IS_RELOAD) {
+    // Rechargement : on force le haut de page même après les reflows (polices, carrousel, images).
+    window.scrollTo(0, 0);
+    [50, 150, 400].forEach(t => setTimeout(() => window.scrollTo(0, 0), t));
+  } else if (window.location.hash === '#login') {
     setTimeout(() => openAuthModal(), 300);
   } else if (window.location.hash) {
     setTimeout(() => {
@@ -3112,6 +3129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 300);
   }
 });
+window.addEventListener('load', () => { if (IS_RELOAD) window.scrollTo(0, 0); });
 
 function openCandidature() { document.getElementById('candidature-modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
 function closeCandidature() { document.getElementById('candidature-modal').classList.remove('open'); document.body.style.overflow = ''; }
