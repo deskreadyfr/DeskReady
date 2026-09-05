@@ -2488,6 +2488,63 @@
   </div>
 </section>
 
+<section id="cv-review">
+  <div class="container">
+    <div class="cv-review-inner">
+      <div class="cv-review-text reveal">
+        <div class="section-label">Review de CV</div>
+        <h2 class="section-title" style="font-size: clamp(1.6rem, 3vw, 2.2rem);">Ton CV, première étape vers l'entretien</h2>
+        <p class="section-desc">En finance de marché, un CV se joue souvent en quelques secondes. Un recruteur en lit des centaines : le moindre détail mal calibré — structure, vocabulaire, ordre des expériences, mise en avant des projets — peut suffire à affaiblir une candidature pourtant solide.</p>
+        <p class="section-desc">Les attentes d'un desk ne sont pas celles d'un CV académique classique. Un regard de professionnel permet d'identifier ce qui accroche vraiment, ce qui dessert ton profil, et comment mieux présenter ton parcours pour maximiser tes chances d'obtenir un entretien.</p>
+        <ul class="cv-review-points">
+          <li>Un retour détaillé sur le fond et la forme</li>
+          <li>Les erreurs qui pénalisent ta candidature</li>
+          <li>Des conseils concrets pour mieux valoriser tes expériences</li>
+          <li>Un CV plus lisible, plus crédible et mieux calibré pour la finance de marché</li>
+        </ul>
+      </div>
+
+      <!--
+        Montage de témoignages anonymisés.
+        Pour ajouter/remplacer un screenshot : dépose le fichier à la racine du projet
+        (ex. cv-review-avis-1.png) puis renseigne son nom dans le src ci-dessous.
+        Anonymise chaque capture : pas de nom, pas de photo de profil, pas d'info sensible.
+        Utilise 2 ou 3 blocs .testimonial-shot maximum.
+        Si le fichier est absent, le bloc affiche automatiquement un placeholder discret.
+      -->
+      <div class="cv-review-proof reveal">
+        <div class="section-label">Témoignages étudiants</div>
+        <div class="testimonial-stack">
+          <div class="testimonial-shot">
+            <img src="cv-review-avis-1.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+          </div>
+          <div class="testimonial-shot">
+            <img src="cv-review-avis-2.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+          </div>
+          <div class="testimonial-shot">
+            <img src="cv-review-avis-3.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+          </div>
+        </div>
+      </div>
+
+      <div class="cv-review-buy reveal">
+        <div class="offre-name" style="white-space:nowrap;">Review de CV</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple-glow);margin-bottom:0.8rem;">9 €</div>
+        <p class="offre-desc" style="margin-bottom:1.2rem;">Un retour détaillé sur ton CV par un professionnel du secteur.</p>
+        <ul class="cv-review-buy-features">
+          <li>Commentaires sur le fond, la forme et le positionnement</li>
+          <li>Pensé pour les recrutements en finance de marché</li>
+          <li>Retour clair, concret et actionnable</li>
+        </ul>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
+          <button onclick="payStripe('review_cv')" class="btn-primary" style="text-align:center;font-size:0.9rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Faire analyser mon CV →</button>
+          <button onclick="addToCart('Review de CV', 9, this)" class="btn-ghost" style="text-align:center;font-size:0.85rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="offres" style="padding:3rem 0;">
   <div class="container">
     <div class="offres-header reveal">
@@ -2605,63 +2662,6 @@
         <div class="stat-card"><div class="stat-num">+15</div><div class="stat-label">banques représentées dans notre réseau d'élèves</div></div>
         <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">semaines en moyenne du premier contact à l'offre</div></div>
         <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">des contenus rédigés par des professionnels en activité</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="cv-review">
-  <div class="container">
-    <div class="cv-review-inner">
-      <div class="cv-review-text reveal">
-        <div class="section-label">Review de CV</div>
-        <h2 class="section-title" style="font-size: clamp(1.6rem, 3vw, 2.2rem);">Ton CV, première étape vers l'entretien</h2>
-        <p class="section-desc">En finance de marché, un CV se joue souvent en quelques secondes. Un recruteur en lit des centaines : le moindre détail mal calibré — structure, vocabulaire, ordre des expériences, mise en avant des projets — peut suffire à affaiblir une candidature pourtant solide.</p>
-        <p class="section-desc">Les attentes d'un desk ne sont pas celles d'un CV académique classique. Un regard de professionnel permet d'identifier ce qui accroche vraiment, ce qui dessert ton profil, et comment mieux présenter ton parcours pour maximiser tes chances d'obtenir un entretien.</p>
-        <ul class="cv-review-points">
-          <li>Un retour détaillé sur le fond et la forme</li>
-          <li>Les erreurs qui pénalisent ta candidature</li>
-          <li>Des conseils concrets pour mieux valoriser tes expériences</li>
-          <li>Un CV plus lisible, plus crédible et mieux calibré pour la finance de marché</li>
-        </ul>
-      </div>
-
-      <!--
-        Montage de témoignages anonymisés.
-        Pour ajouter/remplacer un screenshot : dépose le fichier à la racine du projet
-        (ex. cv-review-avis-1.png) puis renseigne son nom dans le src ci-dessous.
-        Anonymise chaque capture : pas de nom, pas de photo de profil, pas d'info sensible.
-        Utilise 2 ou 3 blocs .testimonial-shot maximum.
-        Si le fichier est absent, le bloc affiche automatiquement un placeholder discret.
-      -->
-      <div class="cv-review-proof reveal">
-        <div class="section-label">Témoignages étudiants</div>
-        <div class="testimonial-stack">
-          <div class="testimonial-shot">
-            <img src="cv-review-avis-1.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
-          </div>
-          <div class="testimonial-shot">
-            <img src="cv-review-avis-2.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
-          </div>
-          <div class="testimonial-shot">
-            <img src="cv-review-avis-3.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
-          </div>
-        </div>
-      </div>
-
-      <div class="cv-review-buy reveal">
-        <div class="offre-name" style="white-space:nowrap;">Review de CV</div>
-        <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple-glow);margin-bottom:0.8rem;">9 €</div>
-        <p class="offre-desc" style="margin-bottom:1.2rem;">Un retour détaillé sur ton CV par un professionnel du secteur.</p>
-        <ul class="cv-review-buy-features">
-          <li>Commentaires sur le fond, la forme et le positionnement</li>
-          <li>Pensé pour les recrutements en finance de marché</li>
-          <li>Retour clair, concret et actionnable</li>
-        </ul>
-        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
-          <button onclick="payStripe('review_cv')" class="btn-primary" style="text-align:center;font-size:0.9rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Faire analyser mon CV →</button>
-          <button onclick="addToCart('Review de CV', 9, this)" class="btn-ghost" style="text-align:center;font-size:0.85rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
-        </div>
       </div>
     </div>
   </div>
