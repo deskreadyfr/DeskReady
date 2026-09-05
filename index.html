@@ -2568,6 +2568,9 @@
   </div>
 </section>
 
+<!-- Ancres conservees pour la navigation (sections "Nos formations" / "A la carte" retirees) -->
+<div id="offres" style="scroll-margin-top:6rem;"></div>
+<div id="a-la-carte" style="scroll-margin-top:6rem;"></div>
 <section id="cv-review">
   <div class="container">
     <div class="cv-review-inner">
@@ -2631,6 +2634,7 @@
   Le visuel central est un contenu temporaire (fiche de simulation / débrief) facilement remplaçable.
   Le prix affiché est un placeholder : remplacer "XX €" ci-dessous quand il sera fixé.
 -->
+<div id="entretien-blanc" style="scroll-margin-top:6rem;"></div>
 <section id="entretien-blanc-section">
   <div class="container">
     <div class="eb-inner">
@@ -2734,6 +2738,10 @@
   </div>
 </section>
 
+<!-- [Homepage MVP] Section "Nos Formations" (Basic / Gold / Elite) retiree de la homepage.
+     Conservee ci-dessous dans un <template> inerte : code, donnees, routes et pages inchanges,
+     rendu simplement desactive sur la homepage. -->
+<template id="tpl-offres-formations" data-removed-from-homepage="nos-formations">
 <section id="offres" style="padding:3rem 0;">
   <div class="container">
     <div class="offres-header reveal">
@@ -2795,6 +2803,7 @@
     </div>
   </div>
 </section>
+</template>
 
 <section id="apropos">
   <div class="container">
@@ -2824,38 +2833,10 @@
   </div>
 </section>
 
-<section id="pourquoi">
-  <div class="container">
-    <div class="pourquoi-inner">
-      <div class="reveal">
-        <div class="section-label">Pourquoi DeskReady ?</div>
-        <h2 class="section-title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); white-space: nowrap;">Un milieu compétitif aux codes précis</h2>
-        <p class="section-desc">Maîtriser la technique ne suffit pas : il faut aussi comprendre les codes du milieu.</p>
-        <div class="values-list">
-          <div class="value-item">
-            <div class="value-icon">🎓</div>
-            <div><div class="value-title">Fait par des professionnels du milieu</div><div class="value-desc">Une formation conçue par des professionnels qui connaissent les attentes des desks.</div></div>
-          </div>
-          <div class="value-item">
-            <div class="value-icon">🔗</div>
-            <div><div class="value-title">Le réseau, au cœur de tout</div><div class="value-desc">On t'apprend à networker intelligemment et à approcher les professionnels du secteur de la bonne manière.</div></div>
-          </div>
-          <div class="value-item">
-            <div class="value-icon">⚡</div>
-            <div><div class="value-title">Des bases techniques solides</div><div class="value-desc">Comprendre les produits, les marchés et les mécanismes clés pour être crédible dès tes premiers échanges avec des professionnels.</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="stats-grid reveal">
-        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">de nos membres décrochent un stage en finance de marché avec notre accompagnement</div></div>
-        <div class="stat-card"><div class="stat-num">+15</div><div class="stat-label">banques représentées dans notre réseau d'élèves</div></div>
-        <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">semaines en moyenne du premier contact à l'offre</div></div>
-        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">des contenus rédigés par des professionnels en activité</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- [Homepage MVP] Section "A la carte" retiree de la homepage (doublon des sections
+     detaillees Review de CV / Entretien blanc plus haut). Conservee dans un <template>
+     inerte : composants, donnees et fonctions de paiement inchanges. -->
+<template id="tpl-offres-a-la-carte" data-removed-from-homepage="a-la-carte">
 <section id="offres-a-la-carte">
   <div class="container">
     <div id="a-la-carte" style="scroll-margin-top:6rem;">
@@ -2920,6 +2901,7 @@
     </div>
   </div>
 </section>
+</template>
 
 <section id="temoignages">
   <div class="container">
@@ -2937,6 +2919,38 @@
         <div class="carousel-dots" id="carousel-dots"></div>
       </div>
       <button class="carousel-btn" id="carousel-next" onclick="carouselMove(1)" aria-label="Suivant">→</button>
+    </div>
+  </div>
+</section>
+
+<section id="pourquoi">
+  <div class="container">
+    <div class="pourquoi-inner">
+      <div class="reveal">
+        <div class="section-label">Pourquoi DeskReady ?</div>
+        <h2 class="section-title" style="font-size: clamp(1.6rem, 3vw, 2.2rem); white-space: nowrap;">Un milieu compétitif aux codes précis</h2>
+        <p class="section-desc">Maîtriser la technique ne suffit pas : il faut aussi comprendre les codes du milieu.</p>
+        <div class="values-list">
+          <div class="value-item">
+            <div class="value-icon">🎓</div>
+            <div><div class="value-title">Fait par des professionnels du milieu</div><div class="value-desc">Une formation conçue par des professionnels qui connaissent les attentes des desks.</div></div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🔗</div>
+            <div><div class="value-title">Le réseau, au cœur de tout</div><div class="value-desc">On t'apprend à networker intelligemment et à approcher les professionnels du secteur de la bonne manière.</div></div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">⚡</div>
+            <div><div class="value-title">Des bases techniques solides</div><div class="value-desc">Comprendre les produits, les marchés et les mécanismes clés pour être crédible dès tes premiers échanges avec des professionnels.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-grid reveal">
+        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">de nos membres décrochent un stage en finance de marché avec notre accompagnement</div></div>
+        <div class="stat-card"><div class="stat-num">+15</div><div class="stat-label">banques représentées dans notre réseau d'élèves</div></div>
+        <div class="stat-card"><div class="stat-num">6</div><div class="stat-label">semaines en moyenne du premier contact à l'offre</div></div>
+        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">des contenus rédigés par des professionnels en activité</div></div>
+      </div>
     </div>
   </div>
 </section>
