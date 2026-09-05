@@ -402,26 +402,16 @@
   .eb-points li { position: relative; padding-left: 1.6rem; color: var(--grey); font-size: 0.92rem; line-height: 1.55; font-weight: 300; }
   .eb-points li::before { content: '→'; position: absolute; left: 0; color: var(--purple-glow); font-weight: 700; }
 
-  /* Colonne centrale : fiche de simulation / débrief (contenu temporaire, facilement remplaçable) */
+  /* Colonne centrale : bloc explicatif des 3 étapes réelles (service humain, pas d'interface simulée) */
   .eb-visual { display: flex; flex-direction: column; justify-content: center; }
-  .eb-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.4rem; box-shadow: 0 18px 45px rgba(0,0,0,0.35); display: flex; flex-direction: column; gap: 0.9rem; width: 100%; }
-  .eb-panel-head { display: flex; align-items: center; justify-content: space-between; padding-bottom: 0.9rem; border-bottom: 1px solid var(--border); }
-  .eb-panel-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; }
-  .eb-live { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
-  .eb-live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--purple-glow); box-shadow: 0 0 0 3px rgba(168,85,247,0.2); flex-shrink: 0; }
-  .eb-step { display: flex; align-items: center; gap: 0.6rem; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--grey); font-weight: 600; }
-  .eb-step b { width: 20px; height: 20px; border-radius: 6px; background: rgba(168,85,247,0.15); border: 1px solid var(--border); color: var(--purple-glow); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; }
-  .eb-block { background: rgba(124,58,237,0.05); border: 1px solid var(--border); border-radius: 10px; padding: 0.85rem 0.95rem; }
-  .eb-block-label { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple-glow); margin-bottom: 0.35rem; font-weight: 600; }
-  .eb-block-text { font-size: 0.8rem; color: var(--grey); line-height: 1.5; font-weight: 300; }
-  .eb-criteria { display: flex; flex-direction: column; gap: 0.6rem; }
-  .eb-criterion { display: grid; grid-template-columns: 74px 1fr; align-items: center; gap: 0.7rem; }
-  .eb-criterion span { font-size: 0.74rem; color: var(--grey); }
-  .eb-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.06); overflow: hidden; }
-  .eb-bar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--purple-core), var(--purple-glow)); }
-  .eb-axes { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; margin: 0; }
-  .eb-axes li { position: relative; padding-left: 1.2rem; font-size: 0.78rem; color: var(--grey); line-height: 1.45; font-weight: 300; }
-  .eb-axes li::before { content: '↗'; position: absolute; left: 0; color: var(--purple-glow); font-weight: 700; }
+  .eb-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 0.6rem 1.8rem; box-shadow: 0 18px 45px rgba(0,0,0,0.35); display: flex; flex-direction: column; width: 100%; }
+  .eb-stage { padding: 1.6rem 0; }
+  .eb-stage + .eb-stage { border-top: 1px solid var(--border); }
+  .eb-stage-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.6rem; }
+  .eb-stage-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.8rem; color: var(--purple-glow); letter-spacing: 0.05em; flex-shrink: 0; }
+  .eb-stage-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: -0.01em; }
+  .eb-stage-text { font-size: 0.86rem; color: var(--grey); line-height: 1.6; font-weight: 300; margin: 0; }
+  .eb-stage-hint { margin: 0.7rem 0 0; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--grey); opacity: 0.65; font-weight: 300; }
 
   .eb-buy { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2.2rem 2rem; display: flex; flex-direction: column; }
   .eb-buy .eb-buy-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 0 0 1.6rem; }
@@ -433,9 +423,6 @@
     .eb-visual { order: 2; }
     .eb-buy { order: 3; }
     .eb-panel { max-width: 460px; margin: 0 auto; }
-  }
-  @media (max-width: 560px) {
-    .eb-criterion { grid-template-columns: 64px 1fr; }
   }
 
   #temoignages { padding: 3rem 0; }
@@ -2612,45 +2599,35 @@
       </div>
 
       <!--
-        Colonne centrale — fiche de simulation / débrief anonymisée.
-        Contenu d'exemple, pas un vrai témoignage. Remplace librement les textes ci-dessous.
-        Elle illustre le parcours : mise en situation → challenge → évaluation → débrief.
+        Colonne centrale — bloc explicatif des 3 étapes réelles de l'entretien blanc.
+        Service humain et personnalisé : pas d'interface simulée, pas de scoring.
+        Textes facilement modifiables ci-dessous.
       -->
       <div class="eb-visual reveal">
         <div class="eb-panel">
-          <div class="eb-panel-head">
-            <span class="eb-panel-title">Simulation d'entretien</span>
-            <span class="eb-live">Desk visé · Rates</span>
-          </div>
-
-          <div class="eb-step"><b>1</b> Mise en situation</div>
-          <div class="eb-block">
-            <div class="eb-block-label">Question technique</div>
-            <div class="eb-block-text">« Comment expliques-tu la pentification de la courbe des taux et son impact sur un portefeuille de swaps ? »</div>
-          </div>
-
-          <div class="eb-step"><b>2</b> Sous pression</div>
-          <div class="eb-block">
-            <div class="eb-block-label">Relance</div>
-            <div class="eb-block-text">« Ta réponse tient 30 secondes. Va droit au but : quel est le risque principal ? »</div>
-          </div>
-
-          <div class="eb-step"><b>3</b> Évaluation</div>
-          <div class="eb-block">
-            <div class="eb-criteria">
-              <div class="eb-criterion"><span>Fond</span><div class="eb-bar"><i style="width:72%"></i></div></div>
-              <div class="eb-criterion"><span>Forme</span><div class="eb-bar"><i style="width:58%"></i></div></div>
-              <div class="eb-criterion"><span>Préparation</span><div class="eb-bar"><i style="width:65%"></i></div></div>
+          <div class="eb-stage">
+            <div class="eb-stage-head">
+              <span class="eb-stage-num">01</span>
+              <span class="eb-stage-title">Questions ciblées</span>
             </div>
+            <p class="eb-stage-text">Questions techniques et de fit adaptées au desk visé, aux classes d'actifs de ton choix et à ton CV.</p>
+            <p class="eb-stage-hint">FX · Rates · Credit · Equity · Structured Products</p>
           </div>
 
-          <div class="eb-step"><b>4</b> Débrief</div>
-          <div class="eb-block">
-            <div class="eb-block-label">Axes de travail</div>
-            <ul class="eb-axes">
-              <li>Structurer la réponse en 3 points avant de rentrer dans le détail</li>
-              <li>Assumer un avis clair sur le risque plutôt que de rester descriptif</li>
-            </ul>
+          <div class="eb-stage">
+            <div class="eb-stage-head">
+              <span class="eb-stage-num">02</span>
+              <span class="eb-stage-title">Feedback personnalisé</span>
+            </div>
+            <p class="eb-stage-text">Retour détaillé sur tes réponses, ton raisonnement, ton pitch, ta communication et ta maîtrise technique.</p>
+          </div>
+
+          <div class="eb-stage">
+            <div class="eb-stage-head">
+              <span class="eb-stage-num">03</span>
+              <span class="eb-stage-title">Plan de progression</span>
+            </div>
+            <p class="eb-stage-text">Évaluation de tes points forts, de tes axes d'amélioration et des sujets à retravailler avant ton prochain entretien.</p>
           </div>
         </div>
       </div>
