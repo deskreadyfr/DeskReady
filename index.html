@@ -354,12 +354,44 @@
   .cv-review-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.6rem; }
   .cv-review-points li { position: relative; padding-left: 1.6rem; color: var(--grey); font-size: 0.92rem; line-height: 1.55; font-weight: 300; }
   .cv-review-points li::before { content: '→'; position: absolute; left: 0; color: var(--purple-glow); font-weight: 700; }
-  .cv-review-img { border: 1px dashed rgba(168,85,247,0.35); border-radius: 16px; background: rgba(124,58,237,0.05); display: flex; align-items: center; justify-content: center; min-height: 320px; color: var(--grey); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; overflow: hidden; }
-  .cv-review-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; }
+
+  /* --- Montage de témoignages anonymisés (colonne centrale) --- */
+  .cv-review-proof { display: flex; flex-direction: column; align-items: center; }
+  .cv-review-proof .section-label { align-self: center; text-align: center; margin-bottom: 1.6rem; }
+  .testimonial-stack { position: relative; width: 100%; display: flex; flex-direction: column; align-items: center; padding: 0.5rem 0 2.5rem; }
+  .testimonial-shot {
+    width: 82%; border-radius: 14px; overflow: hidden;
+    border: 1px solid var(--border); background: var(--card-bg);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.45);
+    transition: transform 0.3s ease;
+  }
+  .testimonial-shot + .testimonial-shot { margin-top: -46px; }
+  .testimonial-shot:nth-child(1) { transform: rotate(-2.5deg); align-self: flex-start; z-index: 1; }
+  .testimonial-shot:nth-child(2) { transform: rotate(2deg); align-self: flex-end; z-index: 2; }
+  .testimonial-shot:nth-child(3) { transform: rotate(-1.5deg); align-self: center; z-index: 3; }
+  .testimonial-stack:hover .testimonial-shot { transform: rotate(0deg); }
+  .testimonial-shot img { display: block; width: 100%; height: auto; }
+  .testimonial-shot .testimonial-placeholder {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    min-height: 150px; padding: 1.5rem; color: var(--grey);
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    background: rgba(124,58,237,0.06);
+  }
+
   .cv-review-buy { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2.2rem 2rem; display: flex; flex-direction: column; }
+  .cv-review-buy .cv-review-buy-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 0 0 1.6rem; }
+  .cv-review-buy .cv-review-buy-features li { position: relative; padding-left: 1.4rem; color: var(--grey); font-size: 0.83rem; line-height: 1.5; font-weight: 300; }
+  .cv-review-buy .cv-review-buy-features li::before { content: '✓'; position: absolute; left: 0; color: var(--purple-glow); font-weight: 700; }
   @media (max-width: 980px) {
     .cv-review-inner { grid-template-columns: 1fr; gap: 2rem; }
-    .cv-review-img { min-height: 220px; }
+    .testimonial-stack { max-width: 420px; margin: 0 auto; }
+  }
+  @media (max-width: 560px) {
+    .testimonial-shot { width: 100%; }
+    .testimonial-shot + .testimonial-shot { margin-top: 1rem; }
+    .testimonial-shot:nth-child(1),
+    .testimonial-shot:nth-child(2),
+    .testimonial-shot:nth-child(3) { transform: none; align-self: center; }
   }
 
   #temoignages { padding: 3rem 0; }
@@ -746,7 +778,7 @@
 
     <div class="hero-col-right">
       <div class="hero-testimonial">
-        <p class="hero-testimonial-label">Après un échange avec DeskReady</p>
+        <p class="hero-testimonial-label">Après un échange avec un de nos coachs</p>
         <div class="hero-testimonial-card">
           <!-- Pour remplacer le témoignage : remplace simplement le fichier student-feedback.png à la racine du projet -->
           <img id="student-feedback-image" src="student-feedback.png" alt="Témoignage d'un étudiant DeskReady" loading="lazy">
@@ -2583,27 +2615,52 @@
     <div class="cv-review-inner">
       <div class="cv-review-text reveal">
         <div class="section-label">Review de CV</div>
-        <h2 class="section-title" style="font-size: clamp(1.6rem, 3vw, 2.2rem);">Ton CV, ta première impression</h2>
-        <p class="section-desc">En finance de marché, ton CV est filtré en quelques secondes. Un recruteur en lit des centaines : le moindre détail mal calibré — format, ordre des expériences, vocabulaire, mise en avant des projets — peut suffire à écarter une candidature pourtant solide.</p>
-        <p class="section-desc">Les codes attendus sur un desk ne sont pas ceux d'un CV classique. Un regard de professionnel du secteur te permet d'identifier ce qui accroche vraiment, ce qui dessert ta candidature, et comment présenter ton parcours pour maximiser tes chances de décrocher un entretien.</p>
+        <h2 class="section-title" style="font-size: clamp(1.6rem, 3vw, 2.2rem);">Ton CV, première étape vers l'entretien</h2>
+        <p class="section-desc">En finance de marché, un CV se joue souvent en quelques secondes. Un recruteur en lit des centaines : le moindre détail mal calibré — structure, vocabulaire, ordre des expériences, mise en avant des projets — peut suffire à affaiblir une candidature pourtant solide.</p>
+        <p class="section-desc">Les attentes d'un desk ne sont pas celles d'un CV académique classique. Un regard de professionnel permet d'identifier ce qui accroche vraiment, ce qui dessert ton profil, et comment mieux présenter ton parcours pour maximiser tes chances d'obtenir un entretien.</p>
         <ul class="cv-review-points">
-          <li>Un retour ligne par ligne sur le fond et la forme</li>
-          <li>Les attentes réelles des recruteurs en finance de marché</li>
-          <li>Comment valoriser tes expériences et projets techniques</li>
-          <li>Les erreurs qui coûtent un entretien</li>
+          <li>Un retour détaillé sur le fond et la forme</li>
+          <li>Les erreurs qui pénalisent ta candidature</li>
+          <li>Des conseils concrets pour mieux valoriser tes expériences</li>
+          <li>Un CV plus lisible, plus crédible et mieux calibré pour la finance de marché</li>
         </ul>
       </div>
-      <div class="cv-review-img reveal">
-        <!-- Remplace ce bloc par : <img src="chemin/vers/image.jpg" alt="Review de CV"> -->
-        Image
+
+      <!--
+        Montage de témoignages anonymisés.
+        Pour ajouter/remplacer un screenshot : dépose le fichier à la racine du projet
+        (ex. cv-review-avis-1.png) puis renseigne son nom dans le src ci-dessous.
+        Anonymise chaque capture : pas de nom, pas de photo de profil, pas d'info sensible.
+        Utilise 2 ou 3 blocs .testimonial-shot maximum.
+        Si le fichier est absent, le bloc affiche automatiquement un placeholder discret.
+      -->
+      <div class="cv-review-proof reveal">
+        <div class="section-label">Témoignages étudiants</div>
+        <div class="testimonial-stack">
+          <div class="testimonial-shot">
+            <img src="cv-review-avis-1.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+          </div>
+          <div class="testimonial-shot">
+            <img src="cv-review-avis-2.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+          </div>
+          <div class="testimonial-shot">
+            <img src="cv-review-avis-3.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+          </div>
+        </div>
       </div>
+
       <div class="cv-review-buy reveal">
         <div class="offre-name" style="white-space:nowrap;">Review de CV</div>
-        <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple-glow);margin-bottom:0.8rem;">9€</div>
-        <p class="offre-desc">Un retour détaillé sur ton CV par un professionnel du secteur.</p>
-        <div style="display:flex;flex-direction:column;gap:0.4rem;margin-top:auto;">
-          <button onclick="addToCart('Review de CV', 9, this)" class="btn-ghost" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;">Je veux</button>
-          <button onclick="payStripe('review_cv')" class="btn-primary" style="text-align:center;font-size:0.88rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Payer · 9€ →</button>
+        <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple-glow);margin-bottom:0.8rem;">9 €</div>
+        <p class="offre-desc" style="margin-bottom:1.2rem;">Un retour détaillé sur ton CV par un professionnel du secteur.</p>
+        <ul class="cv-review-buy-features">
+          <li>Commentaires sur le fond, la forme et le positionnement</li>
+          <li>Pensé pour les recrutements en finance de marché</li>
+          <li>Retour clair, concret et actionnable</li>
+        </ul>
+        <div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:auto;">
+          <button onclick="payStripe('review_cv')" class="btn-primary" style="text-align:center;font-size:0.9rem;display:block;width:100%;cursor:pointer;justify-content:center;border:none;">Faire analyser mon CV →</button>
+          <button onclick="addToCart('Review de CV', 9, this)" class="btn-ghost" style="text-align:center;font-size:0.85rem;display:block;width:100%;cursor:pointer;">Ajouter au panier</button>
         </div>
       </div>
     </div>
