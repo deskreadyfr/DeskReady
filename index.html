@@ -377,8 +377,9 @@
   .testimonial-viewport {
     overflow: hidden; border-radius: 18px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    transition: height 0.45s ease;
   }
-  .testimonial-track { display: flex; transition: transform 0.5s ease; }
+  .testimonial-track { display: flex; align-items: flex-start; transition: transform 0.5s ease; }
   .testimonial-frame {
     position: relative; flex: 0 0 100%;
     padding: 10px; border-radius: 18px;
@@ -387,13 +388,12 @@
     cursor: zoom-in;
   }
   .testimonial-frame img {
-    display: block; width: 100%; height: 440px;
-    object-fit: cover; object-position: top center;
+    display: block; width: 100%; height: auto;
     border-radius: 10px;
   }
   .testimonial-frame .testimonial-placeholder {
     display: flex; align-items: center; justify-content: center; text-align: center;
-    height: 440px; padding: 1.5rem; color: var(--grey);
+    min-height: 360px; padding: 1.5rem; color: var(--grey);
     font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
     background: rgba(124,58,237,0.06); border-radius: 10px;
   }
@@ -3490,15 +3490,22 @@ function openTestimonialLightbox(src) {
 (function initCvTestimonials() {
   var root = document.getElementById('cvTestimonials');
   if (!root) return;
+  var viewport = root.querySelector('.testimonial-viewport');
   var track = root.querySelector('.testimonial-track');
   var dotsWrap = root.querySelector('.testimonial-dots');
   var count = track ? track.children.length : 0;
-  if (!track || !dotsWrap || count < 2) return;
+  if (!viewport || !track || !dotsWrap || count < 2) return;
   var index = 0, timer = null;
+  function fitHeight() {
+    // Hauteur du carrousel = hauteur de la capture affichée (image entière, non rognée).
+    var slide = track.children[index];
+    if (slide) viewport.style.height = slide.offsetHeight + 'px';
+  }
   function render() {
     track.style.transform = 'translateX(-' + (index * 100) + '%)';
     var dots = dotsWrap.children;
     for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('active', k === index);
+    fitHeight();
   }
   function go(n) { index = (n % count + count) % count; render(); }
   function start() { timer = setInterval(function () { go(index + 1); }, 5000); }
@@ -3512,9 +3519,18 @@ function openTestimonialLightbox(src) {
       dotsWrap.appendChild(b);
     })(i);
   }
+  // Réajuste la hauteur quand les captures finissent de charger et au redimensionnement.
+  var imgs = track.querySelectorAll('img');
+  for (var j = 0; j < imgs.length; j++) {
+    if (imgs[j].complete) continue;
+    imgs[j].addEventListener('load', fitHeight);
+    imgs[j].addEventListener('error', fitHeight);
+  }
+  window.addEventListener('resize', fitHeight);
   root.addEventListener('mouseenter', stop);
   root.addEventListener('mouseleave', start);
   render();
+  setTimeout(fitHeight, 200);
   start();
 })();
 
