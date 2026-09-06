@@ -2910,6 +2910,12 @@
   </div>
 </section>
 
+<!-- [Homepage MVP] Section "Pourquoi DeskReady ?" retiree de la homepage.
+     Section temporarily removed from homepage — kept for possible future reuse.
+     Le markup, les donnees (stats) et les styles (#pourquoi, .pourquoi-inner,
+     .values-list, .stat-card...) restent intacts : reactivable en sortant le
+     <section> de ce <template>. -->
+<template id="tpl-pourquoi" data-removed-from-homepage="pourquoi">
 <section id="pourquoi">
   <div class="container">
     <div class="pourquoi-inner">
@@ -2941,6 +2947,7 @@
     </div>
   </div>
 </section>
+</template>
 
 <section id="blog">
   <div class="container">
@@ -3050,10 +3057,10 @@
     <div style="text-align:center;margin-bottom:4rem;" class="reveal">
       <div class="section-label">Nous contacter</div>
       <h2 class="section-title" style="font-size:clamp(2rem,4vw,3rem);">On est là pour toi</h2>
-      <p class="section-desc" style="margin:0 auto;">Une question ou prêt à passer à l'action ? Les deux options sont juste en dessous.</p>
+      <p class="section-desc" style="margin:0 auto;">Une question sur l'accompagnement DeskReady ? Écris-nous, on te répond rapidement.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:stretch;" class="contact-dual-grid">
+    <div style="display:grid;grid-template-columns:1fr;gap:2rem;align-items:stretch;max-width:620px;margin:0 auto;" class="contact-dual-grid">
 
       <div class="reveal" style="display:flex;flex-direction:column;">
         <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:2.5rem;flex:1;display:flex;flex-direction:column;">
@@ -3079,6 +3086,15 @@
         </div>
       </div>
 
+      <!-- [Homepage MVP] Bloc "Call decouverte" retire de la section Contact :
+           doublon avec la nouvelle section "Bilan candidature · 15 min offertes".
+           Section temporarily removed from homepage — kept for possible future reuse.
+           Le markup et toute la logique de reservation (validatePrebooking,
+           backToPrebooking, insert Supabase "bookings", embed Calendly) restent
+           intacts et reutilisables : reactivable en sortant ce <div id="booking">
+           de ce <template>. La CTA "Bilan candidature" utilise openCalendly(),
+           qui bascule automatiquement sur le popup Calendly quand #booking est absent. -->
+      <template id="tpl-contact-booking" data-removed-from-homepage="contact-call-decouverte">
       <div class="reveal" id="booking" style="display:flex;flex-direction:column;">
         <div id="prebooking-step" style="flex:1;display:flex;flex-direction:column;">
           <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:2.5rem;flex:1;display:flex;flex-direction:column;">
@@ -3135,6 +3151,7 @@
           </div>
         </div>
       </div>
+      </template>
     </div>
   </div>
 </section>
@@ -3340,7 +3357,7 @@
   </div>
 </footer>
 
-<button onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})" class="floating-cta" style="border:none;cursor:pointer;">Réserve un call gratuit ↗</button>
+<button onclick="openCalendly()" class="floating-cta" style="border:none;cursor:pointer;">Réserve un call gratuit ↗</button>
 
 <script>
 // Empêche le navigateur de restaurer la position de scroll au refresh.
