@@ -309,27 +309,34 @@
   .offre-list li { font-size: 0.88rem; color: rgba(248,244,255,0.7); display: flex; align-items: flex-start; gap: 0.6rem; }
   .offre-list li::before { content: '→'; color: var(--purple-glow); flex-shrink: 0; margin-top: 1px; }
 
-  #apropos { padding: 3rem 0; }
-  .apropos-inner {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
-    align-items: stretch;
+  #apropos { padding: 5.5rem 0; }
+  .mission-inner {
+    max-width: 780px; margin: 0 auto; text-align: center;
+    display: flex; flex-direction: column; align-items: center;
   }
-  .apropos-col-left {
-    display: flex; flex-direction: column;
+  .mission-inner .section-label { margin-bottom: 1.2rem; }
+  .mission-inner .section-title { font-size: clamp(1.9rem, 4vw, 2.9rem); margin-bottom: 1.8rem; max-width: 700px; }
+  .mission-text { color: var(--grey); font-size: 1.02rem; font-weight: 300; line-height: 1.8; max-width: 640px; }
+  .mission-text + .mission-text { margin-top: 1.1rem; }
+  .mission-pillars {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem;
+    margin-top: 3rem;
   }
-  .apropos-card-main {
-    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(168,85,247,0.05));
-    border: 1px solid rgba(168,85,247,0.3); border-radius: 20px; padding: 2rem 2.5rem;
-    position: relative; overflow: hidden;
-    flex: 1;
-    display: flex; flex-direction: column; justify-content: flex-start; padding-top: 1.5rem;
+  .mission-pillar {
+    background: rgba(124,58,237,0.12);
+    border: 1px solid rgba(168,85,247,0.28);
+    color: var(--purple-soft);
+    font-size: 0.85rem; font-weight: 500;
+    padding: 0.55rem 1.1rem; border-radius: 999px;
   }
-  .apropos-card-main::before { content: ''; position: absolute; top: -50%; right: -30%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(124,58,237,0.3), transparent 70%); pointer-events: none; }
-  .apropos-name { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.3rem; }
-  .apropos-role { font-size: 0.85rem; color: var(--purple-soft); margin-bottom: 0.4rem; }
-  .apropos-bio { font-size: 0.95rem; color: var(--grey); line-height: 1.6; }
-  .apropos-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 1.5rem; }
-  .apropos-tag { background: rgba(124,58,237,0.2); border: 1px solid rgba(168,85,247,0.25); color: var(--purple-soft); font-size: 0.75rem; font-weight: 500; padding: 0.25rem 0.75rem; border-radius: 999px; }
+  .mission-cta { margin-top: 3rem; }
+
+  @media (max-width: 600px) {
+    #apropos { padding: 3.5rem 0; }
+    .mission-inner .section-title { margin-bottom: 1.4rem; }
+    .mission-pillars { gap: 0.6rem; margin-top: 2.4rem; }
+    .mission-cta { margin-top: 2.4rem; }
+  }
 
   #pourquoi { padding: 3rem 0; background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04) 50%, transparent); }
   .pourquoi-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: end; }
@@ -758,7 +765,7 @@
     .nav-links { display: none; }
     .offres-grid, .temoignages-track .temoignage-card { flex: 0 0 100%; }
     .blog-grid { grid-template-columns: 1fr; }
-    .pourquoi-inner, .apropos-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .pourquoi-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
     .stats-grid { grid-template-columns: 1fr 1fr; }
   }
 
@@ -2801,27 +2808,19 @@
 
 <section id="apropos">
   <div class="container">
-    <div class="apropos-inner">
-      <div class="reveal apropos-col-left">
-        <div class="section-label" style="margin-bottom:1rem;">Notre Histoire</div>
-        <div class="apropos-card-main">
-          <div class="apropos-name">A&C — Les Deux Fondateurs</div>
-          <div class="apropos-role">Anciens étudiants d'école de commerce · Aujourd'hui Sales sur des desks FICC</div>
-          <p class="apropos-bio" style="margin-top:1.2rem;">Nous sommes passés par le même parcours que beaucoup d'étudiants intéressés par la finance de marché. En cherchant à rejoindre un desk en stage ou en CDI, nous avons rapidement constaté un décalage entre les formations académiques et les attentes réelles du secteur.</p>
-          <p class="apropos-bio" style="margin-top:0.6rem;">Les connaissances techniques sont importantes, mais ce sont souvent les codes du milieu, le networking et la compréhension des attentes des desks qui font la différence.</p>
-          <p class="apropos-bio" style="margin-top:0.6rem;">Avec DeskReady, nous avons voulu créer la plateforme que nous aurions aimé avoir à l'époque : un endroit pour comprendre le secteur, structurer sa stratégie et se préparer efficacement aux opportunités en salle de marché.</p>
-          <p class="apropos-bio" style="margin-top:0.6rem;">Notre objectif est simple : aider les étudiants à gagner du temps, éviter les erreurs les plus courantes et aborder les processus de recrutement avec une stratégie claire.</p>
-        </div>
+    <div class="mission-inner reveal">
+      <div class="section-label">Notre mission</div>
+      <h2 class="section-title">Rendre les recrutements en finance de marché plus accessibles</h2>
+      <p class="mission-text">Les recrutements en finance de marché sont exigeants, rapides et souvent opaques. Beaucoup d'étudiants ne savent pas exactement ce qui est attendu d'eux, comment présenter leur parcours ou comment se préparer efficacement aux entretiens.</p>
+      <p class="mission-text">DeskReady a été créé pour rendre cette préparation plus claire, plus concrète et plus accessible.</p>
+      <p class="mission-text">Notre objectif : t'aider à identifier ce que tu dois améliorer, structurer ta candidature et arriver mieux préparé à chaque étape du recrutement.</p>
+      <div class="mission-pillars">
+        <span class="mission-pillar">Comprendre les attentes</span>
+        <span class="mission-pillar">Corriger les points faibles</span>
+        <span class="mission-pillar">Arriver prêt en entretien</span>
       </div>
-      <div class="reveal" style="display:flex;flex-direction:column;justify-content:flex-start;">
-        <div class="section-label">Notre mission</div>
-        <h2 class="section-title">Vous rendre opérationnel dès votre arrivée sur le desk</h2>
-        <p class="section-desc">Les marchés restent un univers exigeant, difficile à pénétrer et largement fondé sur le réseau. Pourtant, les formations académiques préparent rarement aux réalités concrètes des desks.</p>
-        <p class="section-desc" style="margin-top:1rem;">DeskReady a été créé pour combler cet écart. Notre objectif : t'apporter les connaissances pratiques, les codes et les méthodes qui font réellement la différence lorsqu'il s'agit de décrocher un stage sur un desk.</p>
-        <p class="section-desc" style="margin-top:1rem;">Au-delà de la théorie, nous transmettons une approche, un réseau et une compréhension concrète du fonctionnement des desks.</p>
-        <div style="margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;">
-          <a href="#offres" class="btn-primary">Voir les offres →</a>
-        </div>
+      <div class="mission-cta">
+        <a href="#offres" class="btn-ghost">Découvrir nos accompagnements →</a>
       </div>
     </div>
   </div>
