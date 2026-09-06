@@ -42,6 +42,13 @@
   .nav-links a:hover { color: var(--white); }
   .nav-cta { background: var(--purple-core); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 500 !important; }
   .nav-cta:hover { background: var(--purple-glow) !important; }
+  .nav-academy-link { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .nav-soon-badge {
+    font-size: 0.58rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--purple-soft); background: rgba(124,58,237,0.15);
+    border: 1px solid rgba(168,85,247,0.3); border-radius: 999px;
+    padding: 0.1rem 0.42rem; line-height: 1.5; white-space: nowrap;
+  }
 
   .nav-dropdown { position: relative; }
   .nav-dropdown-toggle {
@@ -826,7 +833,7 @@
         <a href="/pricer.html"><span class="drop-icon">📊</span>Pricer</a>
       </div>
     </li>
-    <li><a href="/plateforme.html">Plateforme</a></li>
+    <li><a href="/academy.html" class="nav-academy-link">Academy <span class="nav-soon-badge">Bientôt</span></a></li>
     <li><a href="#apropos">À propos</a></li>
     <li><a href="#temoignages">Témoignages</a></li>
     <li><a href="#faq">FAQ</a></li>
@@ -3093,7 +3100,7 @@
             <div class="form-group"><label>Email <span style="color:var(--purple-glow);">*</span></label><input type="email" id="msg-email" placeholder="jean.dupont@ecole.edu"></div>
             <div class="form-group"><label>Message <span style="color:var(--purple-glow);">*</span></label><textarea id="msg-question" rows="4" placeholder="Ta question…" style="resize:vertical;"></textarea></div>
             <div id="msg-error" style="display:none;color:#f87171;font-size:0.83rem;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);border-radius:8px;padding:0.6rem 0.9rem;"></div>
-            <button id="send-msg-btn" onclick="sendMessage()" class="btn-primary" style="width:100%;justify-content:center;border:none;font-size:0.95rem;padding:0.9rem;">Envoyer mon message →</button>
+            <button id="send-msg-btn" onclick="sendMessage()" class="btn-primary" style="width:100%;justify-content:center;border:none;font-size:0.95rem;padding:0.9rem;">Envoyer mon message</button>
             <div id="msg-feedback" style="display:none;text-align:center;font-size:0.83rem;"></div>
           </div>
         </div>

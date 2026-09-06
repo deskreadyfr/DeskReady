@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Academy · DeskReady</title>
+  <meta name="description" content="DeskReady Academy — la future plateforme de préparation technique aux recrutements en finance de marché. Découvre les thèmes à venir et rejoins la liste d'attente.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800;900&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #050508;
+      --purple-core: #7c3aed;
+      --purple-glow: #a855f7;
+      --purple-soft: #c084fc;
+      --purple-dim: #3b0764;
+      --white: #f8f4ff;
+      --grey: #a09ab5;
+      --card-bg: rgba(255,255,255,0.03);
+      --border: rgba(168,85,247,0.15);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+    /* Stars bg — identique aux autres pages DeskReady */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 20%, rgba(168,85,247,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 10%, rgba(248,244,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 35%, rgba(168,85,247,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 60%, rgba(248,244,255,0.25) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 75%, rgba(168,85,247,0.35) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 90%, rgba(248,244,255,0.2) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 10% 85%, rgba(168,85,247,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 55%, rgba(248,244,255,0.3) 0%, transparent 100%);
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.6rem 4rem;
+      backdrop-filter: blur(20px);
+      background: rgba(5,5,8,0.6);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo img { height: 36px; width: auto; max-width: 180px; display: block; object-fit: contain; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; flex: 1; justify-content: center; }
+    .nav-links a { color: var(--white); text-decoration: none; font-size: 0.88rem; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links .active { color: var(--purple-soft); }
+    .nav-cta { background: var(--purple-core); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 6px; font-weight: 500 !important; font-family: inherit; }
+    .nav-cta:hover { background: var(--purple-glow) !important; }
+    .nav-academy-link { display: inline-flex; align-items: center; gap: 0.4rem; }
+    .nav-soon-badge {
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--purple-soft); background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(168,85,247,0.3); border-radius: 999px;
+      padding: 0.1rem 0.42rem; line-height: 1.5; white-space: nowrap;
+    }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-toggle {
+      color: var(--white); text-decoration: none; font-size: 0.88rem;
+      font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s;
+      display: flex; align-items: center; gap: 0.3rem; cursor: pointer;
+      background: none; border: none; padding: 0.2rem 0; font-family: inherit;
+    }
+    .nav-dropdown-toggle:hover, .nav-dropdown:hover .nav-dropdown-toggle { color: var(--white); }
+    .nav-dropdown-toggle svg { transition: transform 0.2s; }
+    .nav-dropdown:hover .nav-dropdown-toggle svg { transform: rotate(180deg); }
+    .nav-dropdown::after { content: ''; position: absolute; top: 100%; left: -20px; right: -20px; height: 18px; }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + 14px); left: 50%;
+      transform: translateX(-50%) translateY(-4px);
+      background: #0d0d14; border: 1px solid var(--border);
+      border-radius: 12px; padding: 0.5rem; min-width: 210px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    }
+    .nav-dropdown:hover .nav-dropdown-menu { opacity: 1; visibility: visible; pointer-events: auto; transform: translateX(-50%) translateY(0); }
+    .nav-dropdown-menu a {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.85rem; border-radius: 8px;
+      color: rgba(248,244,255,0.75); text-decoration: none;
+      font-size: 0.84rem; font-weight: 400;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap; font-family: 'DM Sans', sans-serif;
+    }
+    .nav-dropdown-menu a:hover { background: rgba(124,58,237,0.18); color: var(--white); }
+    .nav-dropdown-menu .drop-icon {
+      width: 26px; height: 26px; background: rgba(124,58,237,0.2);
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; font-size: 0.8rem; flex-shrink: 0;
+    }
+
+    /* PAGE */
+    main { padding-top: 4.5rem; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple-glow); margin-bottom: 1rem; }
+
+    .page-hero { padding: 5rem 0 3.5rem; max-width: 720px; }
+    .page-title {
+      font-family: 'Raleway', sans-serif; font-weight: 900;
+      font-size: clamp(2.2rem, 5.2vw, 3.4rem); line-height: 1.05;
+      letter-spacing: -0.03em; margin-bottom: 1.3rem;
+    }
+    .page-title .accent { color: var(--purple-glow); }
+    .page-desc { color: var(--grey); font-size: 1.05rem; font-weight: 300; line-height: 1.75; }
+
+    /* FUTURS SUJETS */
+    .subjects { padding: 1rem 0 3.5rem; }
+    .subjects h2 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: clamp(1.4rem, 3vw, 1.9rem); letter-spacing: -0.02em; margin-bottom: 0.7rem;
+    }
+    .subjects p.hint { color: var(--grey); font-size: 0.95rem; font-weight: 300; margin-bottom: 1.8rem; }
+    .subject-pills { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .subject-pill {
+      background: var(--card-bg); border: 1px solid rgba(168,85,247,0.25);
+      color: var(--white); font-size: 0.9rem; font-weight: 500;
+      padding: 0.55rem 1.1rem; border-radius: 12px;
+    }
+    .subjects .more { margin-top: 1.2rem; font-size: 0.85rem; color: var(--grey); font-style: italic; }
+
+    /* WAITLIST */
+    .waitlist { padding: 1rem 0 5rem; }
+    .waitlist-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 18px; padding: 2.5rem;
+      max-width: 640px;
+    }
+    .waitlist-card h2 {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.5rem;
+      letter-spacing: -0.02em; margin-bottom: 0.6rem;
+    }
+    .waitlist-card > p { color: var(--grey); font-size: 0.95rem; font-weight: 300; line-height: 1.6; margin-bottom: 1.8rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.4rem; }
+    .form-group label { font-size: 0.82rem; color: var(--grey); font-weight: 500; letter-spacing: 0.03em; }
+    .form-group input[type=email], .form-group input[type=text] {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--white); font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem; padding: 0.8rem 1rem; transition: border-color 0.2s; outline: none;
+    }
+    .form-group input:focus { border-color: var(--purple-glow); }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .chip {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      color: var(--grey); font-size: 0.85rem; font-weight: 500;
+      padding: 0.45rem 0.95rem; border-radius: 999px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: border-color 0.15s, background 0.15s, color 0.15s;
+      user-select: none;
+    }
+    .chip:hover { border-color: rgba(168,85,247,0.45); color: var(--white); }
+    .chip.selected { background: rgba(124,58,237,0.22); border-color: rgba(168,85,247,0.6); color: var(--white); }
+    #autre-wrap { margin-top: 0.9rem; }
+    #autre-wrap[hidden] { display: none; }
+    .btn-primary {
+      background: var(--purple-core); color: var(--white);
+      border: none; border-radius: 8px; cursor: pointer;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 0.9rem 1.4rem; width: 100%; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: var(--purple-glow); transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .form-msg { margin-top: 1rem; font-size: 0.86rem; line-height: 1.55; display: none; }
+    .form-msg.error { display: block; color: #f87171; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.25); border-radius: 8px; padding: 0.7rem 0.95rem; }
+    .form-msg.success { display: block; color: #86efac; }
+    .form-msg a { color: var(--purple-glow); }
+
+    /* FOOTER — identique aux autres pages */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 1rem 0; margin-top: 2rem; }
+    footer .container { max-width: none; padding: 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-left: 4rem; padding-right: 4rem; }
+    .footer-logo { display: flex; align-items: center; text-decoration: none; }
+    .footer-logo img { height: 36px; width: auto; max-width: 180px; display: block; object-fit: contain; }
+    .footer-copy { font-size: 0.8rem; color: var(--grey); }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+    .footer-links a { font-size: 0.82rem; color: var(--grey); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    @media (max-width: 920px) {
+      nav { padding: 0.6rem 1.5rem; }
+      .nav-links { display: none; }
+      .footer-inner { padding-left: 1.5rem; padding-right: 1.5rem; justify-content: center; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .container { padding: 0 1.3rem; }
+      .waitlist-card { padding: 1.8rem 1.4rem; }
+      .page-hero { padding: 3.5rem 0 2.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="/logo.png" alt="DeskReady">
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#offres">Offres</a></li>
+    <li class="nav-dropdown">
+      <button class="nav-dropdown-toggle">
+        Ressources
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-dropdown-menu">
+        <a href="/data-room.html"><span class="drop-icon">📡</span>Data Room</a>
+        <a href="/blog.html"><span class="drop-icon">📝</span>Blog</a>
+        <a href="/career-tracker.html"><span class="drop-icon">🎯</span>Career Tracker</a>
+        <a href="/pricer.html"><span class="drop-icon">📊</span>Pricer</a>
+      </div>
+    </li>
+    <li><a href="/academy.html" class="nav-academy-link active">Academy <span class="nav-soon-badge">Bientôt</span></a></li>
+    <li><a href="/#apropos">À propos</a></li>
+    <li><a href="/#temoignages">Témoignages</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:1rem;">
+    <button id="nav-auth-btn" onclick="window.location.href='/index.html'" class="nav-cta" style="font-size:0.85rem;padding:0.45rem 1rem;border:none;cursor:pointer;">S'inscrire / Se connecter</button>
+    <div id="nav-user-dropdown" class="nav-dropdown" style="display:none;">
+      <button class="nav-dropdown-toggle nav-cta" style="font-size:0.85rem;padding:0.45rem 1rem;font-family:'Syne',sans-serif;font-weight:700;">
+        <span id="nav-user-initials" style="width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.2);display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;">?</span>
+        Mon espace
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="nav-dropdown-menu" style="min-width:200px;">
+        <a href="/dashboard.html"><span class="drop-icon">🏠</span>Dashboard</a>
+        <a href="/mes-achats.html"><span class="drop-icon">🛒</span>Mes achats</a>
+        <a href="/parametres.html"><span class="drop-icon">⚙️</span>Paramètres</a>
+        <a href="#" onclick="handleNavLogout();return false;" style="color:#f87171!important;"><span class="drop-icon" style="background:rgba(248,113,113,0.15);">🚪</span>Déconnecter</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- HERO -->
+    <div class="page-hero reveal">
+      <div class="section-label">DeskReady Academy · Bientôt</div>
+      <h1 class="page-title">Prépare les <span class="accent">technicals</span> avant l'entretien</h1>
+      <p class="page-desc">DeskReady Academy réunira des ressources conçues pour comprendre les concepts, produits et classes d'actifs réellement abordés dans les recrutements en finance de marché. En attendant, la préparation reste concrète avec la review de CV, l'entretien blanc et le bilan candidature offert.</p>
+    </div>
+
+    <!-- FUTURS SUJETS -->
+    <section class="subjects reveal">
+      <div class="section-label">Les futurs modules</div>
+      <h2>Ce que l'Academy couvrira</h2>
+      <p class="hint">Les thèmes envisagés pour la première version. Ces contenus ne sont pas encore disponibles.</p>
+      <div class="subject-pills">
+        <span class="subject-pill">FX</span>
+        <span class="subject-pill">Rates</span>
+        <span class="subject-pill">Credit</span>
+        <span class="subject-pill">Equity</span>
+        <span class="subject-pill">Derivatives</span>
+        <span class="subject-pill">Structured Products</span>
+      </div>
+      <p class="more">Et d'autres modules à venir.</p>
+    </section>
+
+    <!-- WAITLIST -->
+    <section class="waitlist reveal">
+      <div class="waitlist-card">
+        <div class="section-label">Liste d'attente</div>
+        <h2>Sois prévenu au lancement</h2>
+        <p>Laisse ton email et indique-nous les sujets que tu aimerais voir en priorité.</p>
+
+        <form id="waitlist-form" novalidate>
+          <div class="form-group">
+            <label for="wl-email">Email <span style="color:var(--purple-glow);">*</span></label>
+            <input type="email" id="wl-email" placeholder="jean.dupont@ecole.edu" autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label>Quel sujet aimerais-tu voir en premier ? <span style="color:var(--purple-glow);">*</span></label>
+            <div class="chip-row" id="wl-topics">
+              <span class="chip" data-topic="FX">FX</span>
+              <span class="chip" data-topic="Rates">Rates</span>
+              <span class="chip" data-topic="Credit">Credit</span>
+              <span class="chip" data-topic="Equity">Equity</span>
+              <span class="chip" data-topic="Derivatives">Derivatives</span>
+              <span class="chip" data-topic="Structured Products">Structured Products</span>
+              <span class="chip" data-topic="Autre">Autre</span>
+            </div>
+            <div id="autre-wrap" hidden>
+              <input type="text" id="wl-autre" placeholder="Précise le sujet (optionnel)">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" id="wl-submit">Rejoindre la liste d'attente</button>
+          <div class="form-msg" id="wl-msg"></div>
+        </form>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <a href="/" class="footer-logo"><img src="/logo.png" alt="DeskReady"></a>
+      <span class="footer-copy">© 2025 DeskReady — From School to the Desk</span>
+      <ul class="footer-links">
+        <li><a href="/#offres">Offres</a></li>
+        <li><a href="/#faq">FAQ</a></li>
+        <li><a href="/#contact">Contact</a></li>
+        <li><a href="/mentions-legales.html">Mentions légales</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================================
+   WAITLIST ACADEMY — collecte de la demande
+   ----------------------------------------------------------------------------
+   Backend : table Supabase `academy_waitlist`.
+   Schéma + policy RLS (insert anon) : supabase/migrations/20260906_academy_waitlist.sql
+     colonnes : id uuid, email text, sujets text[], autre text, created_at timestamptz
+   Tant que la table n'existe pas (ou refuse l'insert), le formulaire N'affiche
+   PAS de fausse confirmation : il montre un message de repli avec le mail support.
+   Pour brancher un autre backend : remplacer saveWaitlistEntry() ci-dessous.
+   ========================================================================== */
+
+const SUPABASE_URL  = 'https://lysibziqgissumqszedk.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5c2liemlxZ2lzc3VtcXN6ZWRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5OTA4MzcsImV4cCI6MjA4ODU2NjgzN30.3M85rhh4AltDZnm743ntap6_j9T1wApOiNkELLvC9hs';
+const SUPPORT_EMAIL = 'support@deskready.fr';
+
+let _sbPromise = null;
+function getSupabase() {
+  if (_sbPromise) return _sbPromise;
+  _sbPromise = new Promise((resolve, reject) => {
+    if (window.supabase) return resolve(window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON));
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+    s.onload = () => resolve(window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON));
+    s.onerror = () => reject(new Error('supabase-js load failed'));
+    document.head.appendChild(s);
+  });
+  return _sbPromise;
+}
+
+// Renvoie true seulement si l'entrée est RÉELLEMENT enregistrée.
+async function saveWaitlistEntry(entry) {
+  const sb = await getSupabase();
+  const { error } = await sb.from('academy_waitlist').insert([entry]);
+  if (error) { console.warn('academy_waitlist insert:', error.message); return false; }
+  return true;
+}
+
+// --- Sélection des sujets (multi) ---
+const selectedTopics = new Set();
+document.getElementById('wl-topics').addEventListener('click', (e) => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  const topic = chip.dataset.topic;
+  if (selectedTopics.has(topic)) { selectedTopics.delete(topic); chip.classList.remove('selected'); }
+  else { selectedTopics.add(topic); chip.classList.add('selected'); }
+  document.getElementById('autre-wrap').hidden = !selectedTopics.has('Autre');
+});
+
+// --- Soumission ---
+document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('wl-email').value.trim();
+  const autre = document.getElementById('wl-autre').value.trim();
+  const msg = document.getElementById('wl-msg');
+  const btn = document.getElementById('wl-submit');
+  msg.className = 'form-msg';
+
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    msg.classList.add('error'); msg.textContent = 'Merci d\'indiquer un email valide.'; return;
+  }
+  if (selectedTopics.size === 0) {
+    msg.classList.add('error'); msg.textContent = 'Sélectionne au moins un sujet.'; return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Envoi…';
+  const entry = {
+    email,
+    sujets: Array.from(selectedTopics),
+    autre: selectedTopics.has('Autre') ? (autre || null) : null,
+    created_at: new Date().toISOString()
+  };
+
+  let saved = false;
+  try { saved = await saveWaitlistEntry(entry); } catch (err) { console.warn(err); saved = false; }
+
+  if (saved) {
+    document.getElementById('waitlist-form').reset();
+    selectedTopics.clear();
+    document.querySelectorAll('#wl-topics .chip.selected').forEach(c => c.classList.remove('selected'));
+    document.getElementById('autre-wrap').hidden = true;
+    msg.className = 'form-msg success';
+    msg.textContent = '✓ C\'est noté. On te préviendra dès l\'ouverture de l\'Academy.';
+  } else {
+    // Pas d'enregistrement réel → aucune fausse confirmation.
+    msg.className = 'form-msg error';
+    msg.innerHTML = 'L\'inscription n\'a pas pu être enregistrée pour le moment. ' +
+      'Écris-nous à <a href="mailto:' + SUPPORT_EMAIL + '?subject=Waitlist%20DeskReady%20Academy">' + SUPPORT_EMAIL + '</a> ' +
+      'en précisant les sujets qui t\'intéressent, on t\'ajoute manuellement.';
+    btn.disabled = false; btn.textContent = 'Rejoindre la liste d\'attente';
+  }
+});
+
+// --- Reveal on scroll ---
+function revealOnScroll() {
+  document.querySelectorAll('.reveal').forEach(el => {
+    if (el.getBoundingClientRect().top < window.innerHeight - 60) el.classList.add('visible');
+  });
+}
+window.addEventListener('scroll', revealOnScroll, { passive: true });
+setTimeout(revealOnScroll, 100);
+</script>
+
+<script>
+/* Nav : bascule "S'inscrire" -> "Mon espace" si l'utilisateur est connecté (identique aux autres pages) */
+(function() {
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js';
+  s.onload = async () => {
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) return;
+    const meta = user.user_metadata || {};
+    const fullName = meta.full_name || meta.name || user.email.split('@')[0];
+    const parts = fullName.trim().split(' ');
+    const initials = parts.length >= 2 ? (parts[0][0]+parts[parts.length-1][0]).toUpperCase() : fullName.slice(0,2).toUpperCase();
+    const el = document.getElementById('nav-user-initials');
+    if (el) el.textContent = initials;
+    const authBtn = document.getElementById('nav-auth-btn');
+    const dropdown = document.getElementById('nav-user-dropdown');
+    if (authBtn) authBtn.style.display = 'none';
+    if (dropdown) dropdown.style.display = 'block';
+    window.__navSb = sb;
+  };
+  document.head.appendChild(s);
+})();
+function handleNavLogout() {
+  if (window.__navSb) window.__navSb.auth.signOut().then(() => window.location.href = '/index.html');
+  else window.location.href = '/index.html';
+}
+</script>
+
+</body>
+</html>
