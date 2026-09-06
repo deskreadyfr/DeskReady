@@ -379,7 +379,7 @@
     box-shadow: 0 20px 50px rgba(0,0,0,0.45);
     transition: height 0.45s ease;
   }
-  .testimonial-track { display: flex; align-items: flex-start; transition: transform 0.5s ease; }
+  .testimonial-track { display: flex; align-items: center; transition: transform 0.5s ease; }
   .testimonial-frame {
     position: relative; flex: 0 0 100%;
     padding: 10px; border-radius: 18px;
@@ -3497,15 +3497,17 @@ function openTestimonialLightbox(src) {
   if (!viewport || !track || !dotsWrap || count < 2) return;
   var index = 0, timer = null;
   function fitHeight() {
-    // Hauteur du carrousel = hauteur de la capture affichée (image entière, non rognée).
-    var slide = track.children[index];
-    if (slide) viewport.style.height = slide.offsetHeight + 'px';
+    // Hauteur fixe = la plus grande capture, pour tout voir en entier sans rognage ni saut.
+    var max = 0;
+    for (var k = 0; k < track.children.length; k++) {
+      max = Math.max(max, track.children[k].offsetHeight);
+    }
+    if (max) viewport.style.height = max + 'px';
   }
   function render() {
     track.style.transform = 'translateX(-' + (index * 100) + '%)';
     var dots = dotsWrap.children;
     for (var k = 0; k < dots.length; k++) dots[k].classList.toggle('active', k === index);
-    fitHeight();
   }
   function go(n) { index = (n % count + count) % count; render(); }
   function start() { timer = setInterval(function () { go(index + 1); }, 5000); }
