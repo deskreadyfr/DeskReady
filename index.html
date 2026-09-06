@@ -596,7 +596,38 @@
   }
   .faq-item.open .faq-a { max-height: 300px; margin-top: 1rem; }
 
-  #contact { padding: 3rem 0 2.5rem; }
+  /* Section finale fusionnee : FAQ + Contact */
+  .faq-contact-section { padding: 4.5rem 0 4rem; }
+  .faq-contact-head { text-align: center; max-width: 640px; margin: 0 auto 3rem; }
+  .faq-contact-title {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.2vw, 2.3rem); line-height: 1.15;
+    letter-spacing: -0.02em; margin: 0.5rem 0 0.9rem;
+  }
+  .faq-contact-grid {
+    display: grid; grid-template-columns: 1.5fr 1fr; gap: 2.5rem;
+    align-items: start; max-width: 1100px; margin: 0 auto;
+  }
+  .faq-contact-faq { display: flex; flex-direction: column; gap: 1rem; }
+  .faq-contact-card {
+    background: var(--card-bg); border: 1px solid var(--border);
+    border-radius: 18px; padding: 2rem;
+    position: sticky; top: 100px;
+  }
+  .faq-contact-card-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem;
+    margin: 0 0 0.5rem; color: var(--white);
+  }
+  .faq-contact-card-desc { font-size: 0.9rem; color: var(--grey); line-height: 1.6; margin: 0; }
+  .faq-contact-card .contact-form { margin-top: 1.6rem; }
+  @media (max-width: 980px) {
+    .faq-contact-grid { grid-template-columns: 1fr; gap: 2rem; max-width: 680px; }
+    .faq-contact-card { position: static; }
+  }
+
+  /* #contact est desormais l'ancre de la colonne Contact dans la section fusionnee #faq */
+  #contact { scroll-margin-top: 6rem; }
+  /* .contact-inner / .contact-item* : conserves pour reutilisation (ancienne section Contact) */
   .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
   .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
   .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -3002,8 +3033,78 @@
   </div>
 </section>
 
-<!-- ===== FAQ ===== -->
-<section id="faq" style="padding:3rem 0;background:linear-gradient(180deg,transparent,rgba(124,58,237,0.04) 50%,transparent);">
+<!-- ===== FAQ + Contact — section finale fusionnee de la homepage ===== -->
+<section id="faq" class="faq-contact-section" style="background:linear-gradient(180deg,transparent,rgba(124,58,237,0.04) 50%,transparent);">
+  <div class="container">
+    <div class="faq-contact-head reveal">
+      <div class="section-label">FAQ &amp; Contact</div>
+      <h2 class="faq-contact-title">Une question avant de te lancer ?</h2>
+      <p class="section-desc" style="margin:0 auto;">Retrouve les réponses aux questions les plus fréquentes ou écris-nous directement.</p>
+    </div>
+
+    <div class="faq-contact-grid reveal">
+
+      <!-- Colonne gauche : FAQ (accordeon, logique toggleFaq() inchangee) -->
+      <div class="faq-contact-faq">
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Comment fonctionne la review de CV ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Tu nous envoies ton CV et un professionnel de la finance de marché le relit en détail. Tu reçois un retour écrit : structure, formulations, ordre des expériences et éléments à mettre en avant pour passer le premier filtre des recruteurs.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Sous quel délai je reçois mon retour ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Le retour sur la review de CV est envoyé sous 48 à 72 h en général. Pour l'entretien blanc, le débrief est fait à chaud, juste après la session.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Comment se déroule l'entretien blanc ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Une simulation d'entretien d'environ 45 minutes, dans des conditions proches d'un vrai process : motivation, fit, questions de marché et techniques. Tu repars avec un feedback précis sur ce qui fonctionne et ce que tu dois corriger.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Puis-je choisir les classes d'actifs travaillées en entretien ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Oui. Tu indiques le desk et les produits que tu vises (taux, change, crédit, actions…) et l'entretien blanc est adapté en conséquence.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">À qui s'adresse DeskReady ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Aux étudiants en école de commerce ou à l'université qui visent un stage ou un premier poste en finance de marché (Sales, Trading, Structuring), quel que soit leur niveau d'avancement dans leur recherche.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-q">Comment fonctionne le bilan candidature offert ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">C'est un échange gratuit de 15 minutes pour faire le point sur ton profil, les rôles que tu vises et l'état de tes candidatures. Tu repars avec une priorité claire et des recommandations concrètes, sans engagement.</div>
+        </div>
+
+      </div>
+
+      <!-- Colonne droite : contact simple (logique sendMessage() inchangee) -->
+      <div id="contact" style="scroll-margin-top:6rem;">
+        <div class="faq-contact-card">
+          <div class="section-label" style="text-align:left;margin-bottom:0.7rem;">Contact</div>
+          <h3 class="faq-contact-card-title">Tu n'as pas trouvé ta réponse ?</h3>
+          <p class="faq-contact-card-desc">Écris-nous, on te répond rapidement.</p>
+          <div class="contact-form">
+            <div class="form-group"><label>Nom <span style="color:var(--purple-glow);">*</span></label><input type="text" id="msg-nom" placeholder="Dupont"></div>
+            <div class="form-group"><label>Email <span style="color:var(--purple-glow);">*</span></label><input type="email" id="msg-email" placeholder="jean@skema.edu"></div>
+            <div class="form-group"><label>Message <span style="color:var(--purple-glow);">*</span></label><textarea id="msg-question" rows="4" placeholder="Ta question…" style="resize:vertical;"></textarea></div>
+            <div id="msg-error" style="display:none;color:#f87171;font-size:0.83rem;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);border-radius:8px;padding:0.6rem 0.9rem;"></div>
+            <button id="send-msg-btn" onclick="sendMessage()" class="btn-primary" style="width:100%;justify-content:center;border:none;font-size:0.95rem;padding:0.9rem;">Envoyer mon message →</button>
+            <div id="msg-feedback" style="display:none;text-align:center;font-size:0.83rem;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- [Homepage MVP] Ancienne FAQ (references packs Basic/Gold/Elite, acces a vie,
+     WhatsApp, coaching...) conservee ici, inerte, pour reference / reutilisation.
+     Section temporarily removed from homepage — kept for possible future reuse. -->
+<template id="tpl-faq-legacy" data-removed-from-homepage="faq-legacy">
+<section id="faq-legacy" style="padding:3rem 0;background:linear-gradient(180deg,transparent,rgba(124,58,237,0.04) 50%,transparent);">
   <div class="container">
     <div style="text-align:center;margin-bottom:4rem;" class="reveal">
       <div class="section-label">Questions fréquentes</div>
@@ -3050,51 +3151,18 @@
     </div>
   </div>
 </section>
+</template>
 
-<section id="contact" style="padding:3rem 0;">
-  <div class="container">
-
-    <div style="text-align:center;margin-bottom:4rem;" class="reveal">
-      <div class="section-label">Nous contacter</div>
-      <h2 class="section-title" style="font-size:clamp(2rem,4vw,3rem);">On est là pour toi</h2>
-      <p class="section-desc" style="margin:0 auto;">Une question sur l'accompagnement DeskReady ? Écris-nous, on te répond rapidement.</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr;gap:2rem;align-items:stretch;max-width:620px;margin:0 auto;" class="contact-dual-grid">
-
-      <div class="reveal" style="display:flex;flex-direction:column;">
-        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:2.5rem;flex:1;display:flex;flex-direction:column;">
-          <div style="margin-bottom:1.8rem;">
-            <div class="section-label" style="margin-bottom:0.6rem;text-align:left;">Une question ?</div>
-            <h3 style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin:0 0 0.5rem;">On te répond <span style="color:var(--purple-glow);">rapidement</span></h3>
-            <p style="font-size:0.88rem;color:var(--grey);margin:0;line-height:1.6;">Tu as une question sur l'accompagnement DeskReady ? Écris-nous directement.</p>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
-            <div class="form-group"><label>Nom <span style="color:var(--purple-glow);">*</span></label><input type="text" id="msg-nom" placeholder="Dupont"></div>
-            <div class="form-group"><label>Prénom <span style="color:var(--purple-glow);">*</span></label><input type="text" id="msg-prenom" placeholder="Jean"></div>
-          </div>
-          <div class="form-group" style="margin-bottom:1rem;"><label>E-mail <span style="color:var(--purple-glow);">*</span></label><input type="email" id="msg-email" placeholder="jean@skema.edu"></div>
-          <div class="form-group" style="flex:1;margin-bottom:1.5rem;display:flex;flex-direction:column;">
-            <label>Ta question <span style="color:var(--purple-glow);">*</span></label>
-            <textarea id="msg-question" rows="5" placeholder="Ex: Quelle est la différence entre Basic et Gold ?..." style="flex:1;resize:vertical;"></textarea>
-          </div>
-          <div id="msg-error" style="display:none;color:#f87171;font-size:0.83rem;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);border-radius:8px;padding:0.6rem 0.9rem;margin-bottom:1rem;"></div>
-          <button id="send-msg-btn" onclick="sendMessage()" class="btn-primary" style="width:100%;justify-content:center;border:none;font-size:0.95rem;padding:0.9rem;">
-            Envoyer →
-          </button>
-          <div id="msg-feedback" style="display:none;margin-top:0.8rem;text-align:center;font-size:0.83rem;"></div>
-        </div>
-      </div>
-
-      <!-- [Homepage MVP] Bloc "Call decouverte" retire de la section Contact :
-           doublon avec la nouvelle section "Bilan candidature · 15 min offertes".
-           Section temporarily removed from homepage — kept for possible future reuse.
-           Le markup et toute la logique de reservation (validatePrebooking,
-           backToPrebooking, insert Supabase "bookings", embed Calendly) restent
-           intacts et reutilisables : reactivable en sortant ce <div id="booking">
-           de ce <template>. La CTA "Bilan candidature" utilise openCalendly(),
-           qui bascule automatiquement sur le popup Calendly quand #booking est absent. -->
-      <template id="tpl-contact-booking" data-removed-from-homepage="contact-call-decouverte">
+<!-- [Homepage MVP] Ancienne section Contact + bloc "Call decouverte" fusionnee dans
+     la section "#faq" (FAQ + Contact) ci-dessus. Le formulaire de contact reutilise
+     sendMessage() ; le bloc reservation est conserve inerte ci-dessous.
+     Bloc "Call decouverte" : doublon avec la section "Bilan candidature · 15 min offertes".
+     Section temporarily removed from homepage — kept for possible future reuse.
+     Toute la logique de reservation (validatePrebooking, backToPrebooking,
+     insert Supabase "bookings", embed Calendly) reste intacte : reactivable en
+     sortant ce <div id="booking"> du <template>. La CTA "Bilan candidature" utilise
+     openCalendly(), qui bascule sur le popup Calendly quand #booking est absent. -->
+<template id="tpl-contact-booking" data-removed-from-homepage="contact-call-decouverte">
       <div class="reveal" id="booking" style="display:flex;flex-direction:column;">
         <div id="prebooking-step" style="flex:1;display:flex;flex-direction:column;">
           <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:20px;padding:2.5rem;flex:1;display:flex;flex-direction:column;">
@@ -3151,16 +3219,7 @@
           </div>
         </div>
       </div>
-      </template>
-    </div>
-  </div>
-</section>
-
-<style>
-@media (max-width: 768px) {
-  .contact-dual-grid { grid-template-columns: 1fr !important; }
-}
-</style>
+</template>
 
 <!-- PAGE PANIER -->
 <section id="panier" style="display:none;padding:5rem 0 4rem;position:relative;z-index:1;">
@@ -3747,14 +3806,15 @@ function openCalendly() {
 }
 async function sendMessage() {
   const nom = document.getElementById('msg-nom')?.value.trim();
-  const prenom = document.getElementById('msg-prenom')?.value.trim();
+  // Champ "Prénom" optionnel : absent du formulaire fusionne FAQ + Contact, conserve pour compat.
+  const prenom = document.getElementById('msg-prenom')?.value.trim() || '';
   const email = document.getElementById('msg-email')?.value.trim();
   const question = document.getElementById('msg-question')?.value.trim();
   const errEl = document.getElementById('msg-error');
   const fb = document.getElementById('msg-feedback');
   const btn = document.getElementById('send-msg-btn');
   if (fb) fb.style.display = 'none';
-  if (!nom || !prenom || !email || !question || !/\S+@\S+\.\S+/.test(email)) {
+  if (!nom || !email || !question || !/\S+@\S+\.\S+/.test(email)) {
     if (errEl) { errEl.style.display = 'block'; errEl.textContent = 'Merci de remplir tous les champs obligatoires (*).'; }
     return;
   }
@@ -3762,11 +3822,9 @@ async function sendMessage() {
   btn.disabled = true; btn.textContent = 'Envoi en cours…';
   if (window._sb) { try { await _sb.from('messages').insert([{ nom, prenom, email, question, created_at: new Date().toISOString() }]); } catch(e) { console.warn('Supabase message:', e); } }
   if (fb) { fb.style.display = 'block'; fb.style.color = '#86efac'; fb.textContent = '✓ Message envoyé ! On te répond dans la journée.'; }
-  document.getElementById('msg-nom').value = '';
-  document.getElementById('msg-prenom').value = '';
-  document.getElementById('msg-email').value = '';
-  document.getElementById('msg-question').value = '';
-  btn.disabled = false; btn.textContent = 'Envoyer →';
+  const setVal = function(id){ var el = document.getElementById(id); if (el) el.value = ''; };
+  setVal('msg-nom'); setVal('msg-prenom'); setVal('msg-email'); setVal('msg-question');
+  btn.disabled = false; btn.textContent = 'Envoyer mon message →';
 }
 async function validatePrebooking() {
   const prenom = document.getElementById('bk-prenom')?.value.trim();
