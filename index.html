@@ -371,7 +371,7 @@
   .cv-review-proof .section-label { text-align: center; margin-bottom: 1.8rem; }
   .testimonial-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem;
-    max-width: 1040px; margin: 0 auto; align-items: start;
+    max-width: 1100px; margin: 0 auto; align-items: start;
   }
   .testimonial-frame {
     position: relative; padding: 10px; border-radius: 18px;
@@ -388,8 +388,8 @@
   }
   .testimonial-frame:hover { transform: translateY(-4px); border-color: rgba(168,85,247,0.5); }
   .testimonial-frame img {
-    display: block; width: 100%; height: 460px;
-    object-fit: cover; object-position: top center;
+    display: block; width: 100%; height: auto;
+    max-height: 640px; object-fit: cover; object-position: top center;
     border-radius: 10px;
   }
   .testimonial-frame figcaption {
@@ -398,7 +398,7 @@
   }
   .testimonial-frame .testimonial-placeholder {
     display: flex; align-items: center; justify-content: center; text-align: center;
-    height: 460px; padding: 1.5rem; color: var(--grey);
+    min-height: 320px; padding: 1.5rem; color: var(--grey);
     font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
     background: rgba(124,58,237,0.06); border-radius: 10px;
   }
