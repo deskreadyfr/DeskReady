@@ -457,7 +457,6 @@
     background: rgba(124,58,237,0.12); border: 1px solid rgba(168,85,247,0.28);
     border-radius: 999px; padding: 0.4rem 0.9rem; white-space: nowrap;
   }
-  .diag-axis-sep { color: var(--purple-glow); font-weight: 700; font-size: 0.85rem; }
   .diag-outcome {
     font-size: 0.9rem; color: rgba(248,244,255,0.8); font-weight: 300;
     line-height: 1.6; margin: 0 auto 1.9rem; max-width: 480px;
@@ -470,7 +469,6 @@
   }
   @media (max-width: 600px) {
     .diag-card { padding: 2.2rem 1.5rem; border-radius: 16px; }
-    .diag-axis-sep { display: none; }
     .diag-cta { width: 100%; }
   }
 
@@ -2704,7 +2702,7 @@
 </section>
 
 <!--
-  Section "Diagnostic recrutement gratuit" — 4e section de la homepage, juste après l'Entretien blanc.
+  Section "Bilan candidature" — 4e section de la homepage, juste après l'Entretien blanc.
   Filet de conversion : l'étudiant qui ne sait pas quoi travailler réserve 15 min pour faire le point.
   Le CTA réutilise le système de réservation existant (openCalendly → scroll vers #booking).
   Service humain : pas de faux dashboard, pas de scoring.
@@ -2712,27 +2710,23 @@
 <section id="diagnostic-recrutement">
   <div class="container">
     <div class="diag-card reveal">
-      <div class="section-label">Diagnostic recrutement · Gratuit</div>
+      <div class="section-label">Bilan candidature · 15 min offertes</div>
       <h2 class="diag-title">Tu ne sais pas par où commencer ?</h2>
-      <p class="diag-desc">Réserve un diagnostic recrutement gratuit de 15 minutes avec DeskReady.</p>
-      <p class="diag-desc">On fait le point sur ton profil, les rôles que tu vises et l'état de tes candidatures pour identifier ce que tu dois travailler en priorité.</p>
+      <p class="diag-desc">En 15 minutes, on fait le point sur ton profil, les rôles que tu vises et l'état de tes candidatures pour identifier ce que tu dois travailler en priorité.</p>
 
-      <!-- Les 4 grands axes possibles, sous forme de pills sobres reliées visuellement. -->
+      <!-- Les 4 grands axes possibles, en pills indépendants (pas de parcours séquentiel). -->
       <div class="diag-axes">
         <span class="diag-axis">CV</span>
-        <span class="diag-axis-sep">→</span>
         <span class="diag-axis">Stratégie de candidature</span>
-        <span class="diag-axis-sep">→</span>
         <span class="diag-axis">Entretiens</span>
-        <span class="diag-axis-sep">→</span>
-        <span class="diag-axis">Technique</span>
+        <span class="diag-axis">Préparation technique</span>
       </div>
 
       <p class="diag-outcome">Tu repars avec une priorité claire et des recommandations concrètes.</p>
 
       <div class="diag-actions">
-        <button onclick="openCalendly()" class="btn-primary diag-cta">Réserver mon diagnostic gratuit →</button>
-        <span class="diag-meta">15 minutes · Gratuit · Sans engagement</span>
+        <button onclick="openCalendly()" class="btn-primary diag-cta">Réserver mon bilan offert</button>
+        <span class="diag-meta">15 min · Gratuit · Sans engagement</span>
       </div>
     </div>
   </div>
