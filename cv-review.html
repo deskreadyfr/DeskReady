@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricer · DeskReady</title>
+  <title>Review de CV · DeskReady</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@800;900&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
@@ -17,8 +17,6 @@
       --grey: #a09ab5;
       --card-bg: rgba(255,255,255,0.03);
       --border: rgba(168,85,247,0.15);
-      --green: #22c55e;
-      --red: #ef4444;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -39,7 +37,8 @@
 
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
 
-    /* NAV */
+    /* NAV (see nav_css.txt injected below) */
+        /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -102,143 +101,157 @@
     .page-title { font-family: 'Raleway', sans-serif; font-weight: 900; font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.0; letter-spacing: -0.03em; margin-bottom: 1.2rem; }
     .page-desc { color: var(--grey); font-size: 1.05rem; font-weight: 300; max-width: 620px; line-height: 1.7; }
 
-    /* PRICER LAYOUT */
-    .pricer-section { padding-bottom: 6rem; }
-
-    /* MODEL TABS */
-    .model-tabs {
-      display: flex; gap: 0.5rem; margin-bottom: 2rem;
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 12px; padding: 0.35rem; width: fit-content;
-    }
-    .model-tab {
-      padding: 0.55rem 1.4rem; border-radius: 8px; font-size: 0.88rem;
-      font-weight: 500; cursor: pointer; border: none;
-      background: transparent; color: var(--grey);
-      transition: all 0.2s; font-family: 'DM Sans', sans-serif;
-    }
-    .model-tab.active { background: var(--purple-core); color: var(--white); }
-    .model-tab:hover:not(.active) { color: var(--white); }
-
-    /* MAIN GRID */
-    .pricer-grid { display: grid; grid-template-columns: 380px 1fr; gap: 1.6rem; align-items: start; }
-    @media (max-width: 960px) { .pricer-grid { grid-template-columns: 1fr; } }
-
-    /* INPUT PANEL */
-    .input-panel {
-      background: var(--card-bg); border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.8rem; display: flex; flex-direction: column; gap: 1.2rem;
-    }
-    .panel-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-soft); margin-bottom: 0.2rem; }
-
-    /* CALL/PUT TOGGLE */
-    .type-toggle { display: flex; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
-    .type-btn {
-      flex: 1; padding: 0.65rem 1rem; font-size: 0.92rem; font-weight: 600;
-      border: none; cursor: pointer; transition: all 0.2s;
-      font-family: 'DM Sans', sans-serif; background: transparent; color: var(--grey);
-    }
-    .type-btn.call.active { background: rgba(34,197,94,0.18); color: var(--green); }
-    .type-btn.put.active { background: rgba(239,68,68,0.18); color: var(--red); }
-
-    /* INPUT FIELD */
-    .field { display: flex; flex-direction: column; gap: 0.35rem; }
-    .field label { font-size: 0.78rem; color: var(--grey); font-weight: 400; display: flex; justify-content: space-between; align-items: center; }
-    .field label span { color: rgba(168,85,247,0.7); font-size: 0.72rem; }
-    .input-wrap { position: relative; }
-    .input-wrap input {
-      width: 100%; padding: 0.65rem 2.5rem 0.65rem 1rem;
-      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--white);
-      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
-      outline: none; transition: border-color 0.2s;
-    }
-    .input-wrap input:focus { border-color: rgba(168,85,247,0.5); }
-    .input-wrap .unit {
-      position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%);
-      font-size: 0.78rem; color: var(--grey); pointer-events: none;
-    }
-    .binom-fields, .mc-fields { display: flex; flex-direction: column; gap: 1.2rem; }
-    .field-divider { height: 1px; background: var(--border); margin: 0.2rem 0; }
-
-    /* CALCULATE BTN */
-    .calc-btn {
-      width: 100%; padding: 0.8rem; border-radius: 10px;
+    .btn-primary {
       background: var(--purple-core); color: var(--white);
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
-      border: none; cursor: pointer; transition: background 0.2s, transform 0.15s;
-      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 500; text-decoration: none;
+      border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: 'DM Sans', sans-serif;
     }
-    .calc-btn:hover { background: var(--purple-glow); transform: translateY(-1px); }
-    .calc-btn:active { transform: translateY(0); }
-
-    /* RESULTS PANEL */
-    .results-panel { display: flex; flex-direction: column; gap: 1.4rem; }
-
-    /* PRICE CARD */
-    .price-card {
-      background: linear-gradient(135deg, rgba(124,58,237,0.12), rgba(168,85,247,0.06));
-      border: 1px solid rgba(168,85,247,0.3); border-radius: 16px; padding: 2rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+    .btn-primary:hover { background: var(--purple-glow); transform: translateY(-2px); }
+    .btn-ghost {
+      background: transparent; color: var(--white);
+      padding: 0.85rem 2rem; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 400; text-decoration: none;
+      border: 1px solid var(--border); cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+      font-family: 'DM Sans', sans-serif;
     }
-    .price-main { display: flex; flex-direction: column; gap: 0.3rem; }
-    .price-label { font-size: 0.78rem; color: var(--grey); font-weight: 400; text-transform: uppercase; letter-spacing: 0.1em; }
-    .price-value {
-      font-family: 'Raleway', sans-serif; font-weight: 900;
-      font-size: clamp(2.2rem, 4vw, 3rem); letter-spacing: -0.02em;
-      background: linear-gradient(135deg, var(--white), var(--purple-soft));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    .btn-ghost:hover { border-color: var(--purple-glow); transform: translateY(-2px); }
+
+    .section-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.2rem; }
+    .section-desc { color: var(--grey); font-size: 1rem; font-weight: 300; max-width: 560px; line-height: 1.7; }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    main { position: relative; z-index: 1; }
+
+    /* --- Intro : texte + points --- */
+    .crv-intro { padding: 1rem 0 4rem; }
+    .crv-intro-inner { display: grid; grid-template-columns: 1fr 380px; gap: 3rem; align-items: start; }
+    .crv-intro .section-desc { max-width: none; margin-bottom: 1rem; }
+    .cv-review-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.6rem; }
+    .cv-review-points li { position: relative; padding-left: 1.6rem; color: var(--grey); font-size: 0.92rem; line-height: 1.55; font-weight: 300; }
+    .cv-review-points li::before { content: '→'; position: absolute; left: 0; color: var(--purple-glow); font-weight: 700; }
+
+    .cv-review-buy { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2.2rem 2rem; display: flex; flex-direction: column; position: sticky; top: 6.5rem; }
+    .offre-name { font-family: 'Syne', sans-serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 0.7rem; }
+    .offre-desc { color: var(--grey); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.8rem; }
+    .cv-review-buy .cv-review-buy-features { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 0 0 1.6rem; }
+    .cv-review-buy .cv-review-buy-features li { position: relative; padding-left: 1.4rem; color: var(--grey); font-size: 0.83rem; line-height: 1.5; font-weight: 300; }
+    .cv-review-buy .cv-review-buy-features li::before { content: '✓'; position: absolute; left: 0; color: var(--purple-glow); font-weight: 700; }
+    @media (max-width: 900px) {
+      .crv-intro-inner { grid-template-columns: 1fr; }
+      .cv-review-buy { position: static; max-width: 420px; }
     }
-    .price-value.placeholder { opacity: 0.25; -webkit-text-fill-color: var(--grey); background: none; }
-    .price-meta { display: flex; flex-direction: column; gap: 0.5rem; text-align: right; }
-    .price-badge {
-      padding: 0.3rem 0.85rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.06em; width: fit-content; margin-left: auto;
+
+    /* --- Étapes du process --- */
+    #crv-steps { padding: 3rem 0; background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04) 50%, transparent); }
+    .crv-steps-head { text-align: center; max-width: 640px; margin: 0 auto 3rem; }
+    .crv-steps-head .section-desc { margin: 0 auto; }
+    .crv-steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+    .crv-step { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 2rem 1.8rem; }
+    .crv-step-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--purple-glow); margin-bottom: 0.9rem; }
+    .crv-step-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+    .crv-step-desc { color: var(--grey); font-size: 0.88rem; line-height: 1.6; font-weight: 300; }
+    @media (max-width: 800px) { .crv-steps-grid { grid-template-columns: 1fr; } }
+
+    /* --- Témoignages : galerie de captures --- */
+    #crv-proof { padding: 4rem 0; }
+    .crv-proof-head { text-align: center; max-width: 640px; margin: 0 auto 3rem; }
+    .crv-proof-head .section-desc { margin: 0 auto; }
+    .crv-proof-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+    .testimonial-frame {
+      position: relative; width: 100%;
+      padding: 12px; border-radius: 18px;
+      background: rgba(10,8,20,0.55);
+      border: 1px solid rgba(168,85,247,0.25);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+      cursor: zoom-in; text-align: center;
     }
-    .price-badge.call { background: rgba(34,197,94,0.15); color: var(--green); border: 1px solid rgba(34,197,94,0.25); }
-    .price-badge.put { background: rgba(239,68,68,0.15); color: var(--red); border: 1px solid rgba(239,68,68,0.25); }
-    .price-badge.neutral { background: rgba(160,154,181,0.12); color: var(--grey); border: 1px solid var(--border); }
-    .price-model { font-size: 0.72rem; color: var(--grey); }
-
-    /* GREEKS */
-    .greeks-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-soft); }
-    .greeks-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.85rem; }
-    @media (max-width: 1100px) { .greeks-grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 600px) { .greeks-grid { grid-template-columns: repeat(2, 1fr); } }
-
-    .greek-card {
-      background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px;
-      padding: 1.1rem 1rem; display: flex; flex-direction: column; gap: 0.3rem;
-      transition: border-color 0.2s;
+    .testimonial-frame::before {
+      content: ''; position: absolute; inset: -24px; z-index: -1;
+      background: radial-gradient(circle at 50% 30%, rgba(124,58,237,0.22), transparent 70%);
+      filter: blur(32px); pointer-events: none;
     }
-    .greek-card:hover { border-color: rgba(168,85,247,0.3); }
-    .greek-symbol { font-family: 'Raleway', sans-serif; font-size: 1.4rem; font-weight: 900; color: var(--purple-soft); line-height: 1; }
-    .greek-name { font-size: 0.72rem; color: var(--grey); text-transform: uppercase; letter-spacing: 0.08em; }
-    .greek-value { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; margin-top: 0.3rem; }
-    .greek-value.placeholder { color: rgba(160,154,181,0.3); }
-    .greek-desc { font-size: 0.7rem; color: rgba(160,154,181,0.6); line-height: 1.4; margin-top: 0.1rem; }
-
-    /* PAYOFF */
-    .payoff-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.6rem; }
-    .payoff-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-soft); margin-bottom: 1.2rem; }
-    canvas { width: 100%; border-radius: 8px; }
-
-    /* FORMULA NOTE */
-    .formula-note {
-      background: rgba(124,58,237,0.06); border: 1px solid rgba(168,85,247,0.1);
-      border-radius: 10px; padding: 1rem 1.2rem; font-size: 0.78rem; color: var(--grey); line-height: 1.6;
+    .testimonial-frame img {
+      display: block; width: 100%; height: auto;
+      max-height: 420px; object-fit: cover;
+      border-radius: 10px;
     }
-    .formula-note strong { color: var(--purple-soft); }
+    .testimonial-frame .testimonial-placeholder {
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      width: 100%; min-height: 260px; padding: 1.5rem; color: var(--grey);
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      background: rgba(124,58,237,0.06); border-radius: 10px;
+    }
+    @media (max-width: 900px) { .crv-proof-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
 
-    /* ERROR */
-    .error-msg { color: var(--red); font-size: 0.8rem; display: none; }
-    .error-msg.show { display: block; }
+    /* --- Lightbox --- */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 2000;
+      display: flex; align-items: center; justify-content: center;
+      padding: 4vh 4vw; background: rgba(6,4,14,0.9);
+      backdrop-filter: blur(6px); cursor: zoom-out;
+    }
+    .lightbox img {
+      max-width: 100%; max-height: 92vh; width: auto; height: auto;
+      border-radius: 14px; border: 1px solid rgba(168,85,247,0.35);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.6);
+    }
+    .lightbox-close {
+      position: absolute; top: 18px; right: 22px;
+      font-family: 'Syne', sans-serif; font-size: 1.6rem; line-height: 1;
+      color: #fff; background: none; border: none; cursor: pointer; opacity: 0.7;
+    }
+    .lightbox-close:hover { opacity: 1; }
 
-    /* SPINNER */
-    .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(248,244,255,0.2); border-top-color: var(--white); border-radius: 50%; animation: spin 0.6s linear infinite; margin: 0 auto; }
-    .spinner.show { display: block; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    footer { border-top: 1px solid var(--border); padding: 1.5rem 0; margin-top: 4rem; }
+    /* --- FAQ --- */
+    #crv-faq { padding: 3rem 0 5rem; }
+    .crv-faq-head { text-align: center; max-width: 640px; margin: 0 auto 3rem; }
+    .crv-faq-head .section-desc { margin: 0 auto; }
+    .crv-faq-list { display: flex; flex-direction: column; gap: 1rem; max-width: 760px; margin: 0 auto; }
+    .faq-item {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.5rem 2rem;
+      cursor: pointer; transition: border-color 0.3s, background 0.3s;
+      user-select: none;
+    }
+    .faq-item:hover { border-color: rgba(168,85,247,0.4); background: rgba(124,58,237,0.05); }
+    .faq-item.open { border-color: rgba(168,85,247,0.5); background: rgba(124,58,237,0.07); }
+    .faq-q {
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 1rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+      color: var(--white);
+    }
+    .faq-arrow {
+      color: var(--purple-glow); font-size: 1.2rem; flex-shrink: 0;
+      transition: transform 0.3s; display: inline-block;
+    }
+    .faq-item.open .faq-arrow { transform: rotate(90deg); }
+    .faq-a {
+      font-size: 0.9rem; color: var(--grey); line-height: 1.7;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), margin-top 0.3s;
+      margin-top: 0;
+    }
+    .faq-item.open .faq-a { max-height: 300px; margin-top: 1rem; }
+
+    /* --- CTA finale --- */
+    #crv-cta { padding: 2rem 0 5rem; text-align: center; }
+    .crv-cta-box {
+      max-width: 720px; margin: 0 auto; padding: 3rem 2.5rem;
+      border-radius: 20px; border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(124,58,237,0.08), transparent);
+    }
+    .crv-cta-box .section-title { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 0.8rem; }
+    .crv-cta-box .section-desc { margin: 0 auto 1.8rem; }
+
+    /* FOOTER (see footer_css.txt injected below) */
+        footer { border-top: 1px solid var(--border); padding: 1.5rem 0; margin-top: 4rem; }
     footer .container { max-width: none; padding: 0; }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; padding-left: 4rem; padding-right: 220px; }
     .footer-logo { display: flex; align-items: center; text-decoration: none; }
@@ -294,445 +307,161 @@
 <main>
   <section class="page-hero">
     <div class="container">
-      <div class="section-label">Outils quantitatifs</div>
-      <h1 class="page-title">Options Pricer</h1>
-      <p class="page-desc">Calculez le prix et les Grecs de vos options vanilles (calls &amp; puts) avec trois modèles : Black-Scholes, Binomial CRR et Monte Carlo.</p>
+      <div class="section-label">Review de CV</div>
+      <h1 class="page-title">Ton CV, prêt pour la finance de marché</h1>
+      <p class="page-desc">En finance de marché, un CV se joue souvent en quelques secondes. Un recruteur en lit des centaines : le moindre détail mal calibré peut suffire à affaiblir une candidature pourtant solide. Un regard de professionnel du secteur t'aide à corriger ça avant de postuler.</p>
     </div>
   </section>
 
-  <section class="pricer-section">
+  <section class="crv-intro">
     <div class="container">
+      <div class="crv-intro-inner">
+        <div class="crv-intro-text reveal">
+          <p class="section-desc">Les attentes d'un desk ne sont pas celles d'un CV académique classique. Structure, vocabulaire, ordre des expériences, mise en avant des projets : ce sont ces détails qui font qu'un recruteur s'arrête sur ton profil ou passe au suivant.</p>
+          <p class="section-desc">Un regard de professionnel permet d'identifier ce qui accroche vraiment, ce qui dessert ton profil, et comment mieux présenter ton parcours pour maximiser tes chances d'obtenir un entretien.</p>
+          <ul class="cv-review-points">
+            <li>Un retour détaillé sur le fond et la forme</li>
+            <li>Les erreurs qui pénalisent ta candidature</li>
+            <li>Des conseils concrets pour mieux valoriser tes expériences</li>
+            <li>Un CV plus lisible, plus crédible et mieux calibré pour la finance de marché</li>
+          </ul>
+        </div>
 
-      <div class="model-tabs">
-        <button class="model-tab active" data-model="bs">Black-Scholes</button>
-        <button class="model-tab" data-model="binomial">Binomial (CRR)</button>
-        <button class="model-tab" data-model="mc">Monte Carlo</button>
+        <div class="cv-review-buy reveal">
+          <div class="offre-name">Review de CV</div>
+          <div style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--purple-glow);margin-bottom:0.8rem;">9 €</div>
+          <p class="offre-desc">Un retour détaillé sur ton CV par un professionnel du secteur.</p>
+          <ul class="cv-review-buy-features">
+            <li>Commentaires sur le fond, la forme et le positionnement</li>
+            <li>Pensé pour les recrutements en finance de marché</li>
+            <li>Retour clair, concret et actionnable</li>
+            <li>Réponse sous 48 à 72 h</li>
+          </ul>
+          <a href="/#cv-review" class="btn-primary" style="justify-content:center;width:100%;">Faire analyser mon CV →</a>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="pricer-grid">
-
-        <!-- INPUT PANEL -->
-        <div class="input-panel">
-          <div>
-            <div class="panel-title">Type d'option</div>
-            <div class="type-toggle">
-              <button class="type-btn call active" data-type="call">Call</button>
-              <button class="type-btn put" data-type="put">Put</button>
-            </div>
-          </div>
-
-          <div class="field-divider"></div>
-          <div class="panel-title">Paramètres de marché</div>
-
-          <div class="field">
-            <label>Prix du sous-jacent (S) <span>valeur actuelle</span></label>
-            <div class="input-wrap">
-              <input type="number" id="inp-S" value="100" min="0.01" step="0.5">
-              <span class="unit">€</span>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Strike (K) <span>prix d'exercice</span></label>
-            <div class="input-wrap">
-              <input type="number" id="inp-K" value="100" min="0.01" step="0.5">
-              <span class="unit">€</span>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Maturité (T) <span>en jours ouvrés</span></label>
-            <div class="input-wrap">
-              <input type="number" id="inp-T" value="90" min="1" step="1">
-              <span class="unit">j</span>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Taux sans risque (r) <span>annualisé</span></label>
-            <div class="input-wrap">
-              <input type="number" id="inp-r" value="3.5" min="0" step="0.1">
-              <span class="unit">%</span>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>Volatilité implicite (σ) <span>annualisée</span></label>
-            <div class="input-wrap">
-              <input type="number" id="inp-sigma" value="20" min="0.1" step="0.5">
-              <span class="unit">%</span>
-            </div>
-          </div>
-
-          <div class="field-divider"></div>
-
-          <div id="binom-extra" style="display:none;" class="binom-fields">
-            <div class="panel-title">Paramètres Binomial</div>
-            <div class="field">
-              <label>Nombre de pas (N) <span>précision</span></label>
-              <div class="input-wrap">
-                <input type="number" id="inp-N" value="200" min="10" max="2000" step="10">
-                <span class="unit">pas</span>
-              </div>
-            </div>
-            <div class="field-divider"></div>
-          </div>
-
-          <div id="mc-extra" style="display:none;" class="mc-fields">
-            <div class="panel-title">Paramètres Monte Carlo</div>
-            <div class="field">
-              <label>Simulations (N) <span>précision ∝ 1/√N</span></label>
-              <div class="input-wrap">
-                <input type="number" id="inp-sims" value="50000" min="1000" max="500000" step="5000">
-                <span class="unit">sim</span>
-              </div>
-            </div>
-            <div class="field-divider"></div>
-          </div>
-
-          <div id="error-msg" class="error-msg">Veuillez vérifier les paramètres saisis.</div>
-          <div id="spinner" class="spinner"></div>
-          <button class="calc-btn" id="calc-btn">Calculer →</button>
+  <section id="crv-steps">
+    <div class="container">
+      <div class="crv-steps-head reveal">
+        <div class="section-label">Comment ça marche</div>
+        <h2 class="section-title">Trois étapes, un CV plus fort</h2>
+        <p class="section-desc">Un process simple, pensé pour aller droit au but.</p>
+      </div>
+      <div class="crv-steps-grid">
+        <div class="crv-step reveal">
+          <div class="crv-step-num">01</div>
+          <div class="crv-step-title">Tu envoies ton CV</div>
+          <div class="crv-step-desc">Dépose ton CV au format PDF et précise le desk ou les métiers que tu vises (Sales, Trading, Structuring…).</div>
         </div>
-
-        <!-- RESULTS PANEL -->
-        <div class="results-panel">
-
-          <div class="price-card">
-            <div class="price-main">
-              <div class="price-label">Prix de l'option</div>
-              <div class="price-value placeholder" id="res-price">—</div>
-            </div>
-            <div class="price-meta">
-              <span class="price-badge neutral" id="res-badge">—</span>
-              <span class="price-model" id="res-model">—</span>
-            </div>
-          </div>
-
-          <div>
-            <div class="greeks-title" style="margin-bottom:0.9rem;">Grecs</div>
-            <div class="greeks-grid">
-              <div class="greek-card">
-                <div class="greek-symbol">Δ</div>
-                <div class="greek-name">Delta</div>
-                <div class="greek-value placeholder" id="res-delta">—</div>
-                <div class="greek-desc">Sensibilité au prix du sous-jacent</div>
-              </div>
-              <div class="greek-card">
-                <div class="greek-symbol">Γ</div>
-                <div class="greek-name">Gamma</div>
-                <div class="greek-value placeholder" id="res-gamma">—</div>
-                <div class="greek-desc">Convexité du delta par rapport à S</div>
-              </div>
-              <div class="greek-card">
-                <div class="greek-symbol">ν</div>
-                <div class="greek-name">Vega</div>
-                <div class="greek-value placeholder" id="res-vega">—</div>
-                <div class="greek-desc">Sensibilité à la vol. (par 1% σ)</div>
-              </div>
-              <div class="greek-card">
-                <div class="greek-symbol">Θ</div>
-                <div class="greek-name">Theta</div>
-                <div class="greek-value placeholder" id="res-theta">—</div>
-                <div class="greek-desc">Decay temporel (par jour)</div>
-              </div>
-              <div class="greek-card">
-                <div class="greek-symbol">ρ</div>
-                <div class="greek-name">Rho</div>
-                <div class="greek-value placeholder" id="res-rho">—</div>
-                <div class="greek-desc">Sensibilité aux taux (par 1% r)</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="payoff-card">
-            <div class="payoff-title">Diagramme de payoff à expiration</div>
-            <canvas id="payoff-canvas" height="180"></canvas>
-          </div>
-
-          <div class="formula-note" id="formula-note">
-            <strong>Black-Scholes (1973)</strong> — Modèle analytique pour options européennes. Hypothèses : volatilité constante, taux sans risque constant, sous-jacent log-normal, sans dividendes.<br><br>
-            <em>d₁ = [ln(S/K) + (r + σ²/2)·T] / (σ·√T) &nbsp;|&nbsp; d₂ = d₁ − σ·√T</em><br>
-            <em>Call = S·N(d₁) − K·e<sup>−rT</sup>·N(d₂) &nbsp;|&nbsp; Put = K·e<sup>−rT</sup>·N(−d₂) − S·N(−d₁)</em>
-          </div>
-
+        <div class="crv-step reveal">
+          <div class="crv-step-num">02</div>
+          <div class="crv-step-title">Un professionnel l'analyse</div>
+          <div class="crv-step-desc">Un professionnel en activité en finance de marché relit ton CV en détail : structure, formulations, ordre des expériences, éléments à mettre en avant.</div>
         </div>
+        <div class="crv-step reveal">
+          <div class="crv-step-num">03</div>
+          <div class="crv-step-title">Tu reçois ton retour</div>
+          <div class="crv-step-desc">Un retour écrit, clair et actionnable, envoyé sous 48 à 72 h, pour un CV mieux calibré et plus crédible.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="crv-proof">
+    <div class="container">
+      <div class="crv-proof-head reveal">
+        <div class="section-label">Témoignages étudiants</div>
+        <h2 class="section-title">Ce qu'ils ont reçu</h2>
+        <p class="section-desc">Quelques captures anonymisées de retours envoyés après une review de CV DeskReady.</p>
+      </div>
+      <div class="crv-proof-grid">
+        <figure class="testimonial-frame reveal" onclick="openTestimonialLightbox('cv-review-avis-1.png')">
+          <img src="cv-review-avis-1.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+        </figure>
+        <figure class="testimonial-frame reveal" onclick="openTestimonialLightbox('cv-review-avis-2.png')">
+          <img src="cv-review-avis-2.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+        </figure>
+        <figure class="testimonial-frame reveal" onclick="openTestimonialLightbox('cv-review-avis-3.png')">
+          <img src="cv-review-avis-3.png" alt="Retour anonymisé d'un étudiant après une review de CV DeskReady" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'testimonial-placeholder',textContent:'Témoignage étudiant'}))">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="crv-faq">
+    <div class="container">
+      <div class="crv-faq-head reveal">
+        <div class="section-label">Questions fréquentes</div>
+        <h2 class="section-title">Tout savoir sur la review de CV</h2>
+      </div>
+      <div class="crv-faq-list">
+        <div class="faq-item reveal" onclick="toggleFaq(this)">
+          <div class="faq-q">Comment fonctionne la review de CV ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Tu nous envoies ton CV et un professionnel de la finance de marché le relit en détail. Tu reçois un retour écrit : structure, formulations, ordre des expériences et éléments à mettre en avant pour passer le premier filtre des recruteurs.</div>
+        </div>
+        <div class="faq-item reveal" onclick="toggleFaq(this)">
+          <div class="faq-q">Sous quel délai je reçois mon retour ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Le retour sur la review de CV est envoyé sous 48 à 72 h en général.</div>
+        </div>
+        <div class="faq-item reveal" onclick="toggleFaq(this)">
+          <div class="faq-q">Quel format de CV dois-je envoyer ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Un fichier PDF, de préférence en une page, dans la version la plus à jour de ton CV.</div>
+        </div>
+        <div class="faq-item reveal" onclick="toggleFaq(this)">
+          <div class="faq-q">La review est-elle adaptée à mon niveau d'expérience ? <span class="faq-arrow">→</span></div>
+          <div class="faq-a">Oui. Que tu cherches un premier stage ou un poste à temps plein en Sales, Trading ou Structuring, le retour est adapté à ton profil et au desk que tu vises.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="crv-cta">
+    <div class="container">
+      <div class="crv-cta-box reveal">
+        <h2 class="section-title">Prêt à passer à l'étape suivante ?</h2>
+        <p class="section-desc">Envoie ton CV et reçois un retour détaillé d'un professionnel du secteur sous 48 à 72 h.</p>
+        <a href="/#cv-review" class="btn-primary">Faire analyser mon CV →</a>
       </div>
     </div>
   </section>
 </main>
 
 <script>
-
-
-// =========================================================
-// MATH UTILITIES
-// =========================================================
-function norm_cdf(x) {
-  const a1=0.254829592, a2=-0.284496736, a3=1.421413741, a4=-1.453152027, a5=1.061405429, p=0.3275911;
-  const sign = x < 0 ? -1 : 1;
-  x = Math.abs(x) / Math.SQRT2;
-  const t = 1 / (1 + p * x);
-  const y = 1 - (((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);
-  return 0.5*(1 + sign*y);
-}
-function norm_pdf(x) { return Math.exp(-0.5*x*x) / Math.sqrt(2*Math.PI); }
-
-// =========================================================
-// BLACK-SCHOLES (European)
-// =========================================================
-function blackScholes(S, K, T, r, sigma, isCall) {
-  if (T <= 0) return null;
-  const sqrtT = Math.sqrt(T);
-  const d1 = (Math.log(S/K) + (r + 0.5*sigma*sigma)*T) / (sigma*sqrtT);
-  const d2 = d1 - sigma*sqrtT;
-  const Nd1=norm_cdf(d1), Nd2=norm_cdf(d2), Nmd1=norm_cdf(-d1), Nmd2=norm_cdf(-d2);
-  const disc = Math.exp(-r*T);
-  const phi  = norm_pdf(d1);
-  const price = isCall ? S*Nd1 - K*disc*Nd2 : K*disc*Nmd2 - S*Nmd1;
-  const delta = isCall ? Nd1 : Nd1 - 1;
-  const gamma = phi / (S*sigma*sqrtT);
-  const vega  = S*phi*sqrtT / 100;
-  const theta = isCall
-    ? (-(S*phi*sigma)/(2*sqrtT) - r*K*disc*Nd2)  / 252
-    : (-(S*phi*sigma)/(2*sqrtT) + r*K*disc*Nmd2) / 252;
-  const rho = isCall ?  K*T*disc*Nd2/100 : -K*T*disc*Nmd2/100;
-  return { price, delta, gamma, vega, theta, rho };
+function toggleFaq(el) {
+  var isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(f){ f.classList.remove('open'); });
+  if (!isOpen) el.classList.add('open');
 }
 
-// =========================================================
-// BINOMIAL CRR (European, finite-difference Greeks)
-// =========================================================
-function binomialCRR(S, K, T, r, sigma, isCall, N) {
-  function binom(s, t, sig, rr) {
-    const dt=t/N, u=Math.exp(sig*Math.sqrt(dt)), d=1/u;
-    const disc=Math.exp(-rr*dt), p=(Math.exp(rr*dt)-d)/(u-d), q=1-p;
-    let v=[];
-    for(let i=0;i<=N;i++){const ST=s*Math.pow(u,N-i)*Math.pow(d,i);v.push(isCall?Math.max(0,ST-K):Math.max(0,K-ST));}
-    for(let step=N-1;step>=0;step--){const nv=[];for(let i=0;i<=step;i++)nv.push(disc*(p*v[i]+q*v[i+1]));v=nv;}
-    return v[0];
-  }
-  const price = binom(S, T, sigma, r);
-  const eS=S*0.001, ev=sigma*0.001, et=T>1/252?1/252:T*0.01, er=0.0001;
-  const pu=binom(S+eS,T,sigma,r), pd=binom(S-eS,T,sigma,r);
-  const delta = (pu-pd)/(2*eS);
-  const gamma = (pu-2*price+pd)/(eS*eS);
-  const vega  = (binom(S,T,sigma+ev,r)-binom(S,T,sigma-ev,r))/(2*ev*100);
-  const theta = (binom(S,T-et,sigma,r)-price)/et/252*(1/252);
-  const rho   = (binom(S,T,sigma,r+er)-binom(S,T,sigma,r-er))/(2*er*100);
-  return { price, delta, gamma, vega, theta, rho };
-}
-
-// =========================================================
-// MONTE CARLO (GBM, Greeks via BS bump-and-reprice)
-// =========================================================
-function monteCarlo(S, K, T, r, sigma, isCall, nSims) {
-  const drift=r-0.5*sigma*sigma, vol=sigma*Math.sqrt(T);
-  let sum=0;
-  for(let i=0;i<nSims;i++){
-    const u1=Math.random()||1e-10, u2=Math.random();
-    const z=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
-    const ST=S*Math.exp(drift*T+vol*z);
-    sum += isCall ? Math.max(0,ST-K) : Math.max(0,K-ST);
-  }
-  const price = Math.exp(-r*T)*sum/nSims;
-  // Greeks from BS (finite diff over price stays analytical)
-  const bs = blackScholes(S, K, T, r, sigma, isCall);
-  return { price, delta:bs.delta, gamma:bs.gamma, vega:bs.vega, theta:bs.theta, rho:bs.rho };
-}
-
-// =========================================================
-// UI
-// =========================================================
-let currentModel = 'bs', currentType = 'call';
-
-document.querySelectorAll('.model-tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.model-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentModel = btn.dataset.model;
-    document.getElementById('binom-extra').style.display = currentModel==='binomial' ? 'flex' : 'none';
-    document.getElementById('mc-extra').style.display    = currentModel==='mc'       ? 'flex' : 'none';
-    updateNote();
-  });
-});
-
-document.querySelectorAll('.type-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentType = btn.dataset.type;
-    const S=parseFloat(document.getElementById('inp-S').value)||100;
-    const K=parseFloat(document.getElementById('inp-K').value)||100;
-    drawPayoff(S,K,currentType==='call');
-  });
-});
-
-function updateNote() {
-  const notes = {
-    bs: '<strong>Black-Scholes (1973)</strong> — Modèle analytique pour options européennes. Hypothèses : volatilité constante, taux sans risque constant, sous-jacent log-normal, sans dividendes.<br><br><em>d₁ = [ln(S/K) + (r + σ²/2)·T] / (σ·√T) &nbsp;|&nbsp; d₂ = d₁ − σ·√T</em><br><em>Call = S·N(d₁) − K·e<sup>−rT</sup>·N(d₂) &nbsp;|&nbsp; Put = K·e<sup>−rT</sup>·N(−d₂) − S·N(−d₁)</em>',
-    binomial: '<strong>Binomial CRR (Cox-Ross-Rubinstein, 1979)</strong> — Arbre recombinant à N pas. Convergent vers BS quand N → ∞. Permet le pricing d\'options américaines (early exercise). Grecs par différences finies centrées.<br><br><em>u = e<sup>σ√(T/N)</sup> &nbsp;|&nbsp; d = 1/u &nbsp;|&nbsp; p = (e<sup>r·Δt</sup> − d) / (u − d)</em>',
-    mc: '<strong>Monte Carlo</strong> — Simulation de N chemins browniens géométriques. Précision ∝ 1/√N. Idéal pour options path-dependent (barrière, asiatiques). Grecs calculés par bump-and-reprice analytique (BS).<br><br><em>S(T) = S · exp[(r − σ²/2)·T + σ·√T · Z] , Z ~ N(0,1)</em><br><em>Prix = e<sup>−rT</sup> · E[max(S<sub>T</sub>−K, 0)]</em>'
+function openTestimonialLightbox(src) {
+  var probe = new Image();
+  probe.onerror = function () {};
+  probe.onload = function () {
+    var existing = document.querySelector('.lightbox');
+    if (existing) existing.remove();
+    var box = document.createElement('div');
+    box.className = 'lightbox';
+    box.innerHTML = '<button class="lightbox-close" aria-label="Fermer">&times;</button><img src="' + src + '" alt="Retour anonymisé d\'un étudiant après une review de CV DeskReady">';
+    function close() { box.remove(); document.removeEventListener('keydown', onKey); }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+    box.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(box);
   };
-  document.getElementById('formula-note').innerHTML = notes[currentModel];
+  probe.src = src;
 }
 
-// =========================================================
-// CALCULATE
-// =========================================================
-document.getElementById('calc-btn').addEventListener('click', () => {
-  const S      = parseFloat(document.getElementById('inp-S').value);
-  const K      = parseFloat(document.getElementById('inp-K').value);
-  const Tdays  = parseFloat(document.getElementById('inp-T').value);
-  const rPct   = parseFloat(document.getElementById('inp-r').value);
-  const sPct   = parseFloat(document.getElementById('inp-sigma').value);
-  const r      = rPct / 100;
-  const sigma  = sPct / 100;
-  const T      = Tdays / 252;
-  const isCall = currentType === 'call';
-  const err    = document.getElementById('error-msg');
-  const spin   = document.getElementById('spinner');
-  const btn    = document.getElementById('calc-btn');
-
-  if ([S,K,Tdays,rPct,sPct].some(v => isNaN(v) || v <= 0)) {
-    err.classList.add('show'); return;
-  }
-  err.classList.remove('show');
-
-  btn.style.display = 'none'; spin.classList.add('show');
-
-  setTimeout(() => {
-    let result;
-    if (currentModel === 'bs') {
-      result = blackScholes(S, K, T, r, sigma, isCall);
-    } else if (currentModel === 'binomial') {
-      const N = parseInt(document.getElementById('inp-N').value) || 200;
-      result = binomialCRR(S, K, T, r, sigma, isCall, N);
-    } else {
-      const nSims = parseInt(document.getElementById('inp-sims').value) || 50000;
-      result = monteCarlo(S, K, T, r, sigma, isCall, nSims);
-    }
-
-    spin.classList.remove('show'); btn.style.display = '';
-
-    if (!result) { err.classList.add('show'); return; }
-
-    const labels = { bs:'Black-Scholes', binomial:'Binomial CRR', mc:'Monte Carlo' };
-    const moneyness = isCall ? (S >= K ? 'ITM' : 'OTM') : (S <= K ? 'ITM' : 'OTM');
-
-    const priceEl = document.getElementById('res-price');
-    priceEl.textContent = result.price.toFixed(4) + ' €';
-    priceEl.classList.remove('placeholder');
-
-    const badge = document.getElementById('res-badge');
-    badge.textContent = (isCall?'Call':'Put') + ' · ' + moneyness;
-    badge.className = 'price-badge ' + currentType;
-
-    document.getElementById('res-model').textContent =
-      labels[currentModel] + ' · S='+S+'€ K='+K+'€ T='+Tdays+'j σ='+(sigma*100).toFixed(1)+'% r='+(r*100).toFixed(1)+'%';
-
-    function setG(id, val, dec) {
-      const el = document.getElementById(id);
-      el.textContent = (isNaN(val)||val===null) ? '—' : val.toFixed(dec);
-      el.classList.remove('placeholder');
-    }
-    setG('res-delta', result.delta, 4);
-    setG('res-gamma', result.gamma, 6);
-    setG('res-vega',  result.vega,  4);
-    setG('res-theta', result.theta, 4);
-    setG('res-rho',   result.rho,   4);
-
-    drawPayoff(S, K, isCall);
-  }, currentModel === 'mc' ? 80 : 0);
-});
-
-// =========================================================
-// PAYOFF DIAGRAM
-// =========================================================
-function drawPayoff(S, K, isCall) {
-  const canvas = document.getElementById('payoff-canvas');
-  const dpr = window.devicePixelRatio || 1;
-  const cssW = canvas.offsetWidth, cssH = 180;
-  canvas.width  = cssW * dpr;
-  canvas.height = cssH * dpr;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-
-  const range = K * 0.6;
-  const N = 300;
-  const prices  = Array.from({length:N}, (_,i) => K - range + 2*range/(N-1)*i);
-  const payoffs = prices.map(p => isCall ? Math.max(0, p-K) : Math.max(0, K-p));
-  const maxP = Math.max(...payoffs, 1);
-
-  const padL=48, padR=16, padT=18, padB=28;
-  const plotW=cssW-padL-padR, plotH=cssH-padT-padB;
-
-  function xPx(p)  { return padL + (p-prices[0])/(prices[N-1]-prices[0])*plotW; }
-  function yPx(v)  { return padT + plotH*(1 - v/maxP); }
-
-  ctx.clearRect(0,0,cssW,cssH);
-
-  // Grid lines
-  ctx.strokeStyle='rgba(168,85,247,0.1)'; ctx.lineWidth=1;
-  for(let i=0;i<=4;i++){
-    const y=padT+plotH/4*i;
-    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(padL+plotW,y); ctx.stroke();
-    ctx.fillStyle='rgba(160,154,181,0.45)'; ctx.font='9px DM Sans,sans-serif'; ctx.textAlign='right';
-    ctx.fillText((maxP*(1-i/4)).toFixed(1), padL-6, y+3);
-  }
-  // Zero line
-  ctx.strokeStyle='rgba(168,85,247,0.2)'; ctx.setLineDash([4,4]);
-  ctx.beginPath(); ctx.moveTo(padL,yPx(0)); ctx.lineTo(padL+plotW,yPx(0)); ctx.stroke();
-  ctx.setLineDash([]);
-  // Strike
-  const kx=xPx(K);
-  ctx.strokeStyle='rgba(168,85,247,0.35)'; ctx.setLineDash([4,4]);
-  ctx.beginPath(); ctx.moveTo(kx,padT); ctx.lineTo(kx,padT+plotH); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle='rgba(168,85,247,0.6)'; ctx.font='9px DM Sans,sans-serif'; ctx.textAlign='center';
-  ctx.fillText('K='+K, kx, padT+plotH+18);
-  // Spot
-  if(S>=prices[0]&&S<=prices[N-1]){
-    const sx=xPx(S);
-    ctx.strokeStyle='rgba(248,244,255,0.2)'; ctx.setLineDash([2,3]);
-    ctx.beginPath(); ctx.moveTo(sx,padT); ctx.lineTo(sx,padT+plotH); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle='rgba(248,244,255,0.4)'; ctx.font='9px DM Sans,sans-serif'; ctx.textAlign='center';
-    ctx.fillText('S='+S, sx, padT-4);
-  }
-  // Fill
-  const col = isCall ? '34,197,94' : '239,68,68';
-  const grad = ctx.createLinearGradient(0,padT,0,padT+plotH);
-  grad.addColorStop(0,'rgba('+col+',0.28)');
-  grad.addColorStop(1,'rgba('+col+',0.03)');
-  ctx.fillStyle=grad;
-  ctx.beginPath(); ctx.moveTo(xPx(prices[0]),yPx(0));
-  prices.forEach((p,i) => ctx.lineTo(xPx(p),yPx(payoffs[i])));
-  ctx.lineTo(xPx(prices[N-1]),yPx(0)); ctx.closePath(); ctx.fill();
-  // Line
-  ctx.strokeStyle=isCall?'#22c55e':'#ef4444'; ctx.lineWidth=2;
-  ctx.beginPath();
-  prices.forEach((p,i) => i===0 ? ctx.moveTo(xPx(p),yPx(payoffs[i])) : ctx.lineTo(xPx(p),yPx(payoffs[i])));
-  ctx.stroke();
-}
-
-window.addEventListener('load', () => drawPayoff(100, 100, true));
-window.addEventListener('resize', () => {
-  const S=parseFloat(document.getElementById('inp-S').value)||100;
-  const K=parseFloat(document.getElementById('inp-K').value)||100;
-  drawPayoff(S,K,currentType==='call');
-});
-
-// Update inputs redraw payoff live
-['inp-S','inp-K'].forEach(id => {
-  document.getElementById(id).addEventListener('input', () => {
-    const S=parseFloat(document.getElementById('inp-S').value)||100;
-    const K=parseFloat(document.getElementById('inp-K').value)||100;
-    drawPayoff(S,K,currentType==='call');
+var reveals = document.querySelectorAll('.reveal');
+var revealObserver = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e, i) {
+    if (e.isIntersecting) { setTimeout(function(){ e.target.classList.add('visible'); }, i*80); revealObserver.unobserve(e.target); }
   });
-});
+}, { threshold: 0.1 });
+reveals.forEach(function(r){ revealObserver.observe(r); });
 </script>
-
 
 <script>
 (function() {
@@ -798,4 +527,3 @@ function handleNavLogout() {
 </script>
 </body>
 </html>
-
